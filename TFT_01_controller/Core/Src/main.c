@@ -31,7 +31,7 @@
 #include "EnhancedFonts/ArialBlack_28pts_bold.h"
 #include "string.h"
 #include "stdio.h"
-#include "logo.h"
+#include "functions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,15 +96,23 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   ILI9341_Init(&hspi1);
-  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-  EF_SetFont(&arialBlack_20ptFontInfo);
-  ILI9341_DrawImage(40, 50, logo, 240, 140);
+
+
+  system_init();
+
+  showCurrentParameters(0, 0, 0, 0, 0);
+
+  // TO DO! - Tutaj przeprowadzić inicjalizację peryferiów i połączenia z drugim STMem
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	 // ILI9341_DrawImage(40, 50, logo, 240, 140);
+
 
     /* USER CODE END WHILE */
 

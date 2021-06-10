@@ -3,6 +3,7 @@
 "Core/Src/GFX_Color.o"
 "Core/Src/GFX_EnhancedFonts.o"
 "Core/Src/TFT_ILI9341.o"
+"Core/Src/functions.o"
 "Core/Src/gpio.o"
 "Core/Src/main.o"
 "Core/Src/spi.o"
