@@ -31,6 +31,7 @@
 #include "EnhancedFonts/ArialBlack_28pts_bold.h"
 #include "string.h"
 #include "stdio.h"
+#include "logo.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,12 +96,9 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   ILI9341_Init(&hspi1);
-  ILI9341_ClearDisplay(ILI9341_NAVY);
+  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
   EF_SetFont(&arialBlack_20ptFontInfo);
-  sprintf(Msg, "CZEŚĆ");
-  EF_PutString(Msg, 0, 0, ILI9341_WHITE, BG_TRANSPARENT, ILI9341_BLACK);
-  sprintf(Msg, "GRAD");
-  EF_PutString(Msg, 120, 90, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
+  ILI9341_DrawImage(40, 50, logo, 240, 140);
   /* USER CODE END 2 */
 
   /* Infinite loop */
