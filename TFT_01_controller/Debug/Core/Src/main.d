@@ -28,6 +28,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/spi.h ../Core/Inc/main.h ../Core/Inc/gpio.h \
  ../Core/Inc/TFT_ILI9341.h ../Core/Inc/GFX_Color.h \
  ../Core/Inc/GFX_EnhancedFonts.h \
+ ../Core/Inc/EnhancedFonts/arialBlack_20ptFontInfo.h \
  ../Core/Inc/EnhancedFonts/ArialBlack_28pts_bold.h
 
 ../Core/Inc/main.h:
@@ -95,5 +96,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/GFX_Color.h:
 
 ../Core/Inc/GFX_EnhancedFonts.h:
+
+../Core/Inc/EnhancedFonts/arialBlack_20ptFontInfo.h:
 
 ../Core/Inc/EnhancedFonts/ArialBlack_28pts_bold.h:
