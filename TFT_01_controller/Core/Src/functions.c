@@ -65,7 +65,7 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
 	  Len++;
 }
 
-void showCurrentParameters()
+void showControlPanel()
 {	// TODO zrobić żeby pokazywało realny panel sterowania
 
 }

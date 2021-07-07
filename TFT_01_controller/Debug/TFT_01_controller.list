@@ -7,43 +7,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         0000336c  080001a0  080001a0  000101a0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0001271c  0800350c  0800350c  0001350c  2**2
+  2 .rodata       00012714  0800350c  0800350c  0001350c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08015c28  08015c28  00030070  2**0
+  3 .ARM.extab    00000000  08015c20  08015c20  00030070  2**0
                   CONTENTS
-  4 .ARM          00000008  08015c28  08015c28  00025c28  2**2
+  4 .ARM          00000008  08015c20  08015c20  00025c20  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08015c30  08015c30  00030070  2**0
+  5 .preinit_array 00000000  08015c28  08015c28  00030070  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08015c30  08015c30  00025c30  2**2
+  6 .init_array   00000004  08015c28  08015c28  00025c28  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08015c34  08015c34  00025c34  2**2
+  7 .fini_array   00000004  08015c2c  08015c2c  00025c2c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000070  20000000  08015c38  00030000  2**2
+  8 .data         00000070  20000000  08015c30  00030000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000000bc  20000070  08015ca8  00030070  2**2
+  9 .bss          000000bc  20000070  08015ca0  00030070  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  2000012c  08015ca8  0003012c  2**0
+ 10 ._user_heap_stack 00000604  2000012c  08015ca0  0003012c  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00030070  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000b88a  00000000  00000000  000300a0  2**0
+ 12 .debug_info   0000b889  00000000  00000000  000300a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000216c  00000000  00000000  0003b92a  2**0
+ 13 .debug_abbrev 0000216a  00000000  00000000  0003b929  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000007f0  00000000  00000000  0003da98  2**3
+ 14 .debug_aranges 000007f8  00000000  00000000  0003da98  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_macro  00003369  00000000  00000000  0003e288  2**0
+ 15 .debug_macro  00003369  00000000  00000000  0003e290  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_line   0000cf69  00000000  00000000  000415f1  2**0
+ 16 .debug_line   0000cf7b  00000000  00000000  000415f9  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    00085fa2  00000000  00000000  0004e55a  2**0
+ 17 .debug_str    00085fa8  00000000  00000000  0004e574  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .comment      00000053  00000000  00000000  000d44fc  2**0
+ 18 .comment      00000053  00000000  00000000  000d451c  2**0
                   CONTENTS, READONLY
- 19 .debug_ranges 000006d0  00000000  00000000  000d4550  2**3
+ 19 .debug_ranges 000006d8  00000000  00000000  000d4570  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00002134  00000000  00000000  000d4c20  2**2
+ 20 .debug_frame  00002154  00000000  00000000  000d4c48  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2918,7 +2918,7 @@ void ILI9341_Init(SPI_HandleTypeDef *hspi)
  8001564:	bd80      	pop	{r7, pc}
  8001566:	bf00      	nop
  8001568:	2000009c 	.word	0x2000009c
- 800156c:	080054f4 	.word	0x080054f4
+ 800156c:	080054ec 	.word	0x080054ec
  8001570:	40020400 	.word	0x40020400
 
 08001574 <system_init>:
@@ -3144,8 +3144,8 @@ uint8_t system_init(){
  800172e:	46bd      	mov	sp, r7
  8001730:	bd80      	pop	{r7, pc}
  8001732:	bf00      	nop
- 8001734:	08005564 	.word	0x08005564
- 8001738:	080054e8 	.word	0x080054e8
+ 8001734:	0800555c 	.word	0x0800555c
+ 8001738:	080054e0 	.word	0x080054e0
  800173c:	0800350c 	.word	0x0800350c
  8001740:	200000a0 	.word	0x200000a0
 
@@ -3168,6 +3168,7 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
  800175c:	717b      	strb	r3, [r7, #5]
  800175e:	4613      	mov	r3, r2
  8001760:	713b      	strb	r3, [r7, #4]
+		// TODO zrobić żeby czytało właściwe wartości
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
  8001762:	f24c 6018 	movw	r0, #50712	; 0xc618
  8001766:	f7ff fe53 	bl	8001410 <ILI9341_ClearDisplay>
@@ -3190,7 +3191,7 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
  8001788:	2114      	movs	r1, #20
  800178a:	4827      	ldr	r0, [pc, #156]	; (8001828 <showCurrentParameters+0xe4>)
  800178c:	f7ff fc80 	bl	8001090 <EF_PutString>
-	  Len = sprintf(Msg, "Temp. zewn.: 0`C");
+	  Len = sprintf(Msg, "Temp. zewn: 0`C");
  8001790:	4926      	ldr	r1, [pc, #152]	; (800182c <showCurrentParameters+0xe8>)
  8001792:	4825      	ldr	r0, [pc, #148]	; (8001828 <showCurrentParameters+0xe4>)
  8001794:	f001 fa80 	bl	8002c98 <siprintf>
@@ -3206,7 +3207,7 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
  80017a8:	2114      	movs	r1, #20
  80017aa:	481f      	ldr	r0, [pc, #124]	; (8001828 <showCurrentParameters+0xe4>)
  80017ac:	f7ff fc70 	bl	8001090 <EF_PutString>
-	  Len = sprintf(Msg, "Temp. wewn.: 0`C");
+	  Len = sprintf(Msg, "Temp. wewn: 0`C");
  80017b0:	491f      	ldr	r1, [pc, #124]	; (8001830 <showCurrentParameters+0xec>)
  80017b2:	481d      	ldr	r0, [pc, #116]	; (8001828 <showCurrentParameters+0xe4>)
  80017b4:	f001 fa70 	bl	8002c98 <siprintf>
@@ -3264,13 +3265,13 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
  800181a:	46bd      	mov	sp, r7
  800181c:	bd90      	pop	{r4, r7, pc}
  800181e:	bf00      	nop
- 8001820:	080054e8 	.word	0x080054e8
+ 8001820:	080054e0 	.word	0x080054e0
  8001824:	08003520 	.word	0x08003520
  8001828:	200000a0 	.word	0x200000a0
  800182c:	08003530 	.word	0x08003530
- 8001830:	08003544 	.word	0x08003544
- 8001834:	08003558 	.word	0x08003558
- 8001838:	0800356c 	.word	0x0800356c
+ 8001830:	08003540 	.word	0x08003540
+ 8001834:	08003550 	.word	0x08003550
+ 8001838:	08003564 	.word	0x08003564
 
 0800183c <MX_GPIO_Init>:
         * Output
@@ -4207,7 +4208,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8001cb0:	20000070 	.word	0x20000070
   ldr r2, =_sidata
- 8001cb4:	08015c38 	.word	0x08015c38
+ 8001cb4:	08015c30 	.word	0x08015c30
   ldr r2, =_sbss
  8001cb8:	20000070 	.word	0x20000070
   ldr r4, =_ebss
@@ -6527,7 +6528,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  800299e:	bf00      	nop
  80029a0:	40023c00 	.word	0x40023c00
  80029a4:	40023800 	.word	0x40023800
- 80029a8:	08015be4 	.word	0x08015be4
+ 80029a8:	08015bdc 	.word	0x08015bdc
  80029ac:	20000000 	.word	0x20000000
  80029b0:	20000004 	.word	0x20000004
 
@@ -6960,10 +6961,10 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
  8002c72:	4798      	blx	r3
  8002c74:	3601      	adds	r6, #1
  8002c76:	e7f2      	b.n	8002c5e <__libc_init_array+0x1e>
- 8002c78:	08015c30 	.word	0x08015c30
- 8002c7c:	08015c30 	.word	0x08015c30
- 8002c80:	08015c30 	.word	0x08015c30
- 8002c84:	08015c34 	.word	0x08015c34
+ 8002c78:	08015c28 	.word	0x08015c28
+ 8002c7c:	08015c28 	.word	0x08015c28
+ 8002c80:	08015c28 	.word	0x08015c28
+ 8002c84:	08015c2c 	.word	0x08015c2c
 
 08002c88 <memset>:
  8002c88:	4402      	add	r2, r0
@@ -7281,11 +7282,11 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
  8002f74:	f000 f87a 	bl	800306c <_printf_i>
  8002f78:	e7eb      	b.n	8002f52 <_svfiprintf_r+0x1c2>
  8002f7a:	bf00      	nop
- 8002f7c:	08015bf4 	.word	0x08015bf4
- 8002f80:	08015bfe 	.word	0x08015bfe
+ 8002f7c:	08015bec 	.word	0x08015bec
+ 8002f80:	08015bf6 	.word	0x08015bf6
  8002f84:	00000000 	.word	0x00000000
  8002f88:	08002cd9 	.word	0x08002cd9
- 8002f8c:	08015bfa 	.word	0x08015bfa
+ 8002f8c:	08015bf2 	.word	0x08015bf2
 
 08002f90 <_printf_common>:
  8002f90:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -7621,8 +7622,8 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
  80032a8:	f104 0619 	add.w	r6, r4, #25
  80032ac:	e7f5      	b.n	800329a <_printf_i+0x22e>
  80032ae:	bf00      	nop
- 80032b0:	08015c05 	.word	0x08015c05
- 80032b4:	08015c16 	.word	0x08015c16
+ 80032b0:	08015bfd 	.word	0x08015bfd
+ 80032b4:	08015c0e 	.word	0x08015c0e
 
 080032b8 <memcpy>:
  80032b8:	440a      	add	r2, r1
