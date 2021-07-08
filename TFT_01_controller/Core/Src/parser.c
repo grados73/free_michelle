@@ -6,6 +6,7 @@
  */
 #include "main.h"
 #include "parser.h"
+#include "functions.h"
 
 CONTROLLER_STATE ControlerRegulator;
 uint8_t AqaParameters[3];
@@ -47,7 +48,8 @@ void IdleRoutine(uint8_t * AqaParameters)
 
 void InitializationRoutine(uint8_t * AqaParameters)
 {
-
+	// TODO - DODAĆ OBSŁUGĘ RETURNA, JAK ZWRACA 1 TO PRZECHODZI DO PARAMETERS A JAK NIE TO DO ERRORS
+	system_init();
 }
 
 void ParametersRoutine(uint8_t * AqaParameters)

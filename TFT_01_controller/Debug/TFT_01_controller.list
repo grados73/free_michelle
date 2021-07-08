@@ -2922,10 +2922,10 @@ void ILI9341_Init(SPI_HandleTypeDef *hspi)
  8001570:	40020400 	.word	0x40020400
 
 08001574 <system_init>:
- */
 
 #include "functions.h"
 #include "logo.h"
+
 
 uint8_t system_init(){
  8001574:	b580      	push	{r7, lr}
@@ -3135,6 +3135,8 @@ uint8_t system_init(){
 	  HAL_Delay(200); // !!!! TODO
  8001722:	20c8      	movs	r0, #200	; 0xc8
  8001724:	f000 fb40 	bl	8001da8 <HAL_Delay>
+
+
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
  8001728:	2301      	movs	r3, #1

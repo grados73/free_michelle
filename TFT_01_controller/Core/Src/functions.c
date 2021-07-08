@@ -10,6 +10,7 @@
 #include "functions.h"
 #include "logo.h"
 
+
 uint8_t system_init(){
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  GFX_Image(40, 50, logo, 240, 140);
@@ -43,6 +44,8 @@ uint8_t system_init(){
 	  HAL_Delay(100); // !!!! TODO
 	  GFX_DrawFillRoundRectangle(240, 200, 20, 20, 5, ILI9341_GREEN);
 	  HAL_Delay(200); // !!!! TODO
+
+
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
 }
