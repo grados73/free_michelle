@@ -2,6 +2,7 @@
 File.Version=6
 KeepUserPlacement=false
 Mcu.Family=STM32F4
+<<<<<<< HEAD
 Mcu.IP0=NVIC
 Mcu.IP1=RCC
 Mcu.IP2=SYS
@@ -17,6 +18,29 @@ Mcu.UserConstants=
 Mcu.UserName=STM32F411CEUx
 MxCube.Version=6.2.1
 MxDb.Version=DB.6.0.21
+=======
+Mcu.IP0=I2C1
+Mcu.IP1=NVIC
+Mcu.IP2=RCC
+Mcu.IP3=SYS
+Mcu.IPNb=4
+Mcu.Name=STM32F411C(C-E)Ux
+Mcu.Package=UFQFPN48
+Mcu.Pin0=PC13-ANTI_TAMP
+Mcu.Pin1=PC14-OSC32_IN
+Mcu.Pin2=PC15-OSC32_OUT
+Mcu.Pin3=PH0 - OSC_IN
+Mcu.Pin4=PH1 - OSC_OUT
+Mcu.Pin5=PB8
+Mcu.Pin6=PB9
+Mcu.Pin7=VP_SYS_VS_Systick
+Mcu.PinsNb=8
+Mcu.ThirdPartyNb=0
+Mcu.UserConstants=
+Mcu.UserName=STM32F411CEUx
+MxCube.Version=6.3.0
+MxDb.Version=DB.6.0.30
+>>>>>>> 5c877302f13b7ee5cbd660cc3f3705d9f39c6c4e
 NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.DebugMonitor_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.ForceEnableDMAVector=true
@@ -28,6 +52,23 @@ NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
 NVIC.SVCall_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.SysTick_IRQn=true\:0\:0\:false\:false\:true\:false\:true
 NVIC.UsageFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false
+<<<<<<< HEAD
+=======
+PB8.Locked=true
+PB8.Mode=I2C
+PB8.Signal=I2C1_SCL
+PB9.Locked=true
+PB9.Mode=I2C
+PB9.Signal=I2C1_SDA
+PC13-ANTI_TAMP.GPIOParameters=GPIO_Label
+PC13-ANTI_TAMP.GPIO_Label=USER_LED
+PC13-ANTI_TAMP.Locked=true
+PC13-ANTI_TAMP.Signal=GPIO_Output
+PC14-OSC32_IN.Mode=LSE-External-Oscillator
+PC14-OSC32_IN.Signal=RCC_OSC32_IN
+PC15-OSC32_OUT.Mode=LSE-External-Oscillator
+PC15-OSC32_OUT.Signal=RCC_OSC32_OUT
+>>>>>>> 5c877302f13b7ee5cbd660cc3f3705d9f39c6c4e
 PH0\ -\ OSC_IN.Mode=HSE-External-Oscillator
 PH0\ -\ OSC_IN.Signal=RCC_OSC_IN
 PH1\ -\ OSC_OUT.Mode=HSE-External-Oscillator
@@ -60,7 +101,11 @@ ProjectManager.StackSize=0x400
 ProjectManager.TargetToolchain=STM32CubeIDE
 ProjectManager.ToolChainLocation=
 ProjectManager.UnderRoot=true
+<<<<<<< HEAD
 ProjectManager.functionlistsort=1-SystemClock_Config-RCC-false-HAL-false
+=======
+ProjectManager.functionlistsort=1-SystemClock_Config-RCC-false-HAL-false,2-MX_GPIO_Init-GPIO-false-HAL-true,3-MX_I2C1_Init-I2C1-false-HAL-true
+>>>>>>> 5c877302f13b7ee5cbd660cc3f3705d9f39c6c4e
 RCC.48MHZClocksFreq_Value=50000000
 RCC.AHBFreq_Value=100000000
 RCC.APB1CLKDivider=RCC_HCLK_DIV2
@@ -76,8 +121,12 @@ RCC.HCLKFreq_Value=100000000
 RCC.HSE_VALUE=25000000
 RCC.HSI_VALUE=16000000
 RCC.I2SClocksFreq_Value=150000000
+<<<<<<< HEAD
 RCC.IPParameters=48MHZClocksFreq_Value,AHBFreq_Value,APB1CLKDivider,APB1Freq_Value,APB1TimFreq_Value,APB2Freq_Value,APB2TimFreq_Value,CortexFreq_Value,EthernetFreq_Value,FCLKCortexFreq_Value,FamilyName,HCLKFreq_Value,HSE_VALUE,HSI_VALUE,I2SClocksFreq_Value,LSE_VALUE,LSI_VALUE,PLLCLKFreq_Value,PLLM,PLLN,PLLQCLKFreq_Value,PLLSourceVirtual,RTCFreq_Value,RTCHSEDivFreq_Value,SYSCLKFreq_VALUE,SYSCLKSource,VCOI2SOutputFreq_Value,VCOInputFreq_Value,VCOInputMFreq_Value,VCOOutputFreq_Value,VcooutputI2S
 RCC.LSE_VALUE=32768
+=======
+RCC.IPParameters=48MHZClocksFreq_Value,AHBFreq_Value,APB1CLKDivider,APB1Freq_Value,APB1TimFreq_Value,APB2Freq_Value,APB2TimFreq_Value,CortexFreq_Value,EthernetFreq_Value,FCLKCortexFreq_Value,FamilyName,HCLKFreq_Value,HSE_VALUE,HSI_VALUE,I2SClocksFreq_Value,LSI_VALUE,PLLCLKFreq_Value,PLLM,PLLN,PLLQCLKFreq_Value,PLLSourceVirtual,RTCFreq_Value,RTCHSEDivFreq_Value,SYSCLKFreq_VALUE,SYSCLKSource,VCOI2SOutputFreq_Value,VCOInputFreq_Value,VCOInputMFreq_Value,VCOOutputFreq_Value,VcooutputI2S
+>>>>>>> 5c877302f13b7ee5cbd660cc3f3705d9f39c6c4e
 RCC.LSI_VALUE=32000
 RCC.PLLCLKFreq_Value=100000000
 RCC.PLLM=12
