@@ -2,24 +2,16 @@
 /**
   ******************************************************************************
   * @file           : main.c
-  * @brief          : Main program body
+  * @brief          : Main program body of controller GPIO in project "free_michelle"
   ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+
   ******************************************************************************
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "i2c.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -35,7 +27,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 /* USER CODE END PD */
-#define BMP280_ADDRESS 0x76
+
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
@@ -50,7 +42,7 @@ BMP280_t Bmp280;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -86,6 +78,8 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_I2C1_Init();
+  MX_TIM10_Init();
   /* USER CODE BEGIN 2 */
   BMP280_Init(&Bmp280, &hi2c1, BMP280_ADDRESS);
   float Temp, Pressure;
@@ -95,9 +89,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  BMP280_ReadPressureAndTemperature(&Bmp280, &Pressure, &Temp);
-	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	  HAL_Delay(100);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -149,7 +141,13 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim->Instance == TIM10){ // Jeżeli przerwanie pochodzi od timera 10
+		  BMP280_ReadPressureAndTemperature(&Bmp280, &Pressure, &Temp);
+		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+	}
+}
 /* USER CODE END 4 */
 
 /**
