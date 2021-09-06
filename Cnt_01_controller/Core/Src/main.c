@@ -19,10 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-<<<<<<< HEAD
-=======
 #include "i2c.h"
->>>>>>> 5c877302f13b7ee5cbd660cc3f3705d9f39c6c4e
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -89,10 +86,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-<<<<<<< HEAD
-=======
-  MX_I2C1_Init();
->>>>>>> 5c877302f13b7ee5cbd660cc3f3705d9f39c6c4e
   /* USER CODE BEGIN 2 */
   BMP280_Init(&Bmp280, &hi2c1, BMP280_ADDRESS);
   float Temp, Pressure;
