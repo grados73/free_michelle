@@ -4,7 +4,7 @@
   * @file           : main.c
   * @project		: free_michelle
   * @author			: grados73
-  *
+  * zaprojektowane do komunikacji z kontrolerem
   ******************************************************************************
   */
 /* USER CODE END Header */
