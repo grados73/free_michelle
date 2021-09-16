@@ -21,7 +21,7 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "functions.h"
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim10;
@@ -63,10 +63,6 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE END TIM10_MspInit 0 */
     /* TIM10 clock enable */
     __HAL_RCC_TIM10_CLK_ENABLE();
-
-    /* TIM10 interrupt Init */
-    HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
   /* USER CODE BEGIN TIM10_MspInit 1 */
 
   /* USER CODE END TIM10_MspInit 1 */
@@ -93,7 +89,12 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+//	if(htim->Instance == TIM10){ // Jeżeli przerwanie pochodzi od timera 10 [1s]
+//		  BMP280_ReadPressureAndTemperature(&Bmp280, &Pressure, &Temp); // wykonanie pomiaru temperatury i ciśnienia
+//		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+//	}
+//}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

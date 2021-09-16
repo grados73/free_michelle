@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bmp280.h"
+#include "functions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,7 +35,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BMP280_ADDRESS 0x76
+//#define BMP280_ADDRESS 0x76
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -46,11 +46,15 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-BMP280_t Bmp280;
+//BMP280_t Bmp280;
+struct Measurements BMPResults;
+float CTemp, CPressure;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MX_NVIC_Init(void);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 /* USER CODE BEGIN PFP */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 /* USER CODE END PFP */
@@ -90,18 +94,23 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   MX_TIM10_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  BMP280_Init(&Bmp280, &hi2c1, BMP280_ADDRESS);
-  float Temp, Pressure;
+   bmp280_init();
+   HAL_TIM_Base_Start_IT(&htim10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  BMP280_ReadPressureAndTemperature(&Bmp280, &Pressure, &Temp);
-	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	  HAL_Delay(100);
+//	  BMPResults = temp_pressure_measurement();
+//	  CTemp = BMPResults.Temp;
+//	  CPressure =BMPResults.Pressure;
+//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+//	  HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -152,13 +161,30 @@ void SystemClock_Config(void)
   }
 }
 
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* TIM1_UP_TIM10_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
+}
+
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if(htim->Instance == TIM10){ // Jeżeli przerwanie pochodzi od timera 10 [1s]
-//		  BMP280_ReadPressureAndTemperature(&Bmp280, &Pressure, &Temp); // wykonanie pomiaru temperatury i ciśnienia
-//		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Instance == TIM10)
+	{
+		  BMPResults = temp_pressure_measurement();
+		  CTemp = BMPResults.Temp;
+		  CPressure =BMPResults.Pressure;
+		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 	}
 }
+
+
 /* USER CODE END 4 */
 
 /**
