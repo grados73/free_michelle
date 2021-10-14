@@ -53,6 +53,9 @@
 //BMP280_t Bmp280;
 struct Measurements BMPResults;
 float CTemp, CPressure;
+UARTDMA_HandleTypeDef huartdma2;
+uint8_t BufferReceive[81];
+char MessageMain[81]; // Transmit buffer
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,17 +108,25 @@ int main(void)
   /* USER CODE BEGIN 2 */
    bmp280_init();
    HAL_TIM_Base_Start_IT(&htim10);
+   UARTDMA_Init(&huartdma2, &huart2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  BMPResults = temp_pressure_measurement();
-//	  CTemp = BMPResults.Temp;
-//	  CPressure =BMPResults.Pressure;
-//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-//	  HAL_Delay(500);
+	  //
+	  // RECEIVE
+	  //
+	  if(UARTDMA_IsDataReceivedReady(&huartdma2))
+	  {
+		  UART_ParseLine(&huartdma2); // Parsing function
+	  }
+
+	  //
+	  // TRANSMIT
+	  //
+	  UARTDMA_TransmitEvent(&huartdma2);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -26,7 +26,6 @@ void ToggleUserLed(uint8_t State)
 	}
 	else if(LedStatus == 1)
 	{
-//		HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
 	}
 }
 
@@ -38,8 +37,6 @@ void LeftMotorMotion(uint8_t MotorSpeed, uint8_t MotorDirection)
 	}
 	else if(MotorDirection == 0) //go back
 	{
-//		HAL_GPIO_WritePin(BIN1_HBridge_GPIO_Port, BIN1_HBridge_Pin, GPIO_PIN_RESET);
-//		HAL_GPIO_WritePin(BIN2_HBridge_GPIO_Port, BIN2_HBridge_Pin, GPIO_PIN_SET);
 	}
 
 	if(MotorSpeed > 100) MotorSpeed = 100;
@@ -53,12 +50,9 @@ void RightMotorMotion(uint8_t MotorSpeed, uint8_t MotorDirection)
 	}
 	else if(MotorDirection == 0) //go back
 	{
-//		HAL_GPIO_WritePin(AIN1_HBridge_GPIO_Port, AIN1_HBridge_Pin, GPIO_PIN_RESET);
-//		HAL_GPIO_WritePin(AIN2_HBridge_GPIO_Port, AIN2_HBridge_Pin, GPIO_PIN_SET);
 	}
 
-	if(MotorSpeed > 100) MotorSpeed = 100;
-//	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, (MotorSpeed)); // ADD CALIBRATION SOMEDAY !
+	if(MotorSpeed > 100) ;
 
 }
 
@@ -82,18 +76,7 @@ void AutonomousMode()
 void GoForwardRoutine()
 {
 	//
-	//ROUTINE
-	//
-	LeftMotorMotion(80,1);
-	RightMotorMotion(80,1);
 
-	//
-	//CHANGINT SeldDriveStatus
-	//
-	if(OdlegloscCm <= ODLEGLOSCODBICIOWA)
-	{
-		SelfDriveStatus = GOBACK;
-	}
 
 }
 
@@ -102,36 +85,24 @@ void GoBackRoutine()
 	//
 	//ROUTINE
 	//
-	LeftMotorMotion(40,0);
-	RightMotorMotion(40,0);
+
 
 	//
 	//CHANGINT SeldDriveStatus
 	//
-	if(OdlegloscCm >= ODLEGLOSCCOFANIA)
-	{
-		SelfDriveStatus = TURNING;
-		TurningStartTime = HAL_GetTick();
-	}
 
 }
-
 void TurningRoutine()
 {
 	//
 	//ROUTINE
 	//
-	CurrentTime = HAL_GetTick();
-	LeftMotorMotion(50,1);
-	RightMotorMotion(50,0);
+
 
 	//
 	//CHANGINT SeldDriveStatus
 	//
-	if((CurrentTime - TurningStartTime) >= CZASSKRECANIA)
-	{
-		SelfDriveStatus = GOFORWARD;
-	}
+
 
 
 }
