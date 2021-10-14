@@ -12,7 +12,7 @@
 
 #define BUFFOR_SIZE 65
 #define FRAME_SIZE 16
-#define DATA_SIZE 4
+#define DATA_SIZE_FR 4
 
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma);
 void UART_ParseLED();
@@ -43,7 +43,7 @@ union comm_frame_union
 		id_message_t id_message;
 		size_data_t size_data;
 		crc_header_t crc_header;
-		uint8_t data(DATA_SIZE);
+		uint8_t data[DATA_SIZE_FR];
 		reserved_t reserved;
 		crc_data_t crc_data;
 		end_bit_t end_bit;
