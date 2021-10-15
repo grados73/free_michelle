@@ -16,10 +16,11 @@
 
 extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
-char MyName[32] = {"No Name"}; // Name string
 CONTROLLER_STATE ControllerRegulator;
 uint8_t MotorParameters[3];	 // Left motor, Right motor, Direction of movement
 uint8_t ChangingStateFlag;
+
+union comm_frame_union frame_current;
 
 /*
  * Parsing headers:
@@ -31,23 +32,63 @@ uint8_t ChangingStateFlag;
  */
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 {
-	char BufferReceive[BUFFOR_SIZE];
+	char BufferReceive[FRAME_SIZE];
 
 	if(!UARTDMA_GetLineFromReceiveBuffer(huartdma, BufferReceive))
 	{
-		// Header
-		char* ParsePointer = strtok(BufferReceive, "="); // LED\0   1\0
-		// ParsePointer == LED\0
+		for(uint8_t i = 0 ; i <= FRAME_SIZE ; i++)
+		{
+			frame_current.bytes[i] = (uint8_t)BufferReceive[i];
+		}
 
-	  if(strcmp(ParsePointer, "LED") == 0)
-	  {
-		  UART_ParseLED();
-	  }
-	  else if(strcmp(ParsePointer, "MOTOR") == 0)
-	  {
-		  UART_ParseMotor();
-		  ChangingStateFlag = 1;
-	  }
+		if(frame_current.destination_adress == MY_ADRESS) //jeśli wiadomość jest adresowana do mnie
+		{
+			switch(frame_current.message_type){
+				case 0:
+					IdleRoutine();
+					break;
+				case 1://Podaj swój status
+					PodajStatusRoutine();
+					break;
+				case 2://Podaj aktualną temperaturę czujnik 1
+					PodajTemperatureRoutine(1);
+					break;
+				case 3://Podaj aktualną temperaturę czujnik 2
+					PodajTemperatureRoutine(2);
+					break;
+				case 4://Podaj aktualne ciśnienie atmosferyczne.
+					PodajCisnienieRoutine();
+					break;
+				case 10://Włącz przekaźnik 1
+					ZmienStanPrzekRoutine(1, 1);
+					break;
+				case 11://Wyłącz przekaźnik 1
+					ZmienStanPrzekRoutine(1, 0);
+					break;
+				case 12://Włącz przekaźnik 2
+					ZmienStanPrzekRoutine(2, 1);
+					break;
+				case 13://Wyłącz przekaźnik 2
+					ZmienStanPrzekRoutine(2, 0);
+					break;
+				default:
+					break;
+		}
+
+//		// Header
+//		char* ParsePointer = strtok(BufferReceive, "="); // LED\0   1\0
+//		// ParsePointer == LED\0
+//
+//	  if(strcmp(ParsePointer, "LED") == 0)
+//	  {
+//		  UART_ParseLED();
+//	  }
+//	  else if(strcmp(ParsePointer, "MOTOR") == 0)
+//	  {
+//		  UART_ParseMotor();
+//		  ChangingStateFlag = 1;
+//	  }
+
 	}
 }
 
@@ -154,14 +195,27 @@ void SwitchMotorRegular()
 //	}
 }
 
-void IdleRoutine(uint8_t * MotorParameters)
+void IdleRoutine()
 {
-	// Control signals for motors
-	LeftMotorMotion(0,1);
-	RightMotorMotion(0,1);
-
-
 
 }
 
+void PodajStatusRoutine()
+{
 
+}
+
+void PodajTemperatureRoutine(uint8_t NrCzujnika)
+{
+
+}
+
+void PodajCisnienieRoutine()
+{
+
+}
+
+void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
+{
+
+}

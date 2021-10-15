@@ -14,6 +14,8 @@
 #define FRAME_SIZE 16
 #define DATA_SIZE_FR 4
 
+#define MY_ADRESS 2 //Adres danego urządzenia
+
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma);
 void UART_ParseLED();
 void UART_ParseMotor();
@@ -50,8 +52,6 @@ union comm_frame_union
 		};
 };
 
-
-
 typedef enum
 {
 	IDLE = 0, 				//0
@@ -78,14 +78,11 @@ typedef enum
 
 void SwitchMotorRegular();
 
-void IdleRoutine(uint8_t * MotorParameters);
-void ConstGo9Routine(uint8_t * MotorParameters);
-void ConstGo6Routine(uint8_t * MotorParameters);
-void ConstBack13Routine(uint8_t * MotorParameters);
-void Constback16Routine(uint8_t * MotorParameters);
-void GoAndTurningLeftRoutine(uint8_t * MotorParameters);
-void GoAndTurningRightRoutine(uint8_t * MotorParameters);
-void TurningLeftRoutine(uint8_t * MotorParameters);
-void TurningRightRoutine(uint8_t * MotorParameters);
-void AutonomousRoutine(uint8_t * MotorParameters);
+void IdleRoutine();
+void PodajStatusRoutine();
+void PodajTemperatureRoutine(uint8_t NrCzujnika);
+void PodajCisnienieRoutine();
+void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
+
+
 #endif /* INC_PARSER_H_ */
