@@ -12,6 +12,7 @@
 
 #define BUFFOR_SIZE 65
 #define FRAME_SIZE 16
+
 #define DATA_SIZE_FR 4
 
 #define MY_ADRESS 2 //Adres danego urządzenia
