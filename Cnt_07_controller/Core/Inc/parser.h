@@ -19,7 +19,10 @@
 
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma);
 void UART_ParseLED();
-void UART_ParseMotor();
+void UART_ParseStatus();
+void UART_ParseTemp();
+void UART_ParsePres();
+void UART_ParseChangeRelayState();
 
 typedef uint8_t preamb_t;
 typedef uint8_t source_adress_t;
@@ -84,6 +87,7 @@ void PodajStatusRoutine();
 void PodajTemperatureRoutine(uint8_t NrCzujnika);
 void PodajCisnienieRoutine();
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
+
 
 
 #endif /* INC_PARSER_H_ */
