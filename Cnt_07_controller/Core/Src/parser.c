@@ -19,15 +19,16 @@ char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"No Name"}; // Name string
 uint8_t ChangingStateFlag;
 
-union comm_frame_union frame_current;
 
 /*
  * Parsing headers:
- * 		LED=1\n 	// LED On
- * 		LED=0\n 	// LED Off
- * 		ENV=X,Y,Z\n // X - temperature, Y - humidity, Z - pressure
- * 		NAME=X\n	// Change name for X
- * 		NAME=?\n	// introduce yourself
+ * 		LED=1\n 		// LED On
+ * 		LED=0\n 		// LED Off
+ * 		STATE=?\n		// Jaki jest stan uC
+ * 		TEMP=1?\n		// Jaka jest temperatura 1 czujnika
+ * 		PRES=1?\n		// Jakie jest cisnienie 1 czujnika
+ * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
+ * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
  */
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 {
@@ -59,39 +60,8 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 	  	  UART_ParseChangeRelayState();
 	  }
-
 	}
 }
-//			switch(frame_current.message_type){
-//				case 0:
-//					IdleRoutine();
-//					break;
-//				case 1://Podaj swój status
-//					PodajStatusRoutine();
-//					break;
-//				case 2://Podaj aktualną temperaturę czujnik 1
-//					PodajTemperatureRoutine(1);
-//					break;
-//				case 3://Podaj aktualną temperaturę czujnik 2
-//					PodajTemperatureRoutine(2);
-//					break;
-//				case 4://Podaj aktualne ciśnienie atmosferyczne.
-//					PodajCisnienieRoutine();
-//					break;
-//				case 10://Włącz przekaźnik 1
-//					ZmienStanPrzekRoutine(1, 1);
-//					break;
-//				case 11://Wyłącz przekaźnik 1
-//					ZmienStanPrzekRoutine(1, 0);
-//					break;
-//				case 12://Włącz przekaźnik 2
-//					ZmienStanPrzekRoutine(2, 1);
-//					break;
-//				case 13://Wyłącz przekaźnik 2
-//					ZmienStanPrzekRoutine(2, 0);
-//					break;
-//				default:
-//					break;
 
 
 
@@ -115,13 +85,13 @@ void UART_ParseLED()
 
 		if(LedState == 1) // LED ON
 		{
-			//TO DO! dodać zmianę stanu diody
+			HAL_GPIO_WritePin(USER_BRD_LED1_GPIO_Port, USER_BRD_LED1_Pin, GPIO_PIN_RESET);
 			UARTDMA_Print(&huartdma2, "LED On\r\n");
 
 		}
 		else if(LedState == 0) // LED OFF
 		{
-			//TO DO! dodać zmianę stanu diody
+			HAL_GPIO_WritePin(USER_BRD_LED1_GPIO_Port, USER_BRD_LED1_Pin, GPIO_PIN_SET);
 			UARTDMA_Print(&huartdma2, "LED Off\r\n");
 		}
 		else // Wrong state number
@@ -133,14 +103,29 @@ void UART_ParseLED()
 
 
 ///////////////////////////////////
-void UART_ParseLED()
-{
-
-}
 
 void UART_ParseStatus()
 {
+	char* ParsePointer = strtok(NULL, ",");
+	char SourceState[SOURCE_STATE_LENGTH] = {0};
 
+	if(strlen(ParsePointer) > 0) // If string exists
+		{
+			if(ParsePointer[0] == '?') // jesli to zapytanie o stan
+			{
+				PodajStatusRoutine();
+			}
+			else //jesli nie ma '?' tzn, ze podaje swoj stan
+			{
+				for(uint8_t i = 0 ; i < SOURCE_STATE_LENGTH ; i++)
+				{
+					SourceState[i] = ParsePointer[i];
+				}
+			}
+			SourceState[1] = SourceState[1];
+
+
+}
 }
 
 void UART_ParseTemp()

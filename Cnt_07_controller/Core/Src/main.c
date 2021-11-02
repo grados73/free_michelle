@@ -54,7 +54,7 @@
 struct Measurements BMPResults;
 float CTemp, CPressure;
 UARTDMA_HandleTypeDef huartdma2;
-uint8_t BufferReceive[81];
+uint8_t BufferReceive[64];
 char MessageMain[81]; // Transmit buffer
 /* USER CODE END PV */
 
@@ -196,7 +196,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		  BMPResults = temp_pressure_measurement();
 		  CTemp = BMPResults.Temp;
 		  CPressure =BMPResults.Pressure;
-		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Podlaczyc diode sygnalizujaca pomiary - to musi zostac!
 	}
 }
 
