@@ -13,11 +13,13 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "motion.h"
+#include "functions.h"
 
 extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
+extern struct Measurements BMPResults;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////// GLOWNA FUNKCJA PARSOWANIA //////////////////////////////////////////////////////////////////////////////
@@ -229,15 +231,25 @@ void PodajStatusRoutine()
 
 void PodajTemperatureRoutine(uint8_t NrCzujnika)
 {
-	//TODO: OBSLUGA
-	sprintf(Message, "OBSLUGA TEMPERATURY\r\n");
+	float aktualna_temperatura = 0;
+
+	if(NrCzujnika == 1)
+	{
+		aktualna_temperatura = BMPResults.Temp;
+	}
+	sprintf(Message, "ATEMP=%f\n", aktualna_temperatura);
 	UARTDMA_Print(&huartdma2, Message);
 }
 
 void PodajCisnienieRoutine(uint8_t NrCzujnika)
 {
-	//TODO: OBSLUGA
-	sprintf(Message, "OBSLUGA CISNIENIA\r\n");
+	float aktualne_cisnienie = 0;
+
+	if(NrCzujnika == 1)
+	{
+		aktualne_cisnienie = BMPResults.Pressure;
+	}
+	sprintf(Message, "APRES=%f\n", aktualne_cisnienie);
 	UARTDMA_Print(&huartdma2, Message);
 }
 
