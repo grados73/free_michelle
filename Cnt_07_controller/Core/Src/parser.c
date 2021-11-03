@@ -30,6 +30,8 @@ uint8_t ChangingStateFlag;
  * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
  * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
  */
+
+//Glowna funkcja od parsowania - rozroznia ktory typ polecenia przychodzi
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 {
 	char BufferReceive[BUFFOR_SIZE];
@@ -63,7 +65,7 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	}
 }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 void UART_ParseLED()
@@ -130,7 +132,23 @@ void UART_ParseStatus()
 
 void UART_ParseTemp()
 {
-	PodajStatusRoutine();
+	uint8_t NrCzujnika; // Received state variable
+
+	char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+	// Should be now: ParsePointer == 1'\0'
+
+	if(strlen(ParsePointer) > 0) // If string exists
+	{
+		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
+		{
+			UARTDMA_Print(&huartdma2, "LED wrong value. Don't use letters dude!\r\n"); // Print message
+			return;	// And exit parsing
+		}
+
+		NrCzujnika = atoi(ParsePointer); // If there are no chars, change string to integer
+		PodajTemperatureRoutine(NrCzujnika);
+
+	}
 }
 
 void UART_ParsePres()
@@ -212,6 +230,6 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	NowyStan = Stan;
 
 	//TODO: Dodac zmiane stanu przekaznikow
-	sprintf(Message, "CHSTATEREADY=%d,%d\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
+	sprintf(Message, "CHSTATEDONE=%d,%d\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
 	UARTDMA_Print(&huartdma2, Message); // Print message
 }
