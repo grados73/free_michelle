@@ -28,10 +28,9 @@ void UART_ParseChangeRelayState();
 
 void SwitchMotorRegular();
 
-void IdleRoutine();
 void PodajStatusRoutine();
 void PodajTemperatureRoutine(uint8_t NrCzujnika);
-void PodajCisnienieRoutine();
+void PodajCisnienieRoutine(uint8_t NrCzujnika);
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
 
 

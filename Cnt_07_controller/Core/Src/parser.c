@@ -25,8 +25,8 @@ uint8_t ChangingStateFlag;
  * 		LED=1\n 		// LED On
  * 		LED=0\n 		// LED Off
  * 		STATE=?\n		// Jaki jest stan uC
- * 		TEMP=1?\n		// Jaka jest temperatura 1 czujnika
- * 		PRES=1?\n		// Jakie jest cisnienie 1 czujnika
+ * 		TEMP=1\n		// Jaka jest temperatura 1 czujnika
+ * 		PRES=1\n		// Jakie jest cisnienie 1 czujnika
  * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
  * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
  */
@@ -141,7 +141,7 @@ void UART_ParseTemp()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "LED wrong value. Don't use letters dude!\r\n"); // Print message
+			UARTDMA_Print(&huartdma2, "TempFormatErr\n"); // Print message
 			return;	// And exit parsing
 		}
 
@@ -154,8 +154,24 @@ void UART_ParseTemp()
 void UART_ParsePres()
 {
 
+	uint8_t NrCzujnika; // Received state variable
+
+	char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+	// Should be now: ParsePointer == 1'\0'
+
+	if(strlen(ParsePointer) > 0) // If string exists
+	{
+		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
+		{
+			UARTDMA_Print(&huartdma2, "PresFormatErr\n"); // Print message
+			return;	// And exit parsing
+		}
+
+		NrCzujnika = atoi(ParsePointer); // If there are no chars, change string to integer
+		PodajCisnienieRoutine(NrCzujnika);
 
 
+	}
 }
 
 void UART_ParseChangeRelayState()
@@ -194,11 +210,6 @@ void UART_ParseChangeRelayState()
 
 //////////////////////////////////////
 
-void IdleRoutine()
-{
-
-}
-
 void PodajStatusRoutine()
 {
 	UARTDMA_Print(&huartdma2, "uC=READY\n");	// TODO: dodac kontrole wszystkich peryferiow i raportowanie o gotowosci
@@ -206,26 +217,18 @@ void PodajStatusRoutine()
 
 void PodajTemperatureRoutine(uint8_t NrCzujnika)
 {
-
-	//		// Print back received data
-	//		sprintf(Message, "Temperature: %f\r\n", EnvParameters[0]);
-	//		UARTDMA_Print(&huartdma2, Message);
-	//
-	//		sprintf(Message, "Humidity: %f\r\n", EnvParameters[1]);
-	//		UARTDMA_Print(&huartdma2, Message);
-	//
-	//		sprintf(Message, "Pressure: %f\r\n", EnvParameters[2]);
-	//		UARTDMA_Print(&huartdma2, Message);
+	//TODO: OBSLUGA
 }
 
-void PodajCisnienieRoutine()
+void PodajCisnienieRoutine(uint8_t NrCzujnika)
 {
-
+	//TODO: OBSLUGA
 }
 
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 {
-	uint8_t Przekaznik, NowyStan;
+	uint8_t Przekaznik;
+	uint8_t NowyStan;
 	Przekaznik = NrPrzekaznika;
 	NowyStan = Stan;
 
