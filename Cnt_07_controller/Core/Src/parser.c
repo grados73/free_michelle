@@ -130,16 +130,47 @@ void UART_ParseStatus()
 
 void UART_ParseTemp()
 {
-
+	PodajStatusRoutine();
 }
 
 void UART_ParsePres()
 {
 
+
+
 }
 
 void UART_ParseChangeRelayState()
 {
+		uint8_t i,j; // Iterators
+		float RelayParameters[2]; // Numer Przekaznika, Stan
+
+		for(i = 0; i<2; i++) // 2 parametry sa oczekiwane - numer przekaznika i stan
+		{
+			char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+
+			if(strlen(ParsePointer) > 0) // If string exists
+			{
+				for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
+				{
+					if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
+					{
+						sprintf(Message, "Zly format danych (CHSTATE=1,0\n)\r\n"); // If not, Error message
+						UARTDMA_Print(&huartdma2, Message); // Print message
+						return;	// And exit parsing
+					}
+
+					RelayParameters[i] = atof(ParsePointer); // If there are no chars, change string to integer
+				}
+			}
+			else
+			{
+				sprintf(Message, "Zly format danych (CHSTATE=1,0\n)\r\n\n"); // If not, Error message
+				UARTDMA_Print(&huartdma2, Message); // Print message
+				return;	// And exit parsing
+			}
+		}
+		ZmienStanPrzekRoutine(RelayParameters[0], RelayParameters[1]);
 
 }
 
@@ -152,12 +183,21 @@ void IdleRoutine()
 
 void PodajStatusRoutine()
 {
-
+	UARTDMA_Print(&huartdma2, "uC=READY\n");	// TODO: dodac kontrole wszystkich peryferiow i raportowanie o gotowosci
 }
 
 void PodajTemperatureRoutine(uint8_t NrCzujnika)
 {
 
+	//		// Print back received data
+	//		sprintf(Message, "Temperature: %f\r\n", EnvParameters[0]);
+	//		UARTDMA_Print(&huartdma2, Message);
+	//
+	//		sprintf(Message, "Humidity: %f\r\n", EnvParameters[1]);
+	//		UARTDMA_Print(&huartdma2, Message);
+	//
+	//		sprintf(Message, "Pressure: %f\r\n", EnvParameters[2]);
+	//		UARTDMA_Print(&huartdma2, Message);
 }
 
 void PodajCisnienieRoutine()
@@ -167,5 +207,11 @@ void PodajCisnienieRoutine()
 
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 {
+	uint8_t Przekaznik, NowyStan;
+	Przekaznik = NrPrzekaznika;
+	NowyStan = Stan;
 
+	//TODO: Dodac zmiane stanu przekaznikow
+	sprintf(Message, "CHSTATEREADY=%d,%d\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
+	UARTDMA_Print(&huartdma2, Message); // Print message
 }
