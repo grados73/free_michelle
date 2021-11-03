@@ -282,7 +282,7 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	}
 	else
 	{
-		sprintf(Message, "CHSTATENRErr\n"); // Potwierdzenie wykonania polecenia
+		sprintf(Message, "CHSTATENRErr\n"); // Zly numer przekaznika,
 		UARTDMA_Print(&huartdma2, Message); // Print message
 		return;	// And exit parsing
 	}
