@@ -260,7 +260,32 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	Przekaznik = NrPrzekaznika;
 	NowyStan = Stan;
 
-	//TODO: Dodac zmiane stanu przekaznikow
+	if(NrPrzekaznika == 1)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(RELAY_1_GPIO_Port, RELAY_1_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(RELAY_1_GPIO_Port, RELAY_1_Pin, GPIO_PIN_SET);
+	}
+	else if(NrPrzekaznika == 2)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(RELAY_2_GPIO_Port, RELAY_2_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(RELAY_2_GPIO_Port, RELAY_2_Pin, GPIO_PIN_SET);
+	}
+	else if(NrPrzekaznika == 3)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(RELAY_3_GPIO_Port, RELAY_3_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(RELAY_3_GPIO_Port, RELAY_3_Pin, GPIO_PIN_SET);
+	}
+	else if(NrPrzekaznika == 4)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(RELAY_4_GPIO_Port, RELAY_4_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(RELAY_4_GPIO_Port, RELAY_4_Pin, GPIO_PIN_SET);
+	}
+	else
+	{
+		sprintf(Message, "CHSTATENRErr\n"); // Potwierdzenie wykonania polecenia
+		UARTDMA_Print(&huartdma2, Message); // Print message
+		return;	// And exit parsing
+	}
 
 	sprintf(Message, "CHSTATEDONE=%d,%d\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
 	UARTDMA_Print(&huartdma2, Message); // Print message

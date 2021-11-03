@@ -60,6 +60,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define USER_BRD_LED1_Pin GPIO_PIN_13
 #define USER_BRD_LED1_GPIO_Port GPIOC
+#define RELAY_4_Pin GPIO_PIN_12
+#define RELAY_4_GPIO_Port GPIOB
+#define RELAY_3_Pin GPIO_PIN_13
+#define RELAY_3_GPIO_Port GPIOB
+#define RELAY_2_Pin GPIO_PIN_14
+#define RELAY_2_GPIO_Port GPIOB
+#define RELAY_1_Pin GPIO_PIN_15
+#define RELAY_1_GPIO_Port GPIOB
 #define USER_LED_Pin GPIO_PIN_11
 #define USER_LED_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
