@@ -16,9 +16,12 @@
 
 extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
-char MyName[32] = {"No Name"}; // Name string
+char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// GLOWNA FUNKCJA PARSOWANIA //////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
  * Parsing headers:
@@ -31,7 +34,6 @@ uint8_t ChangingStateFlag;
  * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
  */
 
-//Glowna funkcja od parsowania - rozroznia ktory typ polecenia przychodzi
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 {
 	char BufferReceive[BUFFOR_SIZE];
@@ -65,8 +67,8 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////// FUNKCJA PARSOWANIA USER LED ////////////////////////////////////////////////////////////////////////////
 
 void UART_ParseLED()
 {
@@ -104,7 +106,7 @@ void UART_ParseLED()
 }
 
 
-///////////////////////////////////
+/////////////////////////////////////////// FUNKCJA PARSOWANIA STATUSU /////////////////////////////////////////////////////////////////////////////
 
 void UART_ParseStatus()
 {
@@ -125,10 +127,11 @@ void UART_ParseStatus()
 				}
 			}
 			SourceState[1] = SourceState[1];
+		}
+}
 
 
-}
-}
+/////////////////////////////////////////// FUNKCJA PARSOWANIA TEMPERATURY /////////////////////////////////////////////////////////////////////////
 
 void UART_ParseTemp()
 {
@@ -141,7 +144,7 @@ void UART_ParseTemp()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "TempFormatErr\n"); // Print message
+			UARTDMA_Print(&huartdma2, "TEMPFormatErr\n"); // Print message
 			return;	// And exit parsing
 		}
 
@@ -150,6 +153,9 @@ void UART_ParseTemp()
 
 	}
 }
+
+
+/////////////////////////////////////////// FUNKCJA PARSOWANIA CISNIENIA ///////////////////////////////////////////////////////////////////////////
 
 void UART_ParsePres()
 {
@@ -163,7 +169,7 @@ void UART_ParsePres()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "PresFormatErr\n"); // Print message
+			UARTDMA_Print(&huartdma2, "PRESFormatErr\n"); // Print message
 			return;	// And exit parsing
 		}
 
@@ -173,6 +179,9 @@ void UART_ParsePres()
 
 	}
 }
+
+
+/////////////////////////////////////////// FUNKCJA PARSOWANIA PRZEKAZNIKOW ////////////////////////////////////////////////////////////////////////
 
 void UART_ParseChangeRelayState()
 {
@@ -189,7 +198,7 @@ void UART_ParseChangeRelayState()
 				{
 					if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
 					{
-						sprintf(Message, "Zly format danych (CHSTATE=1,0\n)\r\n"); // If not, Error message
+						sprintf(Message, "CHSTATEFormatErr\n"); // If not, Error message
 						UARTDMA_Print(&huartdma2, Message); // Print message
 						return;	// And exit parsing
 					}
@@ -199,7 +208,7 @@ void UART_ParseChangeRelayState()
 			}
 			else
 			{
-				sprintf(Message, "Zly format danych (CHSTATE=1,0\n)\r\n\n"); // If not, Error message
+				sprintf(Message, "CHSTATEFormatErr\n"); // If not, Error message
 				UARTDMA_Print(&huartdma2, Message); // Print message
 				return;	// And exit parsing
 			}
@@ -208,7 +217,10 @@ void UART_ParseChangeRelayState()
 
 }
 
-//////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// FUNKCJE WYKONAWCZE ODPOWIEDZI ////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void PodajStatusRoutine()
 {
@@ -218,11 +230,15 @@ void PodajStatusRoutine()
 void PodajTemperatureRoutine(uint8_t NrCzujnika)
 {
 	//TODO: OBSLUGA
+	sprintf(Message, "OBSLUGA TEMPERATURY\r\n");
+	UARTDMA_Print(&huartdma2, Message);
 }
 
 void PodajCisnienieRoutine(uint8_t NrCzujnika)
 {
 	//TODO: OBSLUGA
+	sprintf(Message, "OBSLUGA CISNIENIA\r\n");
+	UARTDMA_Print(&huartdma2, Message);
 }
 
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
@@ -233,6 +249,7 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	NowyStan = Stan;
 
 	//TODO: Dodac zmiane stanu przekaznikow
+
 	sprintf(Message, "CHSTATEDONE=%d,%d\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
 	UARTDMA_Print(&huartdma2, Message); // Print message
 }
