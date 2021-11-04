@@ -55,7 +55,6 @@ struct Measurements BMPResults;
 float CTemp, CPressure;
 UARTDMA_HandleTypeDef huartdma2;
 uint8_t BufferReceive[64];
-char MessageMain[81]; // Transmit buffer
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

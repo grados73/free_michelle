@@ -25,6 +25,8 @@
 #include "string.h"
 #include "stdio.h"
 #include "functions.h"
+#include "uartdma.h"
+#include "parser.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,6 +47,8 @@
 
 /* USER CODE BEGIN PV */
 uint8_t Msg[32];
+UARTDMA_HandleTypeDef huartdma2;
+uint8_t BufferReceive[64];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,10 +96,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ILI9341_Init(&hspi1);
 
-
   system_init();
 
   showCurrentParameters(0, 0, 0, 0, 0);
+
+  UARTDMA_Init(&huartdma2, &huart2);
 
   // TO DO! - Tutaj przeprowadzić inicjalizację peryferiów i połączenia z drugim STMem
 
@@ -107,6 +112,16 @@ int main(void)
   {
 
 	 // ILI9341_DrawImage(40, 50, logo, 240, 140);
+
+	  if(UARTDMA_IsDataReceivedReady(&huartdma2))
+	  {
+		  UART_ParseLine(&huartdma2); // Parsing function
+	  }
+
+	  //
+	  // TRANSMIT
+	  //
+	  UARTDMA_TransmitEvent(&huartdma2);
 
 
     /* USER CODE END WHILE */

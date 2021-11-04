@@ -15,6 +15,7 @@
 #include "motion.h"
 #include "functions.h"
 
+
 extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
@@ -83,7 +84,7 @@ void UART_ParseLED()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "LED wrong value. Don't use letters dude!\r\n"); // Print message
+			UARTDMA_Print(&huartdma2, LED_FORMAT_ERROR); // Print message
 			return;	// And exit parsing
 		}
 
@@ -92,17 +93,17 @@ void UART_ParseLED()
 		if(LedState == 1) // LED ON
 		{
 			HAL_GPIO_WritePin(USER_BRD_LED1_GPIO_Port, USER_BRD_LED1_Pin, GPIO_PIN_RESET);
-			UARTDMA_Print(&huartdma2, "LED On\r\n");
+			UARTDMA_Print(&huartdma2, "LED=On\r\n");
 
 		}
 		else if(LedState == 0) // LED OFF
 		{
 			HAL_GPIO_WritePin(USER_BRD_LED1_GPIO_Port, USER_BRD_LED1_Pin, GPIO_PIN_SET);
-			UARTDMA_Print(&huartdma2, "LED Off\r\n");
+			UARTDMA_Print(&huartdma2, "LED=Off\r\n");
 		}
 		else // Wrong state number
 		{
-			UARTDMA_Print(&huartdma2, "LED wrong value. Use 0 or 1.\r\n");
+			UARTDMA_Print(&huartdma2, LED_FORMAT_ERROR);
 		}
 	}
 }
@@ -146,7 +147,7 @@ void UART_ParseTemp()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "TEMPFormatErr\n"); // Print message
+			UARTDMA_Print(&huartdma2, TEMPERATURE_FORMAT_ERROR); // Print message
 			return;	// And exit parsing
 		}
 
@@ -171,7 +172,7 @@ void UART_ParsePres()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "PRESFormatErr\n"); // Print message
+			UARTDMA_Print(&huartdma2, PRESURE_FORMAT_ERROR); // Print message
 			return;	// And exit parsing
 		}
 
@@ -200,7 +201,7 @@ void UART_ParseChangeRelayState()
 				{
 					if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
 					{
-						sprintf(Message, "CHSTATEFormatErr\n"); // If not, Error message
+						sprintf(Message, CHANGE_RELAY_STATE_FORMAT_ERROR); // If not, Error message
 						UARTDMA_Print(&huartdma2, Message); // Print message
 						return;	// And exit parsing
 					}
@@ -210,7 +211,7 @@ void UART_ParseChangeRelayState()
 			}
 			else
 			{
-				sprintf(Message, "CHSTATEFormatErr\n"); // If not, Error message
+				sprintf(Message, CHANGE_RELAY_STATE_FORMAT_ERROR); // If not, Error message
 				UARTDMA_Print(&huartdma2, Message); // Print message
 				return;	// And exit parsing
 			}
@@ -282,11 +283,11 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	}
 	else
 	{
-		sprintf(Message, "CHSTATENRErr\n"); // Zly numer przekaznika,
+		sprintf(Message, CHANGE_RELAY_STATE_NUMBER_ERROR); // Zly numer przekaznika,
 		UARTDMA_Print(&huartdma2, Message); // Print message
 		return;	// And exit parsing
 	}
 
-	sprintf(Message, "CHSTATEDONE=%d,%d\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
+	sprintf(Message, CHANGE_RELAY_STATE_NUMBER_ERROR, Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
 	UARTDMA_Print(&huartdma2, Message); // Print message
 }

@@ -18,6 +18,15 @@
 
 #define MY_ADRESS 2 //Adres danego urządzenia
 
+//////////////////////////////////////// ERRORS //////////////////////////////////////////////////////////////////////////////////////////////////////
+#define LED_FORMAT_ERROR "LED=ERR_FORMAT\n"
+#define TEMPERATURE_FORMAT_ERROR "ATEMP=ERR_FORMAT\n"
+#define PRESURE_FORMAT_ERROR "APRES=ERR_FORMAT\n"
+#define CHANGE_RELAY_STATE_FORMAT_ERROR "CHSTATE=ERR_FORMAT\n"
+#define CHANGE_RELAY_STATE_NUMBER_ERROR "CHSTATE=ERR_NUMBER\n"
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma);
 void UART_ParseLED();
 void UART_ParseStatus();
