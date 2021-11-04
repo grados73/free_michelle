@@ -81,7 +81,7 @@ void UART_ParseLED()
 	{
 		if(ParsePointer[0] < '0' || ParsePointer[0] > '9') // Chceck if there are only numbers
 		{
-			UARTDMA_Print(&huartdma2, "LED wrong value. Don't use letters dude!\r\n"); // Print message
+			UARTDMA_Print(&huartdma2, LED_FORMAT_ERROR); // Print message
 			return;	// And exit parsing
 		}
 
@@ -90,27 +90,28 @@ void UART_ParseLED()
 		if(LedState == 1) // LED ON
 		{
 			HAL_GPIO_WritePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin, GPIO_PIN_RESET);
-			UARTDMA_Print(&huartdma2, "LED On\r\n");
+			UARTDMA_Print(&huartdma2, "LED=On\r\n");
 
 		}
 		else if(LedState == 0) // LED OFF
 		{
 			HAL_GPIO_WritePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin, GPIO_PIN_SET);
-			UARTDMA_Print(&huartdma2, "LED Off\r\n");
+			UARTDMA_Print(&huartdma2, "LED=Off\r\n");
 		}
 		else // Wrong state number
 		{
-			UARTDMA_Print(&huartdma2, "LED wrong value. Use 0 or 1.\r\n");
+			UARTDMA_Print(&huartdma2, LED_FORMAT_ERROR);
 		}
 	}
 }
 
 void UART_ParseAnswStatus()
 {
-
+	//TODO: Dodac obsluge statusu urzadzenia
 }
 
-void UART_ParseAnswTemp()
+
+void UART_ParseAnswTemp(second_uc_data *dane)
 {
 
 }

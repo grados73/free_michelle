@@ -8,6 +8,8 @@
 #ifndef INC_PARSER_H_
 #define INC_PARSER_H_
 
+#define NUMBER_OF_RELAY 4
+
 typedef enum
 {
 	IDLE = 0, 				//0
@@ -20,8 +22,27 @@ typedef enum
 
 } CONTROLLER_STATE;
 
-void SwitchControllerState();
+typedef struct
+{
+	char status[24];
+	float temperatura1;
+	float cisnienie1;
+	uint8_t przekazniki[NUMBER_OF_RELAY];
 
+} second_uc_data;
+
+
+
+//////////////////////////////////////// ERRORS //////////////////////////////////////////////////////////////////////////////////////////////////////
+#define LED_FORMAT_ERROR "LED=ERR_FORMAT\n"
+#define TEMPERATURE_FORMAT_ERROR "ATEMP=ERR_FORMAT\n"
+#define PRESURE_FORMAT_ERROR "APRES=ERR_FORMAT\n"
+#define CHANGE_RELAY_STATE_FORMAT_ERROR "ACHSTATE=ERR_FORMAT\n"
+#define CHANGE_RELAY_STATE_NUMBER_ERROR "ACHSTATE=ERR_NUMBER\n"
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+void SwitchControllerState();
 void IdleRoutine(uint8_t * AqaParameters);
 void InitializationRoutine(uint8_t * AqaParameters);
 void ParametersRoutine(uint8_t * AqaParameters);
