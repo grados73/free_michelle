@@ -22,8 +22,8 @@
 #define LED_FORMAT_ERROR "LED=ERR_FORMAT\n"
 #define TEMPERATURE_FORMAT_ERROR "ATEMP=ERR_FORMAT\n"
 #define PRESURE_FORMAT_ERROR "APRES=ERR_FORMAT\n"
-#define CHANGE_RELAY_STATE_FORMAT_ERROR "CHSTATE=ERR_FORMAT\n"
-#define CHANGE_RELAY_STATE_NUMBER_ERROR "CHSTATE=ERR_NUMBER\n"
+#define CHANGE_RELAY_STATE_FORMAT_ERROR "ACHSTATE=ERR_FORMAT\n"
+#define CHANGE_RELAY_STATE_NUMBER_ERROR "ACHSTATE=ERR_NUMBER\n"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

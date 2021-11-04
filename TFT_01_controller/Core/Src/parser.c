@@ -47,6 +47,22 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 		  UART_ParseLED();
 	  }
+	  else if (strcmp(ParsePointer, "ASTATE") == 0)
+	  {
+		  UART_ParseAnswStatus();
+	  }
+	  else if (strcmp(ParsePointer, "ATEMP") == 0)
+	  {
+		  UART_ParseAnswTemp();
+	  }
+	  else if (strcmp(ParsePointer, "APRES") == 0)
+	  {
+		  void UART_ParseAnswPres();
+	  }
+	  else if (strcmp(ParsePointer, "ACHSTATE") == 0)
+	  {
+		  void UART_ParseAnswChangeRelayState();
+	  }
 	  //TODO: DODAC OBSLUGE PARSOWANIA BLEDOW
 	}
 }
@@ -89,7 +105,33 @@ void UART_ParseLED()
 	}
 }
 
+void UART_ParseAnswStatus()
+{
 
+}
+
+void UART_ParseAnswTemp()
+{
+
+}
+
+void UART_ParseAnswPres()
+{
+
+}
+
+void UART_ParseAnswChangeRelayState()
+{
+
+}
+
+
+
+
+
+
+
+///////////////////////////////////////////// MASZYNA STANOW ////////////////////////////////
 
 CONTROLLER_STATE ControlerRegulator;
 uint8_t AqaParameters[3];

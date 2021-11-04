@@ -227,7 +227,7 @@ void UART_ParseChangeRelayState()
 
 void PodajStatusRoutine()
 {
-	UARTDMA_Print(&huartdma2, "uC=READY\n");	// TODO: dodac kontrole wszystkich peryferiow i raportowanie o gotowosci
+	UARTDMA_Print(&huartdma2, "ASTATE=READY\n");	// TODO: dodac kontrole wszystkich peryferiow i raportowanie o gotowosci
 }
 
 void PodajTemperatureRoutine(uint8_t NrCzujnika)
@@ -288,6 +288,6 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 		return;	// And exit parsing
 	}
 
-	sprintf(Message, CHANGE_RELAY_STATE_NUMBER_ERROR, Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
+	sprintf(Message, "ACHSTATE=%d,%d,DONE\n", Przekaznik, NowyStan); // Potwierdzenie wykonania polecenia
 	UARTDMA_Print(&huartdma2, Message); // Print message
 }

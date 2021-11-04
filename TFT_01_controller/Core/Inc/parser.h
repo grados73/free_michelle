@@ -42,10 +42,10 @@ void ConnectionErrorRoutine(uint8_t * AqaParameters);
 
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma);
 void UART_ParseLED();
-void UART_ParseStatus();
-void UART_ParseTemp();
-void UART_ParsePres();
-void UART_ParseChangeRelayState();
+void UART_ParseAnswStatus();
+void UART_ParseAnswTemp();
+void UART_ParseAnswPres();
+void UART_ParseAnswChangeRelayState();
 
 
 void SwitchMotorRegular();
