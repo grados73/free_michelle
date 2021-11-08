@@ -1,9 +1,11 @@
-/*
- * parser.c
- *
- *  Created on: Jan 25, 2021
- *      Author: grad_
- */
+/**
+  ******************************************************************************
+  * @file           : parser.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: plik z funkcjami parsowania wiadomosci przychodzacych z UART
+  ******************************************************************************
+  **/
 
 
 #include "main.h"
@@ -12,7 +14,6 @@
 #include "uartdma.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include "motion.h"
 #include "functions.h"
 
 

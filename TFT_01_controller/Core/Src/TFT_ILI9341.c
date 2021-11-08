@@ -1,11 +1,12 @@
-/*
- * ILI9341.h
- *
- *  	Author: grados73
- *  	Created on the basis of Adafruit Library from the recipe of msalomon (under MIT Licence).
- *		https://github.com/grados73
- *
- */
+/**
+  ******************************************************************************
+  * @file           : TFT_ILI9341.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: Created on the basis of Adafruit Library from the recipe of msalomon (under MIT Licence).
+  ******************************************************************************
+  **/
+
 
 #include "main.h"
 #include "TFT_ILI9341.h"

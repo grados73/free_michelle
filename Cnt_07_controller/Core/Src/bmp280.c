@@ -1,4 +1,11 @@
-
+/**
+  ******************************************************************************
+  * @file           : bmp280.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: plik z funkcjami do odczytu cisnienia i temperatury po I2C z czujnika BMP280
+  ******************************************************************************
+  **/
 
 #include "main.h"
 #include "bmp280.h"

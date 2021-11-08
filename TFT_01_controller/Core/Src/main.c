@@ -3,10 +3,11 @@
   ******************************************************************************
   * @file           : main.c
   * @project		: free_michelle
-  * @author			: grados73
-  * zaprojektowane do komunikacji z kontrolerem
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: kontroler dotykowego wyswietlacza TFT do interfejsu komunikacji z
+  * 					uzytkownikiem dla projektu sterownika akwarium
   ******************************************************************************
-  */
+  **/
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"

@@ -3947,7 +3947,7 @@ void UART_ParseAnswTemp(second_uc_data *dane)
 	...
 
 08001c3c <RB_Read>:
- */
+  **/
 #include "main.h"
 #include "ring_buffer.h"
 

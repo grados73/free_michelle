@@ -1,9 +1,11 @@
-/*
- * parser.c
- *
- *  Created on: Jul 7, 2021
- *      Author: grad_
- */
+/**
+  ******************************************************************************
+  * @file           : parser.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: plik z funkcjami parsowania wiadomosci przychodzacych z UART
+  ******************************************************************************
+  **/
 #include "main.h"
 #include "parser.h"
 #include "string.h"

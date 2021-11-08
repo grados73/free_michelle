@@ -1,9 +1,11 @@
-/*
- * ring_buffer.c
- *
- *  Created on: Aug 21, 2020
- *      Author: Mateusz Salamon
- */
+/**
+  ******************************************************************************
+  * @file           : ring_buffer.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: bufor kolowy do obslugi UARTA zrobiony na podstawie pomyslu msalomon
+  ******************************************************************************
+  **/
 #include "main.h"
 #include "ring_buffer.h"
 

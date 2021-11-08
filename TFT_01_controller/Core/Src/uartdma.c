@@ -1,3 +1,12 @@
+/**
+  ******************************************************************************
+  * @file           : TFT_ILI9341.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: plik z funkcjami do obslugi UART przez DMA.
+  ******************************************************************************
+  **/
+
 #include "main.h"
 #include "uartdma.h"
 
