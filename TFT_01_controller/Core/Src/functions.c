@@ -19,7 +19,7 @@ uint8_t system_init(){
 	  HAL_Delay(200); // !!!! TODO
 
 	  EF_SetFont(&arialBlack_20ptFontInfo);
-	  uint8_t Len = sprintf(Msg, "Inicjalizacja...");
+	  uint8_t Len = sprintf((char*)Msg, "Inicjalizacja...");
 	  EF_PutString(Msg, 60, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
 	  Len++;
 	  GFX_DrawRoundRectangle(60, 200, 20, 20, 5, ILI9341_RED);
@@ -56,15 +56,15 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
 		// TODO zrobić żeby czytało właściwe wartości
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
-	  uint8_t Len = sprintf(Msg, "Czas: 00:00:00");
+	  uint8_t Len = sprintf((char*)Msg, "Czas: 00:00:00");
 	  EF_PutString(Msg, 20, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
-	  Len = sprintf(Msg, "Temp. zewn: 0`C");
+	  Len = sprintf((char*)Msg, "Temp. zewn: 0`C");
 	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
-	  Len = sprintf(Msg, "Temp. wewn: 0`C");
+	  Len = sprintf((char*)Msg, "Temp. wewn: 0`C");
 	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
-	  Len = sprintf(Msg, "Wilgotność: 0%");
+	  Len = sprintf((char*)Msg, "Wilgotność: 0%%");
 	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
-	  Len = sprintf(Msg, "Poziom wody: 0%");
+	  Len = sprintf((char*)Msg, "Poziom wody: 0%%");
 	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
 	  Len++;
 }
