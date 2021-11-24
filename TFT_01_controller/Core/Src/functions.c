@@ -13,7 +13,8 @@
 
 uint8_t system_init(){
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-	  GFX_Image(40, 50, logo, 240, 140);
+	  ILI9341_DrawImage(40, 50, logo, 240, 140);
+//	  GFX_Image(40, 50, logo, 240, 140); usunieta wolniejsza wersja rysowania
 
 	  HAL_Delay(200); // !!!! TODO
 
