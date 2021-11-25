@@ -30,6 +30,9 @@
 #include "functions.h"
 #include "uartdma.h"
 #include "parser.h"
+#include "string.h"
+#include "stdlib.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -39,7 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define BMP280_ADDRESS 0x76
+#define DATA_RELEASE_TIME 10 // time in seconds every time the refresh of the environmental data will be do
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -55,6 +58,8 @@ struct Measurements BMPResults;
 float CTemp, CPressure;
 UARTDMA_HandleTypeDef huartdma2;
 uint8_t BufferReceive[64];
+uint8_t RefreshMeasurementDataCounter = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -192,10 +197,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM10)
 	{
-		  BMPResults = temp_pressure_measurement();
-		  CTemp = BMPResults.Temp;
-		  CPressure =BMPResults.Pressure;
-		  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Podlaczyc diode sygnalizujaca pomiary - to musi zostac!
+
+		BMPResults = temp_pressure_measurement();
+		CTemp = BMPResults.Temp;
+		CPressure = BMPResults.Pressure;
+		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Podlaczyc diode sygnalizujaca pomiary - to musi zostac!
+
+		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME) // TODO: MOVE IT INTO A FUNCTION
+		{
+			char Message[BUFFOR_SIZE];
+			sprintf(Message, "PPRES=%f\n", CPressure);
+			UARTDMA_Print(&huartdma2, Message);
+
+			sprintf(Message, "PTEMP=%f\n", CTemp);
+			UARTDMA_Print(&huartdma2, Message);
+			RefreshMeasurementDataCounter = 0;
+		}
+		RefreshMeasurementDataCounter++;
 	}
 }
 
