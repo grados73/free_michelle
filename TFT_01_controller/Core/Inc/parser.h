@@ -52,6 +52,14 @@ void LightTimersRoutine(uint8_t * AqaParameters);
 void ConnectionErrorRoutine(uint8_t * AqaParameters);
 
 #include "uartdma.h"
+#include "TFT_ILI9341.h"
+#include "GFX_Color.h"
+#include "GFX_EnhancedFonts.h"
+#include "EnhancedFonts/arialBlack_20ptFontInfo.h"
+#include "EnhancedFonts/ArialBlack_28pts_bold.h"
+#include "string.h"
+#include "stdio.h"
+#include "functions.h"
 
 #define BUFFOR_SIZE 65
 #define FRAME_SIZE 16

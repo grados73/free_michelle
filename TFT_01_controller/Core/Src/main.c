@@ -28,6 +28,7 @@
 #include "functions.h"
 #include "uartdma.h"
 #include "parser.h"
+#include "stdlib.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -123,7 +124,7 @@ int main(void)
 	  // TRANSMIT
 	  //
 	  UARTDMA_TransmitEvent(&huartdma2);
-
+	  HAL_GPIO_TogglePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin);
 
     /* USER CODE END WHILE */
 

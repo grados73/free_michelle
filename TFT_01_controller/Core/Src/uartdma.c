@@ -4,6 +4,7 @@
   * @project		: free_michelle
   * @author			: grados73 - https://github.com/grados73
   * @purpose		: plik z funkcjami do obslugi UART przez DMA.
+  * @reminder		: remind to change file stm32f4xx_it.c!
   ******************************************************************************
   **/
 

@@ -19,6 +19,8 @@ char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
 extern struct Measurements BMPResults;
+float CTemp = 0.0;
+float Cpres = 0.0;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////// GLOWNA FUNKCJA PARSOWANIA //////////////////////////////////////////////////////////////////////////////
@@ -113,9 +115,19 @@ void UART_ParseAnswStatus()
 }
 
 
-void UART_ParseAnswTemp(second_uc_data *dane)
+void UART_ParseAnswTemp()
 {
+	char* ParsePointer = strtok(NULL, ",");
+	uint8_t Len;
+	if(strlen(ParsePointer) > 0) // If string exists
+	{
 
+		CTemp = atof(ParsePointer); // If there are no chars, change string to integer
+		Len = sprintf((char*)Msg, "Temp. zewn: %f`C", CTemp);
+		EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		UARTDMA_Print(&huartdma2, "TEMP UPDATED! \r\n");
+		Len++;
+	}
 }
 
 void UART_ParseAnswPres()

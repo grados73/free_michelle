@@ -63,7 +63,7 @@ main-build: TFT_01_controller.elf secondary-outputs
 
 # Tool invocations
 TFT_01_controller.elf: $(OBJS) $(USER_OBJS) D:\STM32\free_michelle\TFT_01_controller\STM32F411CEUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "TFT_01_controller.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\STM32\free_michelle\TFT_01_controller\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TFT_01_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "TFT_01_controller.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\STM32\free_michelle\TFT_01_controller\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="TFT_01_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
