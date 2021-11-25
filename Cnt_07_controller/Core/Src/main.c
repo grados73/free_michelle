@@ -203,14 +203,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		CPressure = BMPResults.Pressure;
 		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Podlaczyc diode sygnalizujaca pomiary - to musi zostac!
 
-		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME) // TODO: MOVE IT INTO A FUNCTION
+		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME)
 		{
-			char Message[BUFFOR_SIZE];
-			sprintf(Message, "PPRES=%f\n", CPressure);
-			UARTDMA_Print(&huartdma2, Message);
-
-			sprintf(Message, "PTEMP=%f\n", CTemp);
-			UARTDMA_Print(&huartdma2, Message);
+			PodajTemperatureRoutine(1);
+			PodajCisnienieRoutine(1);
 			RefreshMeasurementDataCounter = 0;
 		}
 		RefreshMeasurementDataCounter++;
