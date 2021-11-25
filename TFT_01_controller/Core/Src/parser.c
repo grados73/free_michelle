@@ -61,11 +61,11 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  }
 	  else if (strcmp(ParsePointer, "APRES") == 0)
 	  {
-		  void UART_ParseAnswPres();
+		  UART_ParseAnswPres();
 	  }
 	  else if (strcmp(ParsePointer, "ACHSTATE") == 0)
 	  {
-		  void UART_ParseAnswChangeRelayState();
+		  UART_ParseAnswChangeRelayState();
 	  }
 	  //TODO: DODAC OBSLUGE PARSOWANIA BLEDOW
 	}
@@ -121,19 +121,29 @@ void UART_ParseAnswTemp()
 	uint8_t Len;
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
-
 		CTemp = atof(ParsePointer); // If there are no chars, change string to integer
-		Len = sprintf((char*)Msg, "Temp. zewn: %f`C", CTemp);
+		Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
 		EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
-		UARTDMA_Print(&huartdma2, "TEMP UPDATED! \r\n");
+		UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
 		Len++;
 	}
 }
 
 void UART_ParseAnswPres()
 {
-
+	char* ParsePointer = strtok(NULL, ",");
+	uint8_t Len;
+	if(strlen(ParsePointer) > 0) // If string exists
+	{
+		Cpres = atof(ParsePointer); // If there are no chars, change string to integer
+		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", Cpres);
+		EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
+		Len++;
+	}
 }
+
+
 
 void UART_ParseAnswChangeRelayState()
 {

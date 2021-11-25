@@ -57,15 +57,15 @@ void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uin
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 	  uint8_t Len = sprintf((char*)Msg, "Czas: 00:00:00");
-	  EF_PutString(Msg, 20, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
+	  EF_PutString(Msg, 20, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 	  Len = sprintf((char*)Msg, "Temp. zewn: 0`C");
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
+	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 	  Len = sprintf((char*)Msg, "Temp. wewn: 0`C");
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
+	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 	  Len = sprintf((char*)Msg, "Wilgotność: 0%%");
-	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
-	  Len = sprintf((char*)Msg, "Poziom wody: 0%%");
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
+	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  Len = sprintf((char*)Msg, "Ciśnienie: 1000.0hPa");
+	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 	  Len++;
 }
 
