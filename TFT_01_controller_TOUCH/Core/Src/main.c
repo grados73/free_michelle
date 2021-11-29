@@ -56,10 +56,12 @@
 uint8_t Msg[32];
 UARTDMA_HandleTypeDef huartdma2;
 uint8_t BufferReceive[64];
+uint16_t Xread, Yread;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -101,6 +103,9 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_SPI3_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   ILI9341_Init(&hspi1);
 
@@ -109,6 +114,8 @@ int main(void)
   showCurrentParameters(0, 0, 0, 0, 0);
 
   UARTDMA_Init(&huartdma2, &huart2);
+
+  XPT2046_Init(&hspi3, EXTI9_5_IRQn);
 
   // TO DO! - Tutaj przeprowadzić inicjalizację peryferiów i połączenia z drugim STMem
 
@@ -130,6 +137,20 @@ int main(void)
 	  // TRANSMIT
 	  //
 	  UARTDMA_TransmitEvent(&huartdma2);
+
+	  //
+	  // TOUCH
+	  //
+	  XPT2046_Task();
+
+
+	  if(XPT2046_IsTouched())
+	  {
+		  XPT2046_GetTouchPoint(&Xread, &Yread);
+
+		  ILI9341_WritePixel(Xread, Yread, ILI9341_BLACK);
+	  }
+
 
 
     /* USER CODE END WHILE */
@@ -182,7 +203,25 @@ void SystemClock_Config(void)
   }
 }
 
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* EXTI9_5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+}
+
 /* USER CODE BEGIN 4 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == TOUCH_IRQ_Pin)
+	{
+		XPT2046_IRQ();
+	}
+}
 
 /* USER CODE END 4 */
 
