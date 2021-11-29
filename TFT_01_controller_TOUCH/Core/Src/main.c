@@ -18,17 +18,22 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+/* STANDARD LIBRARIES */
+#include "string.h"
+#include "stdio.h"
+#include "stdlib.h"
+/* PRRIVATE FILES */
 #include "TFT_ILI9341.h"
 #include "GFX_Color.h"
 #include "GFX_EnhancedFonts.h"
-#include "EnhancedFonts/arialBlack_20ptFontInfo.h"
-#include "EnhancedFonts/ArialBlack_28pts_bold.h"
-#include "string.h"
-#include "stdio.h"
+#include "XPT2064.h"
 #include "functions.h"
 #include "uartdma.h"
 #include "parser.h"
-#include "stdlib.h"
+/* PRRIVATE FONTS*/
+#include "EnhancedFonts/arialBlack_20ptFontInfo.h"
+#include "EnhancedFonts/ArialBlack_28pts_bold.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,6 +100,7 @@ int main(void)
   MX_SPI1_Init();
   MX_DMA_Init();
   MX_USART2_UART_Init();
+  MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
   ILI9341_Init(&hspi1);
 
@@ -124,7 +130,7 @@ int main(void)
 	  // TRANSMIT
 	  //
 	  UARTDMA_TransmitEvent(&huartdma2);
-	  HAL_GPIO_TogglePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin);
+
 
     /* USER CODE END WHILE */
 
