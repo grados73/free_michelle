@@ -127,7 +127,7 @@ void UART_ParseAnswTemp()
 	{
 		CTemp = atof(ParsePointer); // If there are no chars, change string to integer
 		Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
-		EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
 		Len++;
 	}
@@ -141,7 +141,7 @@ void UART_ParseAnswPres()
 	{
 		CPres = atof(ParsePointer); // If there are no chars, change string to integer
 		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
-		EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
 		Len++;
 	}

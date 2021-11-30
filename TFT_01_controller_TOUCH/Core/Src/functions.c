@@ -71,19 +71,19 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  EF_PutString(Msg, 50, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Czas: %d : %d : %d", Time[0], Time[1], Time[2]);
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, CZAS_POZ_X, CZAS_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Temp. wewn: %.2f`C", CTempWew);
-	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, POZ_WODY_POZ_X, POZ_WODY_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
-	  EF_PutString(Msg, 20, 170, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 
 	  EF_SetFont(&arial_11ptFontInfo);

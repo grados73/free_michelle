@@ -23,6 +23,18 @@
 #include "functions.h"
 #include "uartdma.h"
 
+#define CZAS_POZ_X 20
+#define CZAS_POZ_Y 50
+#define TEMP_ZEW_POZ_X 20
+#define TEMP_ZEW_POZ_Y 80
+#define TEMP_WEW_POZ_X 20
+#define TEMP_WEW_POZ_Y 110
+#define POZ_WODY_POZ_X 20
+#define POZ_WODY_POZ_Y 140
+#define CISN_POZ_X 20
+#define CISN_POZ_Y 170
+
+
 uint8_t Msg[32];
 
 uint8_t system_init();

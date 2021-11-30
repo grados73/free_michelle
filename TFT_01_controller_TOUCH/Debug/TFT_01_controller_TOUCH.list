@@ -33,17 +33,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_aranges 00000d88  00000000  00000000  00049eb0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_macro  000059a3  00000000  00000000  0004ac38  2**0
+ 15 .debug_macro  000059f7  00000000  00000000  0004ac38  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_line   00017119  00000000  00000000  000505db  2**0
+ 16 .debug_line   00017119  00000000  00000000  0005062f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    0008ac36  00000000  00000000  000676f4  2**0
+ 17 .debug_str    0008acdd  00000000  00000000  00067748  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .comment      00000053  00000000  00000000  000f232a  2**0
+ 18 .comment      00000053  00000000  00000000  000f2425  2**0
                   CONTENTS, READONLY
- 19 .debug_ranges 00000c10  00000000  00000000  000f2380  2**3
+ 19 .debug_ranges 00000c10  00000000  00000000  000f2478  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00004984  00000000  00000000  000f2f90  2**2
+ 20 .debug_frame  00004984  00000000  00000000  000f3088  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -4729,14 +4729,14 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  8002616:	f005 fa53 	bl	8007ac0 <siprintf>
  800261a:	4603      	mov	r3, r0
  800261c:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 60, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, 50, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  800261e:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002622:	9301      	str	r3, [sp, #4]
  8002624:	2300      	movs	r3, #0
  8002626:	9300      	str	r3, [sp, #0]
  8002628:	2300      	movs	r3, #0
  800262a:	2214      	movs	r2, #20
- 800262c:	213c      	movs	r1, #60	; 0x3c
+ 800262c:	2132      	movs	r1, #50	; 0x32
  800262e:	4861      	ldr	r0, [pc, #388]	; (80027b4 <showCurrentParameters+0x1c8>)
  8002630:	f7ff fa34 	bl	8001a9c <EF_PutString>
 
@@ -4756,7 +4756,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  800264c:	f005 fa38 	bl	8007ac0 <siprintf>
  8002650:	4603      	mov	r3, r0
  8002652:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, CZAS_POZ_X, CZAS_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002654:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002658:	9301      	str	r3, [sp, #4]
  800265a:	2300      	movs	r3, #0
@@ -4779,7 +4779,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  800267c:	f005 fa20 	bl	8007ac0 <siprintf>
  8002680:	4603      	mov	r3, r0
  8002682:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
  8002684:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002688:	9301      	str	r3, [sp, #4]
  800268a:	2301      	movs	r3, #1
@@ -4802,7 +4802,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  80026ac:	f005 fa08 	bl	8007ac0 <siprintf>
  80026b0:	4603      	mov	r3, r0
  80026b2:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  80026b4:	f24c 6318 	movw	r3, #50712	; 0xc618
  80026b8:	9301      	str	r3, [sp, #4]
  80026ba:	2300      	movs	r3, #0
@@ -4822,7 +4822,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  80026d4:	f005 f9f4 	bl	8007ac0 <siprintf>
  80026d8:	4603      	mov	r3, r0
  80026da:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, POZ_WODY_POZ_X, POZ_WODY_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  80026dc:	f24c 6318 	movw	r3, #50712	; 0xc618
  80026e0:	9301      	str	r3, [sp, #4]
  80026e2:	2300      	movs	r3, #0
@@ -4845,7 +4845,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  8002704:	f005 f9dc 	bl	8007ac0 <siprintf>
  8002708:	4603      	mov	r3, r0
  800270a:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 20, 170, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  800270c:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002710:	9301      	str	r3, [sp, #4]
  8002712:	2300      	movs	r3, #0
@@ -5969,13 +5969,13 @@ void UART_ParseAnswTemp()
  8002e6e:	f004 fe27 	bl	8007ac0 <siprintf>
  8002e72:	4603      	mov	r3, r0
  8002e74:	70fb      	strb	r3, [r7, #3]
-		EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
  8002e76:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002e7a:	9301      	str	r3, [sp, #4]
  8002e7c:	2301      	movs	r3, #1
  8002e7e:	9300      	str	r3, [sp, #0]
  8002e80:	2300      	movs	r3, #0
- 8002e82:	2232      	movs	r2, #50	; 0x32
+ 8002e82:	2250      	movs	r2, #80	; 0x50
  8002e84:	2114      	movs	r1, #20
  8002e86:	480a      	ldr	r0, [pc, #40]	; (8002eb0 <UART_ParseAnswTemp+0x84>)
  8002e88:	f7fe fe08 	bl	8001a9c <EF_PutString>
@@ -6042,13 +6042,13 @@ void UART_ParseAnswPres()
  8002efe:	f004 fddf 	bl	8007ac0 <siprintf>
  8002f02:	4603      	mov	r3, r0
  8002f04:	70fb      	strb	r3, [r7, #3]
-		EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
  8002f06:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002f0a:	9301      	str	r3, [sp, #4]
  8002f0c:	2301      	movs	r3, #1
  8002f0e:	9300      	str	r3, [sp, #0]
  8002f10:	2300      	movs	r3, #0
- 8002f12:	228c      	movs	r2, #140	; 0x8c
+ 8002f12:	22aa      	movs	r2, #170	; 0xaa
  8002f14:	2114      	movs	r1, #20
  8002f16:	480a      	ldr	r0, [pc, #40]	; (8002f40 <UART_ParseAnswPres+0x84>)
  8002f18:	f7fe fdc0 	bl	8001a9c <EF_PutString>
