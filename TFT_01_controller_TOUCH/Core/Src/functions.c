@@ -120,6 +120,16 @@ void showControlPanel()
 	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 4:");
 	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
+	  EF_SetFont(&arial_11ptFontInfo);
+	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  Len = sprintf((char*)Msg, "LIGHTS=>");
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  Len = sprintf((char*)Msg, "<=PARAM");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
+
 	  Len++;
 
 }
@@ -143,6 +153,16 @@ void showLightsControlPanel()
 
 	  Len = sprintf((char*)Msg, "ŚWIATŁO 4:");
 	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  EF_SetFont(&arial_11ptFontInfo);
+	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  Len = sprintf((char*)Msg, "PARAM=>");
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  Len = sprintf((char*)Msg, "<=CONTROL");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
 
 	  Len++;
 }

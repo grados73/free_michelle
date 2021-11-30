@@ -21,5 +21,6 @@
 #define RIGHT_LEFT_BUTTON_R 5
 
 void MenuTFT(void);
+void TouchParametersActivity(void);
 
 #endif /* INC_MENUTFT_H_ */

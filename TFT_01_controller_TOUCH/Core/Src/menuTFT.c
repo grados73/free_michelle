@@ -43,21 +43,30 @@ void MenuTFT(void)
 	case MENUTFT_PARAMETERS:
 		if(StateChangeFlag == 1)
 		{
-		showCurrentParameters(CTemp, 0, 0, 0, CPres);
-		StateChangeFlag = 0;
+			showCurrentParameters(CTemp, 0, 0, 0, CPres);
+			StateChangeFlag = 0;
 		}
+		TouchParametersActivity();
 		break;
 	case MENUTFT_SWITCH:
-		showControlPanel();
+		if(StateChangeFlag == 1)
+		{
+			showControlPanel();
+			StateChangeFlag = 0;
+		}
 		break;
 	case MENUTFT_LIGHTS:
-		showLightsControlPanel();
+		if(StateChangeFlag == 1)
+		{
+			showLightsControlPanel();
+			StateChangeFlag = 0;
+		}
 		break;
 	}
 }
 
 
-void TouchActivity(void)
+void TouchParametersActivity(void)
 {
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
@@ -70,8 +79,18 @@ void TouchActivity(void)
 		if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
 				(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
 		{
-
+			State = MENUTFT_LIGHTS;
+			StateChangeFlag = 1;
 		}
+
+		// Check if that point is inside the RIGHT Button
+		if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+				(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+		{
+			State = MENUTFT_SWITCH;
+			StateChangeFlag = 1;
+		}
+
 
 //		if((x > DRAW_WINDOW_X_START)&&(x < DRAW_WINDOW_X_STOP)&&(y > DRAW_WINDOW_Y_START)&&(y < DRAW_WINDOW_Y_STOP))
 //		{
