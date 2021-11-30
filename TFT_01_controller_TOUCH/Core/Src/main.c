@@ -30,9 +30,11 @@
 #include "functions.h"
 #include "uartdma.h"
 #include "parser.h"
+#include "menuTFT.h"
 /* PRRIVATE FONTS*/
 #include "EnhancedFonts/arialBlack_20ptFontInfo.h"
-#include "EnhancedFonts/ArialBlack_28pts_bold.h"
+#include "EnhancedFonts/arialBlack_11ptFontInfo.h"
+#include "EnhancedFonts/ArialBlack_28pts_bold.h" //Bez polskich znakow!
 
 /* USER CODE END Includes */
 
@@ -109,11 +111,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ILI9341_Init(&hspi1);
 
-  system_init();
-
-
-
-  UARTDMA_Init(&huartdma2, &huart2);
+    UARTDMA_Init(&huartdma2, &huart2);
 
   XPT2046_Init(&hspi3, EXTI9_5_IRQn);
 
@@ -144,12 +142,7 @@ int main(void)
 	  XPT2046_Task();
 
 
-	  if(XPT2046_IsTouched())
-	  {
-		  XPT2046_GetTouchPoint(&Xread, &Yread);
-
-		  ILI9341_WritePixel(Xread, Yread, ILI9341_BLACK);
-	  }
+	  MenuTFT();
 
 
 

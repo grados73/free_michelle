@@ -10,6 +10,7 @@
 #include "functions.h"
 #include "logo.h"
 #include "parser.h"
+#include "menuTFT.h"
 
 extern float CTemp;
 extern float CPres;
@@ -53,7 +54,7 @@ uint8_t system_init(){
 	  GFX_DrawFillRoundRectangle(240, 200, 20, 20, 5, ILI9341_GREEN);
 	  HAL_Delay(200); // !!!! TODO
 
-	  showCurrentParameters(0.0, 0.0, Time, 0, 0.0);
+
 
 
 
@@ -65,27 +66,85 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 		// TODO zrobić żeby czytało właściwe wartości
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
-	  uint8_t Len = sprintf((char*)Msg, "Czas: %d:%d:%d", Time[0], Time[1], Time[2]);
-	  EF_PutString(Msg, 20, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  uint8_t Len = sprintf((char*)Msg, "-=PARAMETRY=-");
+	  EF_PutString(Msg, 50, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "Czas: %d : %d : %d", Time[0], Time[1], Time[2]);
+	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "Temp. wewn: %.2f`C", CTempWew);
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
 	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
+	  Len = sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
+	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
 	  Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, 20, 170, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+
+	  EF_SetFont(&arial_11ptFontInfo);
+	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  Len = sprintf((char*)Msg, "CONTROL=>");
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  Len = sprintf((char*)Msg, "<=LIGHTS");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
 
 	  Len++;
 }
 
 void showControlPanel()
-{	// TODO zrobić żeby pokazywało realny panel sterowania
+{
 
+	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
+
+	  uint8_t Len = sprintf((char*)Msg, "-=PRZEŁĄCZNIKI=-");
+	  EF_PutString(Msg, 50, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 1:");
+	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 2:");
+	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 3:");
+	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 4:");
+	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len++;
+
+}
+
+void showLightsControlPanel()
+{
+	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
+
+	  uint8_t Len = sprintf((char*)Msg, "-=ŚWIATŁA=-");
+	  EF_PutString(Msg, 80, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "ŚWIATŁO 1:");
+	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "ŚWIATŁO 2:");
+	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "ŚWIATŁO 3:");
+	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "ŚWIATŁO 4:");
+	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len++;
 }
 
 
