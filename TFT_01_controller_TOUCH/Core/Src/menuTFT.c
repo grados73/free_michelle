@@ -19,15 +19,7 @@ extern float CTemp;
 extern float CPres;
 uint8_t StateChangeFlag = 0;
 
-
-
-typedef enum
-{
-	MENUTFT_INIT, 			// Build GUI
-	MENUTFT_PARAMETERS, 	// Read parameters
-	MENUTFT_SWITCH,			// Show current switch state, and possibility to change them
-	MENUTFT_LIGHTS 			// Show current lights state, and possibility to change them
-} MenuTFTState;
+uint32_t TimerTouch = 0;
 
 MenuTFTState State = MENUTFT_INIT; // Initialization state for MenuTFT State Machine
 
@@ -54,6 +46,7 @@ void MenuTFT(void)
 			showControlPanel();
 			StateChangeFlag = 0;
 		}
+		TouchSwitchActivity();
 		break;
 	case MENUTFT_LIGHTS:
 		if(StateChangeFlag == 1)
@@ -61,6 +54,7 @@ void MenuTFT(void)
 			showLightsControlPanel();
 			StateChangeFlag = 0;
 		}
+		TouchLightsActivity();
 		break;
 	}
 }
@@ -71,49 +65,91 @@ void TouchParametersActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		uint16_t x, y; // Touch points
-
-		XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
-
-		// Check if that point is inside the LEFT Button
-		if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
-				(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
 		{
-			State = MENUTFT_LIGHTS;
-			StateChangeFlag = 1;
-		}
+			uint16_t x, y; // Touch points
 
-		// Check if that point is inside the RIGHT Button
-		if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
-				(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+			// Check if that point is inside the LEFT Button
+			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+			{
+				State = MENUTFT_LIGHTS;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the RIGHT Button
+			else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+			{
+				State = MENUTFT_SWITCH;
+				StateChangeFlag = 1;
+			}
+			TimerTouch = HAL_GetTick();
+		}
+	}
+}
+
+void TouchSwitchActivity(void)
+{
+	// Check if screen was touched
+	if(XPT2046_IsTouched())
+	{
+		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
 		{
-			State = MENUTFT_SWITCH;
-			StateChangeFlag = 1;
+			uint16_t x, y; // Touch points
+
+			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+			// Check if that point is inside the LEFT Button
+			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+			{
+				State = MENUTFT_PARAMETERS;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the RIGHT Button
+			else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+			{
+				State = MENUTFT_LIGHTS;
+				StateChangeFlag = 1;
+			}
+			TimerTouch = HAL_GetTick();
 		}
+	}
+}
 
+void TouchLightsActivity(void)
+{
+	// Check if screen was touched
+	if(XPT2046_IsTouched())
+	{
+		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		{
+			uint16_t x, y; // Touch points
 
-//		if((x > DRAW_WINDOW_X_START)&&(x < DRAW_WINDOW_X_STOP)&&(y > DRAW_WINDOW_Y_START)&&(y < DRAW_WINDOW_Y_STOP))
-//		{
-//			// If yes - just draw a pixel there with current selected color
-//			GFX_DrawPixel(x, y, CurrentColor);
-//		}
-//
-//		// Check if any Color change button was touched
-//		ColorButtonNubmer = IsColorButtonTouched(x, y);
-//		if(ColorButtonNubmer != 0) // If yes
-//		{
-//			// Chenge current color
-//			CurrentColor = UsedColors[ColorButtonNubmer-1];
-//			// Redrwa current color indicator
-//			ColorIndicator();
-//		}
-//
-//		// Check if any Clearing button was touched
-//		if(IsClearButtonTouched(x, y))
-//		{
-//			// Jump to Clearing state
-//			State = PAINT_CLEAR;
-//		}
+			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+			// Check if that point is inside the LEFT Button
+			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+			{
+				State = MENUTFT_SWITCH;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the RIGHT Button
+			else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+			{
+				State = MENUTFT_PARAMETERS;
+				StateChangeFlag = 1;
+			}
+			TimerTouch = HAL_GetTick();
+		}
 	}
 }
 

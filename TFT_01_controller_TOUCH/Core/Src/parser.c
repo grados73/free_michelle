@@ -13,12 +13,15 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "functions.h"
+#include "menuTFT.h"
 
 extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
 extern struct Measurements BMPResults;
+
+extern MenuTFTState State;
 
 float CTemp = 0.0;
 float CPres = 0.0;
@@ -126,8 +129,13 @@ void UART_ParseAnswTemp()
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
 		CTemp = atof(ParsePointer); // If there are no chars, change string to integer
-		Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
-		EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+		//Only if on the screen are Parameters, update current Temp
+		if(State == MENUTFT_PARAMETERS)
+		{
+			Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
+			EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		}
 		UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
 		Len++;
 	}
@@ -140,8 +148,13 @@ void UART_ParseAnswPres()
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
 		CPres = atof(ParsePointer); // If there are no chars, change string to integer
-		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
-		EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+		//Only if on the screen are Parameters, update current Presure
+		if(State == MENUTFT_PARAMETERS)
+		{
+			Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
+			EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		}
 		UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
 		Len++;
 	}

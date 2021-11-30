@@ -20,7 +20,17 @@
 
 #define RIGHT_LEFT_BUTTON_R 5
 
+typedef enum
+{
+	MENUTFT_INIT, 			// Build GUI
+	MENUTFT_PARAMETERS, 	// Read parameters
+	MENUTFT_SWITCH,			// Show current switch state, and possibility to change them
+	MENUTFT_LIGHTS 			// Show current lights state, and possibility to change them
+} MenuTFTState;
+
 void MenuTFT(void);
 void TouchParametersActivity(void);
+void TouchSwitchActivity(void);
+void TouchLightsActivity(void);
 
 #endif /* INC_MENUTFT_H_ */
