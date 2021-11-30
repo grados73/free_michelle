@@ -111,7 +111,7 @@ int main(void)
 
   system_init();
 
-  showCurrentParameters(0, 0, 0, 0, 0);
+
 
   UARTDMA_Init(&huartdma2, &huart2);
 

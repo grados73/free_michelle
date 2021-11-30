@@ -19,9 +19,11 @@ char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
 extern struct Measurements BMPResults;
+
 float CTemp = 0.0;
 float CPres = 0.0;
 float CTempWew = 0.0;
+uint8_t CWaterLvl = 0;
 uint8_t Time[3] = {0,0,0};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

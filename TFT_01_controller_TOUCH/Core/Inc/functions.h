@@ -24,7 +24,7 @@
 uint8_t Msg[32];
 
 uint8_t system_init();
-void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t Time[3], uint8_t water_lvl, uint8_t presure);
+void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure);
 void showControlPanel();
 
 #endif /* INC_FUNCTIONS_H_ */
