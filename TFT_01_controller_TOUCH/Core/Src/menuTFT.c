@@ -65,7 +65,7 @@ void TouchParametersActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
 		{
 			uint16_t x, y; // Touch points
 
@@ -96,7 +96,7 @@ void TouchSwitchActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
 		{
 			uint16_t x, y; // Touch points
 
@@ -127,7 +127,7 @@ void TouchLightsActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
 		{
 			uint16_t x, y; // Touch points
 

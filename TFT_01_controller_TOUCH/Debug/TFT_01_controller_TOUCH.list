@@ -5981,13 +5981,13 @@ void TouchParametersActivity(void)
  8002eb8:	2b00      	cmp	r3, #0
  8002eba:	d039      	beq.n	8002f30 <TouchParametersActivity+0x84>
 	{
-		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
  8002ebc:	f000 ffe6 	bl	8003e8c <HAL_GetTick>
  8002ec0:	4602      	mov	r2, r0
  8002ec2:	4b1d      	ldr	r3, [pc, #116]	; (8002f38 <TouchParametersActivity+0x8c>)
  8002ec4:	681b      	ldr	r3, [r3, #0]
  8002ec6:	1ad3      	subs	r3, r2, r3
- 8002ec8:	f5b3 7ffa 	cmp.w	r3, #500	; 0x1f4
+ 8002ec8:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
  8002ecc:	d330      	bcc.n	8002f30 <TouchParametersActivity+0x84>
 		{
 			uint16_t x, y; // Touch points
@@ -6085,13 +6085,13 @@ void TouchSwitchActivity(void)
  8002f50:	2b00      	cmp	r3, #0
  8002f52:	d039      	beq.n	8002fc8 <TouchSwitchActivity+0x84>
 	{
-		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
  8002f54:	f000 ff9a 	bl	8003e8c <HAL_GetTick>
  8002f58:	4602      	mov	r2, r0
  8002f5a:	4b1d      	ldr	r3, [pc, #116]	; (8002fd0 <TouchSwitchActivity+0x8c>)
  8002f5c:	681b      	ldr	r3, [r3, #0]
  8002f5e:	1ad3      	subs	r3, r2, r3
- 8002f60:	f5b3 7ffa 	cmp.w	r3, #500	; 0x1f4
+ 8002f60:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
  8002f64:	d330      	bcc.n	8002fc8 <TouchSwitchActivity+0x84>
 		{
 			uint16_t x, y; // Touch points
@@ -6189,13 +6189,13 @@ void TouchLightsActivity(void)
  8002fe8:	2b00      	cmp	r3, #0
  8002fea:	d039      	beq.n	8003060 <TouchLightsActivity+0x84>
 	{
-		if(HAL_GetTick() - TimerTouch >= 500) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
  8002fec:	f000 ff4e 	bl	8003e8c <HAL_GetTick>
  8002ff0:	4602      	mov	r2, r0
  8002ff2:	4b1d      	ldr	r3, [pc, #116]	; (8003068 <TouchLightsActivity+0x8c>)
  8002ff4:	681b      	ldr	r3, [r3, #0]
  8002ff6:	1ad3      	subs	r3, r2, r3
- 8002ff8:	f5b3 7ffa 	cmp.w	r3, #500	; 0x1f4
+ 8002ff8:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
  8002ffc:	d330      	bcc.n	8003060 <TouchLightsActivity+0x84>
 		{
 			uint16_t x, y; // Touch points
