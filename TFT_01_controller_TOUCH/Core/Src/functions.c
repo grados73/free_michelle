@@ -10,6 +10,11 @@
 #include "functions.h"
 #include "logo.h"
 
+extern float CTemp;
+extern float CPres;
+extern float CTempWew = 0.0;
+extern uint8_t Time[3] = {0,0,0};
+
 
 uint8_t system_init(){
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
@@ -46,26 +51,33 @@ uint8_t system_init(){
 	  GFX_DrawFillRoundRectangle(240, 200, 20, 20, 5, ILI9341_GREEN);
 	  HAL_Delay(200); // !!!! TODO
 
+	  showCurrentParameters(0, 0, 0, 0, 0);
+
 
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
 }
 
-void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uint8_t water_lvl, uint8_t humidity)
+void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t Time[3], uint8_t water_lvl, uint8_t presure)
 {
 		// TODO zrobić żeby czytało właściwe wartości
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 	  uint8_t Len = sprintf((char*)Msg, "Czas: 00:00:00");
 	  EF_PutString(Msg, 20, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	  Len = sprintf((char*)Msg, "Temp. zewn: 0`C");
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
+	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
 	  Len = sprintf((char*)Msg, "Temp. wewn: 0`C");
 	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
 	  Len = sprintf((char*)Msg, "Wilgotność: 0%%");
 	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	  Len = sprintf((char*)Msg, "Ciśnienie: 1000.0hPa");
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
+	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
 	  Len++;
 }
 

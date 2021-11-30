@@ -1352,8 +1352,8 @@ Discarded input sections
  .data          0x0000000000000000        0x0 ./Core/Src/menuTFT.o
  .bss           0x0000000000000000        0x0 ./Core/Src/menuTFT.o
  .bss.State     0x0000000000000000        0x1 ./Core/Src/menuTFT.o
- .text.MenuTFT  0x0000000000000000       0x34 ./Core/Src/menuTFT.o
- .debug_info    0x0000000000000000      0xbc5 ./Core/Src/menuTFT.o
+ .text.MenuTFT  0x0000000000000000       0x74 ./Core/Src/menuTFT.o
+ .debug_info    0x0000000000000000      0xbe4 ./Core/Src/menuTFT.o
  .debug_abbrev  0x0000000000000000      0x1e2 ./Core/Src/menuTFT.o
  .debug_aranges
                 0x0000000000000000       0x20 ./Core/Src/menuTFT.o
@@ -1431,10 +1431,10 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x3d ./Core/Src/menuTFT.o
  .debug_macro   0x0000000000000000       0x16 ./Core/Src/menuTFT.o
  .debug_macro   0x0000000000000000      0x145 ./Core/Src/menuTFT.o
- .debug_line    0x0000000000000000      0xc19 ./Core/Src/menuTFT.o
- .debug_str     0x0000000000000000    0x85d3c ./Core/Src/menuTFT.o
+ .debug_line    0x0000000000000000      0xc1e ./Core/Src/menuTFT.o
+ .debug_str     0x0000000000000000    0x85d4e ./Core/Src/menuTFT.o
  .comment       0x0000000000000000       0x54 ./Core/Src/menuTFT.o
- .debug_frame   0x0000000000000000       0x2c ./Core/Src/menuTFT.o
+ .debug_frame   0x0000000000000000       0x34 ./Core/Src/menuTFT.o
  .ARM.attributes
                 0x0000000000000000       0x34 ./Core/Src/menuTFT.o
  .group         0x0000000000000000        0xc ./Core/Src/parser.o
@@ -5761,8 +5761,8 @@ LOAD d:/stm32/programs/stm32_cube_ide/stm32cubeide_1.5.0/stm32cubeide/plugins/co
  *fill*         0x0000000020000242        0x2 
  .bss.CTemp     0x0000000020000244        0x4 ./Core/Src/parser.o
                 0x0000000020000244                CTemp
- .bss.Cpres     0x0000000020000248        0x4 ./Core/Src/parser.o
-                0x0000000020000248                Cpres
+ .bss.CPres     0x0000000020000248        0x4 ./Core/Src/parser.o
+                0x0000000020000248                CPres
  .bss.__sbrk_heap_end
                 0x000000002000024c        0x4 ./Core/Src/sysmem.o
  .bss.__malloc_free_list
@@ -6274,7 +6274,7 @@ LOAD d:/stm32/programs/stm32_cube_ide/stm32cubeide_1.5.0/stm32cubeide/plugins/co
  .debug_line    0x00000000000110e8     0x1ddf ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o
  .debug_line    0x0000000000012ec7     0x2bde ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_str      0x0000000000000000    0x8aa8d
+.debug_str      0x0000000000000000    0x8aa5d
  .debug_str     0x0000000000000000    0x80e7f ./Core/Src/EnhancedFonts/arialBlack_20ptFontInfo.o
                                       0x81126 (size before relaxing)
  .debug_str     0x0000000000080e7f     0x3dbe ./Core/Src/GFX_Color.o
@@ -6287,46 +6287,47 @@ LOAD d:/stm32/programs/stm32_cube_ide/stm32cubeide_1.5.0/stm32cubeide/plugins/co
                                       0x82508 (size before relaxing)
  .debug_str     0x0000000000085a74      0x139 ./Core/Src/dma.o
                                       0x814ce (size before relaxing)
- .debug_str     0x0000000000085bad     0x1004 ./Core/Src/functions.o
-                                      0x85cb5 (size before relaxing)
- .debug_str     0x0000000000086bb1       0x62 ./Core/Src/gpio.o
+ .debug_str     0x0000000000085bad     0x1003 ./Core/Src/functions.o
+                                      0x85cb4 (size before relaxing)
+ .debug_str     0x0000000000086bb0       0x62 ./Core/Src/gpio.o
                                       0x811d8 (size before relaxing)
- .debug_str     0x0000000000086c13      0x5be ./Core/Src/main.o
+ .debug_str     0x0000000000086c12      0x5be ./Core/Src/main.o
                                       0x86c75 (size before relaxing)
- .debug_str     0x00000000000871d1      0x21f ./Core/Src/parser.o
+ .debug_str     0x00000000000871d0      0x21f ./Core/Src/parser.o
                                       0x8662e (size before relaxing)
- .debug_str     0x00000000000873f0       0x4c ./Core/Src/ring_buffer.o
+ .debug_str     0x00000000000873ef       0x4c ./Core/Src/ring_buffer.o
                                       0x81090 (size before relaxing)
- .debug_str     0x000000000008743c       0x58 ./Core/Src/spi.o
+ .debug_str     0x000000000008743b       0x58 ./Core/Src/spi.o
                                       0x819de (size before relaxing)
- .debug_str     0x0000000000087494       0x2c ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_str     0x0000000000087493       0x2c ./Core/Src/stm32f4xx_hal_msp.o
                                       0x8113b (size before relaxing)
- .debug_str     0x00000000000874c0      0x140 ./Core/Src/stm32f4xx_it.o
+ .debug_str     0x00000000000874bf      0x140 ./Core/Src/stm32f4xx_it.o
                                       0x8180a (size before relaxing)
- .debug_str     0x0000000000087600     0x166e ./Core/Src/syscalls.o
+ .debug_str     0x00000000000875ff     0x166e ./Core/Src/syscalls.o
                                        0x8ec7 (size before relaxing)
- .debug_str     0x0000000000088c6e       0x6b ./Core/Src/sysmem.o
+ .debug_str     0x0000000000088c6d       0x6b ./Core/Src/sysmem.o
                                        0x629a (size before relaxing)
- .debug_str     0x0000000000088cd9       0xaf ./Core/Src/system_stm32f4xx.o
+ .debug_str     0x0000000000088cd8       0xaf ./Core/Src/system_stm32f4xx.o
                                       0x81063 (size before relaxing)
- .debug_str     0x0000000000088d88      0x165 ./Core/Src/uartdma.o
+ .debug_str     0x0000000000088d87      0x165 ./Core/Src/uartdma.o
                                       0x816bb (size before relaxing)
- .debug_str     0x0000000000088eed       0x57 ./Core/Src/usart.o
+ .debug_str     0x0000000000088eec       0x57 ./Core/Src/usart.o
                                       0x819f1 (size before relaxing)
- .debug_str     0x0000000000088f44       0x65 ./Core/Startup/startup_stm32f411ceux.o
- .debug_str     0x0000000000088fa9      0x57e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_str     0x0000000000088f43       0x36 ./Core/Startup/startup_stm32f411ceux.o
+                                         0x6b (size before relaxing)
+ .debug_str     0x0000000000088f79      0x57e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
                                       0x819ed (size before relaxing)
- .debug_str     0x0000000000089527      0x388 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_str     0x00000000000894f7      0x388 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
                                       0x817ca (size before relaxing)
- .debug_str     0x00000000000898af      0x2f8 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_str     0x000000000008987f      0x2f8 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
                                       0x8147b (size before relaxing)
- .debug_str     0x0000000000089ba7      0x122 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_str     0x0000000000089b77      0x122 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
                                       0x8120a (size before relaxing)
- .debug_str     0x0000000000089cc9      0x259 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_str     0x0000000000089c99      0x259 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
                                       0x81465 (size before relaxing)
- .debug_str     0x0000000000089f22      0x575 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o
+ .debug_str     0x0000000000089ef2      0x575 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o
                                       0x818f5 (size before relaxing)
- .debug_str     0x000000000008a497      0x5f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_str     0x000000000008a467      0x5f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
                                       0x819d9 (size before relaxing)
 
 .comment        0x0000000000000000       0x53

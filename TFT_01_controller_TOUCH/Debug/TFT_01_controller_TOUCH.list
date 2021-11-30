@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_line   00015aa5  00000000  00000000  0004ec26  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    0008aa8d  00000000  00000000  000646cb  2**0
+ 17 .debug_str    0008aa5d  00000000  00000000  000646cb  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .comment      00000053  00000000  00000000  000ef158  2**0
+ 18 .comment      00000053  00000000  00000000  000ef128  2**0
                   CONTENTS, READONLY
- 19 .debug_ranges 00000bf0  00000000  00000000  000ef1b0  2**3
+ 19 .debug_ranges 00000bf0  00000000  00000000  000ef180  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00004908  00000000  00000000  000efda0  2**2
+ 20 .debug_frame  00004908  00000000  00000000  000efd70  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -4807,7 +4807,7 @@ uint8_t system_init(){
 
 0800268c <showCurrentParameters>:
 
-void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uint8_t water_lvl, uint8_t humidity)
+void showCurrentParameters(uint8_t temp_zew, uint8_t temp_wew, uint8_t time, uint8_t water_lvl, uint8_t presure)
 {
  800268c:	b590      	push	{r4, r7, lr}
  800268e:	b087      	sub	sp, #28
@@ -5723,7 +5723,7 @@ void UART_ParseAnswPres()
  8002c54:	2b00      	cmp	r3, #0
  8002c56:	d02a      	beq.n	8002cae <UART_ParseAnswPres+0x6e>
 	{
-		Cpres = atof(ParsePointer); // If there are no chars, change string to integer
+		CPres = atof(ParsePointer); // If there are no chars, change string to integer
  8002c58:	6878      	ldr	r0, [r7, #4]
  8002c5a:	f003 ff39 	bl	8006ad0 <atof>
  8002c5e:	ec53 2b10 	vmov	r2, r3, d0
@@ -5733,7 +5733,7 @@ void UART_ParseAnswPres()
  8002c6a:	4603      	mov	r3, r0
  8002c6c:	4a13      	ldr	r2, [pc, #76]	; (8002cbc <UART_ParseAnswPres+0x7c>)
  8002c6e:	6013      	str	r3, [r2, #0]
-		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", Cpres);
+		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
  8002c70:	4b12      	ldr	r3, [pc, #72]	; (8002cbc <UART_ParseAnswPres+0x7c>)
  8002c72:	681b      	ldr	r3, [r3, #0]
  8002c74:	4618      	mov	r0, r3

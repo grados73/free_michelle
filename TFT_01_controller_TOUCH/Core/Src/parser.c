@@ -20,7 +20,9 @@ char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
 extern struct Measurements BMPResults;
 float CTemp = 0.0;
-float Cpres = 0.0;
+float CPres = 0.0;
+float CTempWew = 0.0;
+uint8_t Time[3] = {0,0,0};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////// GLOWNA FUNKCJA PARSOWANIA //////////////////////////////////////////////////////////////////////////////
@@ -135,8 +137,8 @@ void UART_ParseAnswPres()
 	uint8_t Len;
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
-		Cpres = atof(ParsePointer); // If there are no chars, change string to integer
-		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", Cpres);
+		CPres = atof(ParsePointer); // If there are no chars, change string to integer
+		Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
 		EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
 		Len++;
