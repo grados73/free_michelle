@@ -54,7 +54,6 @@
 //
 // Define position string in showLightsControlPanel funcion
 //
-
 #define SWIATLA_STRING_POZ_X 70
 #define SWIATLA_STRING_POZ_Y 20
 #define STRING_LIGHTS_POZ_X 20

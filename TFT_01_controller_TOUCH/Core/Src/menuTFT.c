@@ -65,12 +65,14 @@ void TouchParametersActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
 		{
 			uint16_t x, y; // Touch points
-
 			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
 
+			//
+			// Check if it is button to change screen
+			//
 			// Check if that point is inside the LEFT Button
 			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
 					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
@@ -96,12 +98,14 @@ void TouchSwitchActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
 		{
 			uint16_t x, y; // Touch points
-
 			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
 
+			//
+			// Check if it is button to change screen
+			//
 			// Check if that point is inside the LEFT Button
 			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
 					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
@@ -127,12 +131,14 @@ void TouchLightsActivity(void)
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
-		if(HAL_GetTick() - TimerTouch >= 1000) // If pass 500ms from last change State
+		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
 		{
 			uint16_t x, y; // Touch points
-
 			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
 
+			//
+			// Check if it is button to change screen
+			//
 			// Check if that point is inside the LEFT Button
 			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
 					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
