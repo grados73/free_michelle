@@ -41,7 +41,7 @@
 #define CISN_POZ_Y 170
 
 //
-// Define position string in showCurrentParameters funcion
+// Define position string in showControlPanel funcion
 //
 #define PRZELACZNIKI_STRING_POZ_X 45
 #define PRZELACZNIKI_STRING_POZ_Y 20
@@ -51,9 +51,26 @@
 #define STRING_SWITCH_3_POZ_Y 120
 #define STRING_SWITCH_4_POZ_Y 150
 
+//
+// Define position string in showLightsControlPanel funcion
+//
+
+#define SWIATLA_STRING_POZ_X 70
+#define SWIATLA_STRING_POZ_Y 20
+#define STRING_LIGHTS_POZ_X 20
+#define STRING_LIGHTS_1_POZ_Y 60
+#define STRING_LIGHTS_2_POZ_Y 90
+#define STRING_LIGHTS_3_POZ_Y 120
+#define STRING_LIGHTS_4_POZ_Y 150
+
+
 
 uint8_t Msg[32];
 
+
+//
+// Prototype of functions
+//
 uint8_t system_init();
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure);
 void showControlPanel();

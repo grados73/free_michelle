@@ -22,7 +22,7 @@ extern uint8_t Time[3];
 uint8_t system_init(){
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  ILI9341_DrawImage(40, 50, logo, 240, 140);
-//	  GFX_Image(40, 50, logo, 240, 140); usunieta wolniejsza wersja rysowania
+//	  GFX_Image(40, 50, logo, 240, 140); //usunieta wolniejsza wersja rysowania
 
 	  HAL_Delay(200); // !!!! TODO
 
@@ -63,7 +63,7 @@ uint8_t system_init(){
 
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure)
 {
-		// TODO zrobić żeby czytało właściwe wartości
+		// TODO dodac kreske pod naglowkiem
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
@@ -140,19 +140,19 @@ void showLightsControlPanel()
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
 	  uint8_t Len = sprintf((char*)Msg, "-=ŚWIATŁA=-");
-	  EF_PutString(Msg, 80, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "ŚWIATŁO 1:");
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "ŚWIATŁO 2:");
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "ŚWIATŁO 3:");
-	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  Len = sprintf((char*)Msg, "ŚWIATŁO 4:");
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  EF_SetFont(&arial_11ptFontInfo);
 	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);

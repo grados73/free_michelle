@@ -33,17 +33,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_aranges 00000d98  00000000  00000000  00049f78  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_macro  00005a00  00000000  00000000  0004ad10  2**0
+ 15 .debug_macro  00005a60  00000000  00000000  0004ad10  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_line   000172db  00000000  00000000  00050710  2**0
+ 16 .debug_line   000172db  00000000  00000000  00050770  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    0008ad1a  00000000  00000000  000679eb  2**0
+ 17 .debug_str    0008aeb2  00000000  00000000  00067a4b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .comment      00000053  00000000  00000000  000f2705  2**0
+ 18 .comment      00000053  00000000  00000000  000f28fd  2**0
                   CONTENTS, READONLY
- 19 .debug_ranges 00000c20  00000000  00000000  000f2758  2**3
+ 19 .debug_ranges 00000c20  00000000  00000000  000f2950  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  000049cc  00000000  00000000  000f3378  2**2
+ 20 .debug_frame  000049cc  00000000  00000000  000f3570  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -4595,7 +4595,7 @@ uint8_t system_init(){
  80024d2:	2132      	movs	r1, #50	; 0x32
  80024d4:	2028      	movs	r0, #40	; 0x28
  80024d6:	f7ff fca0 	bl	8001e1a <ILI9341_DrawImage>
-//	  GFX_Image(40, 50, logo, 240, 140); usunieta wolniejsza wersja rysowania
+//	  GFX_Image(40, 50, logo, 240, 140); //usunieta wolniejsza wersja rysowania
 
 	  HAL_Delay(200); // !!!! TODO
  80024da:	20c8      	movs	r0, #200	; 0xc8
@@ -4820,7 +4820,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  800269c:	460b      	mov	r3, r1
  800269e:	ed87 1a01 	vstr	s2, [r7, #4]
  80026a2:	72fb      	strb	r3, [r7, #11]
-		// TODO zrobić żeby czytało właściwe wartości
+		// TODO dodac kreske pod naglowkiem
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
  80026a4:	f24c 6018 	movw	r0, #50712	; 0xc618
  80026a8:	f7ff fbe2 	bl	8001e70 <ILI9341_ClearDisplay>
@@ -4834,14 +4834,14 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  80026b6:	f005 fbdf 	bl	8007e78 <siprintf>
  80026ba:	4603      	mov	r3, r0
  80026bc:	77fb      	strb	r3, [r7, #31]
-	  EF_PutString(Msg, 50, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, PARAMETRY_STRING_POZ_X, PARAMETRY_STRING_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  80026be:	f24c 6318 	movw	r3, #50712	; 0xc618
  80026c2:	9301      	str	r3, [sp, #4]
  80026c4:	2300      	movs	r3, #0
  80026c6:	9300      	str	r3, [sp, #0]
  80026c8:	2300      	movs	r3, #0
  80026ca:	2214      	movs	r2, #20
- 80026cc:	2132      	movs	r1, #50	; 0x32
+ 80026cc:	212f      	movs	r1, #47	; 0x2f
  80026ce:	4861      	ldr	r0, [pc, #388]	; (8002854 <showCurrentParameters+0x1c8>)
  80026d0:	f7ff f9e4 	bl	8001a9c <EF_PutString>
 
@@ -5069,14 +5069,14 @@ void showControlPanel()
  80028a4:	f005 fae8 	bl	8007e78 <siprintf>
  80028a8:	4603      	mov	r3, r0
  80028aa:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 50, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, PRZELACZNIKI_STRING_POZ_X, PRZELACZNIKI_STRING_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  80028ac:	f24c 6318 	movw	r3, #50712	; 0xc618
  80028b0:	9301      	str	r3, [sp, #4]
  80028b2:	2300      	movs	r3, #0
  80028b4:	9300      	str	r3, [sp, #0]
  80028b6:	2300      	movs	r3, #0
  80028b8:	2214      	movs	r2, #20
- 80028ba:	2132      	movs	r1, #50	; 0x32
+ 80028ba:	212d      	movs	r1, #45	; 0x2d
  80028bc:	4847      	ldr	r0, [pc, #284]	; (80029dc <showControlPanel+0x150>)
  80028be:	f7ff f8ed 	bl	8001a9c <EF_PutString>
 
@@ -5086,13 +5086,13 @@ void showControlPanel()
  80028c6:	f005 fad7 	bl	8007e78 <siprintf>
  80028ca:	4603      	mov	r3, r0
  80028cc:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  80028ce:	f24c 6318 	movw	r3, #50712	; 0xc618
  80028d2:	9301      	str	r3, [sp, #4]
  80028d4:	2300      	movs	r3, #0
  80028d6:	9300      	str	r3, [sp, #0]
  80028d8:	2300      	movs	r3, #0
- 80028da:	2232      	movs	r2, #50	; 0x32
+ 80028da:	223c      	movs	r2, #60	; 0x3c
  80028dc:	2114      	movs	r1, #20
  80028de:	483f      	ldr	r0, [pc, #252]	; (80029dc <showControlPanel+0x150>)
  80028e0:	f7ff f8dc 	bl	8001a9c <EF_PutString>
@@ -5103,13 +5103,13 @@ void showControlPanel()
  80028e8:	f005 fac6 	bl	8007e78 <siprintf>
  80028ec:	4603      	mov	r3, r0
  80028ee:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
  80028f0:	f24c 6318 	movw	r3, #50712	; 0xc618
  80028f4:	9301      	str	r3, [sp, #4]
  80028f6:	2301      	movs	r3, #1
  80028f8:	9300      	str	r3, [sp, #0]
  80028fa:	2300      	movs	r3, #0
- 80028fc:	2250      	movs	r2, #80	; 0x50
+ 80028fc:	225a      	movs	r2, #90	; 0x5a
  80028fe:	2114      	movs	r1, #20
  8002900:	4836      	ldr	r0, [pc, #216]	; (80029dc <showControlPanel+0x150>)
  8002902:	f7ff f8cb 	bl	8001a9c <EF_PutString>
@@ -5120,13 +5120,13 @@ void showControlPanel()
  800290a:	f005 fab5 	bl	8007e78 <siprintf>
  800290e:	4603      	mov	r3, r0
  8002910:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002912:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002916:	9301      	str	r3, [sp, #4]
  8002918:	2300      	movs	r3, #0
  800291a:	9300      	str	r3, [sp, #0]
  800291c:	2300      	movs	r3, #0
- 800291e:	226e      	movs	r2, #110	; 0x6e
+ 800291e:	2278      	movs	r2, #120	; 0x78
  8002920:	2114      	movs	r1, #20
  8002922:	482e      	ldr	r0, [pc, #184]	; (80029dc <showControlPanel+0x150>)
  8002924:	f7ff f8ba 	bl	8001a9c <EF_PutString>
@@ -5137,13 +5137,13 @@ void showControlPanel()
  800292c:	f005 faa4 	bl	8007e78 <siprintf>
  8002930:	4603      	mov	r3, r0
  8002932:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002934:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002938:	9301      	str	r3, [sp, #4]
  800293a:	2300      	movs	r3, #0
  800293c:	9300      	str	r3, [sp, #0]
  800293e:	2300      	movs	r3, #0
- 8002940:	228c      	movs	r2, #140	; 0x8c
+ 8002940:	2296      	movs	r2, #150	; 0x96
  8002942:	2114      	movs	r1, #20
  8002944:	4825      	ldr	r0, [pc, #148]	; (80029dc <showControlPanel+0x150>)
  8002946:	f7ff f8a9 	bl	8001a9c <EF_PutString>
@@ -5249,14 +5249,14 @@ void showLightsControlPanel()
  8002a14:	f005 fa30 	bl	8007e78 <siprintf>
  8002a18:	4603      	mov	r3, r0
  8002a1a:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 80, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002a1c:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002a20:	9301      	str	r3, [sp, #4]
  8002a22:	2300      	movs	r3, #0
  8002a24:	9300      	str	r3, [sp, #0]
  8002a26:	2300      	movs	r3, #0
  8002a28:	2214      	movs	r2, #20
- 8002a2a:	2150      	movs	r1, #80	; 0x50
+ 8002a2a:	2146      	movs	r1, #70	; 0x46
  8002a2c:	4847      	ldr	r0, [pc, #284]	; (8002b4c <showLightsControlPanel+0x150>)
  8002a2e:	f7ff f835 	bl	8001a9c <EF_PutString>
 
@@ -5266,13 +5266,13 @@ void showLightsControlPanel()
  8002a36:	f005 fa1f 	bl	8007e78 <siprintf>
  8002a3a:	4603      	mov	r3, r0
  8002a3c:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 50, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002a3e:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002a42:	9301      	str	r3, [sp, #4]
  8002a44:	2300      	movs	r3, #0
  8002a46:	9300      	str	r3, [sp, #0]
  8002a48:	2300      	movs	r3, #0
- 8002a4a:	2232      	movs	r2, #50	; 0x32
+ 8002a4a:	223c      	movs	r2, #60	; 0x3c
  8002a4c:	2114      	movs	r1, #20
  8002a4e:	483f      	ldr	r0, [pc, #252]	; (8002b4c <showLightsControlPanel+0x150>)
  8002a50:	f7ff f824 	bl	8001a9c <EF_PutString>
@@ -5283,13 +5283,13 @@ void showLightsControlPanel()
  8002a58:	f005 fa0e 	bl	8007e78 <siprintf>
  8002a5c:	4603      	mov	r3, r0
  8002a5e:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 80, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
  8002a60:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002a64:	9301      	str	r3, [sp, #4]
  8002a66:	2301      	movs	r3, #1
  8002a68:	9300      	str	r3, [sp, #0]
  8002a6a:	2300      	movs	r3, #0
- 8002a6c:	2250      	movs	r2, #80	; 0x50
+ 8002a6c:	225a      	movs	r2, #90	; 0x5a
  8002a6e:	2114      	movs	r1, #20
  8002a70:	4836      	ldr	r0, [pc, #216]	; (8002b4c <showLightsControlPanel+0x150>)
  8002a72:	f7ff f813 	bl	8001a9c <EF_PutString>
@@ -5300,13 +5300,13 @@ void showLightsControlPanel()
  8002a7a:	f005 f9fd 	bl	8007e78 <siprintf>
  8002a7e:	4603      	mov	r3, r0
  8002a80:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 110, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002a82:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002a86:	9301      	str	r3, [sp, #4]
  8002a88:	2300      	movs	r3, #0
  8002a8a:	9300      	str	r3, [sp, #0]
  8002a8c:	2300      	movs	r3, #0
- 8002a8e:	226e      	movs	r2, #110	; 0x6e
+ 8002a8e:	2278      	movs	r2, #120	; 0x78
  8002a90:	2114      	movs	r1, #20
  8002a92:	482e      	ldr	r0, [pc, #184]	; (8002b4c <showLightsControlPanel+0x150>)
  8002a94:	f7ff f802 	bl	8001a9c <EF_PutString>
@@ -5317,13 +5317,13 @@ void showLightsControlPanel()
  8002a9c:	f005 f9ec 	bl	8007e78 <siprintf>
  8002aa0:	4603      	mov	r3, r0
  8002aa2:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, 20, 140, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8002aa4:	f24c 6318 	movw	r3, #50712	; 0xc618
  8002aa8:	9301      	str	r3, [sp, #4]
  8002aaa:	2300      	movs	r3, #0
  8002aac:	9300      	str	r3, [sp, #0]
  8002aae:	2300      	movs	r3, #0
- 8002ab0:	228c      	movs	r2, #140	; 0x8c
+ 8002ab0:	2296      	movs	r2, #150	; 0x96
  8002ab2:	2114      	movs	r1, #20
  8002ab4:	4825      	ldr	r0, [pc, #148]	; (8002b4c <showLightsControlPanel+0x150>)
  8002ab6:	f7fe fff1 	bl	8001a9c <EF_PutString>
