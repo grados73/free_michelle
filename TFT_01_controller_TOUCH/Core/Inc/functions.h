@@ -23,6 +23,12 @@
 #include "functions.h"
 #include "uartdma.h"
 
+
+//
+// Define position string in showCurrentParameters funcion
+//
+#define PARAMETRY_STRING_POZ_X 47
+#define PARAMETRY_STRING_POZ_Y 20
 #define CZAS_POZ_X 20
 #define CZAS_POZ_Y 50
 #define TEMP_ZEW_POZ_X 20
@@ -33,6 +39,17 @@
 #define POZ_WODY_POZ_Y 140
 #define CISN_POZ_X 20
 #define CISN_POZ_Y 170
+
+//
+// Define position string in showCurrentParameters funcion
+//
+#define PRZELACZNIKI_STRING_POZ_X 45
+#define PRZELACZNIKI_STRING_POZ_Y 20
+#define STRING_SWITCH_POZ_X 20
+#define STRING_SWITCH_1_POZ_Y 60
+#define STRING_SWITCH_2_POZ_Y 90
+#define STRING_SWITCH_3_POZ_Y 120
+#define STRING_SWITCH_4_POZ_Y 150
 
 
 uint8_t Msg[32];

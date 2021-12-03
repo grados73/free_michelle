@@ -8,15 +8,24 @@
 #ifndef INC_MENUTFT_H_
 #define INC_MENUTFT_H_
 
+//
+// Define position of button
+//
+
+//define position and size of button to change menu screen to RIGHT
 #define RIGHT_BUTTON_X 220
 #define RIGHT_BUTTON_Y 216
 #define RIGHT_BUTTON_W 100
 #define RIGHT_BUTTON_H 20
 
+//define position and size of button to change menu screen to LEFT
 #define LEFT_BUTTON_X 10
 #define LEFT_BUTTON_Y 216
 #define LEFT_BUTTON_W 100
 #define LEFT_BUTTON_H 20
+
+//define position and size of button to change state of first switch
+
 
 #define RIGHT_LEFT_BUTTON_R 5
 

@@ -5347,14 +5347,14 @@ void showLightsControlPanel()
  8002ada:	f005 f9cd 	bl	8007e78 <siprintf>
  8002ade:	4603      	mov	r3, r0
  8002ae0:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
  8002ae2:	f44f 63fc 	mov.w	r3, #2016	; 0x7e0
  8002ae6:	9301      	str	r3, [sp, #4]
  8002ae8:	2300      	movs	r3, #0
  8002aea:	9300      	str	r3, [sp, #0]
  8002aec:	2300      	movs	r3, #0
  8002aee:	22da      	movs	r2, #218	; 0xda
- 8002af0:	21df      	movs	r1, #223	; 0xdf
+ 8002af0:	21e6      	movs	r1, #230	; 0xe6
  8002af2:	4816      	ldr	r0, [pc, #88]	; (8002b4c <showLightsControlPanel+0x150>)
  8002af4:	f7fe ffd2 	bl	8001a9c <EF_PutString>
 
@@ -5374,14 +5374,14 @@ void showLightsControlPanel()
  8002b12:	f005 f9b1 	bl	8007e78 <siprintf>
  8002b16:	4603      	mov	r3, r0
  8002b18:	71fb      	strb	r3, [r7, #7]
-	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
  8002b1a:	f44f 63fc 	mov.w	r3, #2016	; 0x7e0
  8002b1e:	9301      	str	r3, [sp, #4]
  8002b20:	2300      	movs	r3, #0
  8002b22:	9300      	str	r3, [sp, #0]
  8002b24:	2300      	movs	r3, #0
  8002b26:	22da      	movs	r2, #218	; 0xda
- 8002b28:	2114      	movs	r1, #20
+ 8002b28:	210d      	movs	r1, #13
  8002b2a:	4808      	ldr	r0, [pc, #32]	; (8002b4c <showLightsControlPanel+0x150>)
  8002b2c:	f7fe ffb6 	bl	8001a9c <EF_PutString>
 	  EF_SetFont(&arialBlack_20ptFontInfo);
