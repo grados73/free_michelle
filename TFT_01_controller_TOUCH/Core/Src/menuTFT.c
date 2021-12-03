@@ -121,6 +121,28 @@ void TouchSwitchActivity(void)
 				State = MENUTFT_LIGHTS;
 				StateChangeFlag = 1;
 			}
+			//
+			// Check if it is button to change SWITCH status
+			//
+			else if((x >= SWITCH_BUTTON_X)&&(x <= (SWITCH_BUTTON_X + SWITCH_BUTTON_W)))
+			{
+				if((y >= SWITCH_1_POZ_Y)&&(y <= (SWITCH_1_POZ_Y + SWITCH_BUTTON_H)))
+				{
+					//TODO
+				}
+				else if((y >= SWITCH_2_POZ_Y)&&(y <= (SWITCH_2_POZ_Y + SWITCH_BUTTON_H)))
+				{
+					//TODO
+				}
+				else if((y >= SWITCH_3_POZ_Y)&&(y <= (SWITCH_3_POZ_Y + SWITCH_BUTTON_H)))
+				{
+					//TODO
+				}
+				else if((y >= SWITCH_4_POZ_Y)&&(y <= (SWITCH_4_POZ_Y + SWITCH_BUTTON_H)))
+				{
+					//TODO
+				}
+			}
 			TimerTouch = HAL_GetTick();
 		}
 	}
@@ -154,6 +176,30 @@ void TouchLightsActivity(void)
 				State = MENUTFT_PARAMETERS;
 				StateChangeFlag = 1;
 			}
+
+			//
+			// Check if it is button to change LIGHTS status
+			//
+			else if((x >= LIGHTS_BUTTON_X)&&(x <= (LIGHTS_BUTTON_X + LIGHTS_BUTTON_W)))
+			{
+				if((y >= LIGHT_B_1_POZ_Y)&&(y <= (LIGHT_B_1_POZ_Y + LIGHTS_BUTTON_H)))
+				{
+					//TODO
+				}
+				else if((y >= LIGHT_B_2_POZ_Y)&&(y <= (LIGHT_B_2_POZ_Y + LIGHTS_BUTTON_H)))
+				{
+					//TODO
+				}
+				else if((y >= LIGHT_B_3_POZ_Y)&&(y <= (LIGHT_B_3_POZ_Y + LIGHTS_BUTTON_H)))
+				{
+					//TODO
+				}
+				else if((y >= LIGHT_B_4_POZ_Y)&&(y <= (LIGHT_B_4_POZ_Y + LIGHTS_BUTTON_H)))
+				{
+					//TODO
+				}
+			}
+
 			TimerTouch = HAL_GetTick();
 		}
 	}
