@@ -17,6 +17,8 @@ extern float CPres;
 extern float CTempWew;
 extern uint8_t CWaterLvl ;
 extern uint8_t Time[3];
+extern uint8_t SwitchesButtonState[4];
+extern uint8_t LightsButtonState[4];
 
 
 uint8_t system_init(){
@@ -131,6 +133,8 @@ void showControlPanel()
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
 	  Len++;
+
+	  SendComand(UCMD_RELAY_SCHOW_ALL);
 
 	  //TODO: Dodać sprawdzenie aktualnego stanu
 	  GFX_DrawRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_BUTTON_COLOR);

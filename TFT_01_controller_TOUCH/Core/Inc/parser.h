@@ -78,6 +78,7 @@ void UART_ParseAnswTemp();
 void UART_ParseAnswPres();
 void UART_ParseAnswChangeRelayState();
 void UART_ParseAnswRelayStateStatus();
+void UART_ParseAnswLightsStateStatus();
 
 
 void SwitchMotorRegular();
@@ -87,6 +88,49 @@ void PodajTemperatureRoutine(uint8_t NrCzujnika);
 void PodajCisnienieRoutine(uint8_t NrCzujnika);
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
 
-uint8_t SendComand(uint8_t Comand);
+/*
+ * SENDING COMAND ID NUMBER
+ *	0 	=>	LED=1\n 			// LED On
+ * 	1	=>	LED=0\n 			// LED Off
+ * 	2	=>	STATE=?\n			// Jaki jest stan uC
+ * 	3	=>	TEMP=1\n			// Jaka jest temperatura 1 czujnika
+ * 	4	=>	PRES=1\n			// Jakie jest cisnienie 1 czujnika
+ * 	5	=>	CHSTATE=1,0\n		// Zmien stan przekaznika 1 na wylaczony
+ * 	6	=>	CHSTATE=2,1\n		// Zmien stan przekaznika 2 na wlaczony
+ * 	21	=>	STATESTATUS=?\n		// Podaj stan wszystkich przekaznikow
+ * 	13  =>	CHLIGHT=1,0\n		// Zmien stan swiatla 1 na wylaczony
+ * 	15  =>  CHLIGHT=2,1\n		// Zmien stan swiatla 2 na wlaczony
+ * 	22	=>	LIGHTSSTATUS=?\n	// Podaj stan wszytskich swiatel
+ *
+ */
+
+#define UCMD_LED_ON 0
+#define UCMD_LED_OFF 1
+#define UCMD_STATE_ASK 2
+#define UCMD_TEMP_1 3
+#define UCMD_PRES_1 4
+//***********************//
+#define UCMD_RELAY_1_ON 5
+#define UCMD_RELAY_1_OFF 6
+#define UCMD_RELAY_2_ON 7
+#define UCMD_RELAY_2_OFF 8
+#define UCMD_RELAY_3_ON 9
+#define UCMD_RELAY_3_OFF 10
+#define UCMD_RELAY_4_ON 11
+#define UCMD_RELAY_4_OFF 12
+#define UCMD_RELAY_SCHOW_ALL 21
+//***********************//
+#define UCMD_LIGHT_1_ON 13
+#define UCMD_LIGHT_1_OFF 14
+#define UCMD_LIGHT_2_ON 15
+#define UCMD_LIGHT_2_OFF 16
+#define UCMD_LIGHT_3_ON 17
+#define UCMD_LIGHT_3_OFF 18
+#define UCMD_LIGHT_4_ON 19
+#define UCMD_LIGHT_4_OFF 20
+#define UCMD_LIGHT_SCHOW_ALL 22
+
+
+uint8_t SendComand(uint8_t Command);
 
 #endif /* INC_PARSER_H_ */

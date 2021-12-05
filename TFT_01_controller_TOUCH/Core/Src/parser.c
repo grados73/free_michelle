@@ -28,7 +28,8 @@ float CPres = 0.0;
 float CTempWew = 0.0;
 uint8_t CWaterLvl = 0;
 uint8_t Time[3] = {0,0,0};
-uint8_t SwitchButtonState[4] = {0,0,0,0};
+uint8_t SwitchesButtonState[4] = {0,0,0,0};
+uint8_t LightsButtonState[4] = {0,0,0,0};
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,14 +38,14 @@ uint8_t SwitchButtonState[4] = {0,0,0,0};
 
 /*
  * Parsing headers:
- * 		LED=1\n 		// LED On
- * 		LED=0\n 		// LED Off
- * 		STATE=?\n		// Jaki jest stan uC
- * 		TEMP=1\n		// Jaka jest temperatura 1 czujnika
- * 		PRES=1\n		// Jakie jest cisnienie 1 czujnika
- * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
- * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
- * 		ASTATESTATUS\n	// Podaj stan wszystkich przekaznikow
+ * 		LED=1\n 			// LED On
+ * 		LED=0\n 			// LED Off
+ * 		STATE=?\n			// Jaki jest stan uC
+ * 		TEMP=1\n			// Jaka jest temperatura 1 czujnika
+ * 		PRES=1\n			// Jakie jest cisnienie 1 czujnika
+ * 		CHSTATE=1,0\n		// Zmien stan przekaznika 1 na wylaczony
+ * 		CHSTATE=2,1\n		// Zmien stan przekaznika 2 na wlaczony
+ * 		ASTATESTATUS=?\n	// Podaj stan wszystkich przekaznikow
  *
  */
 
@@ -81,6 +82,10 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  else if (strcmp(ParsePointer, "ASTATESTATUS") == 0) // Answear about current Switch Status
 	  {
 		  UART_ParseAnswRelayStateStatus();
+	  }
+	  else if (strcmp(ParsePointer, "ALIGHTSSTATUS=?\n") == 0) // Answear about current Switch Status
+	  {
+		  UART_ParseAnswLightsStateStatus();
 	  }
 
 	  //TODO: DODAC OBSLUGE PARSOWANIA BLEDOW
@@ -210,7 +215,7 @@ void UART_ParseAnswRelayStateStatus()
 						return;	// And exit parsing
 					}
 
-					SwitchButtonState[i] = atof(ParsePointer); // If there are no chars, change string to integer
+					SwitchesButtonState[i] = atof(ParsePointer); // If there are no chars, change string to integer
 				}
 			}
 			else
@@ -222,12 +227,120 @@ void UART_ParseAnswRelayStateStatus()
 		}
 }
 
+//
+// Parsing information about current state of lights
+// "ALIGHTSSTATUS=0,1,1,0\n" // Light1-> 0, Light2 -> 1, Light3 -> 1, Light4 -> 0
+void UART_ParseAnswLightsStateStatus()
+{
+	uint8_t i,j; // Iterators
+
+			for(i = 0; i<4; i++) // 4 parameters are expected
+			{
+				char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+
+				if(strlen(ParsePointer) > 0) // If string exists
+				{
+					for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
+					{
+						if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
+						{
+							sprintf(Message, "ERROR_WRONG_VALUE\n"); // If not, Error message
+							UARTDMA_Print(&huartdma2, Message); // Print message
+							return;	// And exit parsing
+						}
+
+						LightsButtonState[i] = atof(ParsePointer); // If there are no chars, change string to integer
+					}
+				}
+				else
+				{
+					sprintf(Message, "ERROR_TOO_LESS_PARAMETERS\n"); // If not, Error message
+					UARTDMA_Print(&huartdma2, Message); // Print message
+					return;	// And exit parsing
+				}
+			}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////// ASK FOR INFORMATION //////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-uint8_t SendComand(uint8_t Comand)
+uint8_t SendComand(uint8_t Command)
 {
+	uint8_t SW_Command = Command;
+
+	switch(SW_Command)
+		{
+		case UCMD_LED_ON:
+			UARTDMA_Print(&huartdma2, "LED=1\n");
+			break;
+		case UCMD_LED_OFF:
+			UARTDMA_Print(&huartdma2, "LED=0\n");
+			break;
+		case UCMD_STATE_ASK:
+			UARTDMA_Print(&huartdma2, "STATE=?\n");
+			break;
+		case UCMD_TEMP_1:
+			UARTDMA_Print(&huartdma2, "TEMP=1\n");
+			break;
+		case UCMD_PRES_1:
+			UARTDMA_Print(&huartdma2, "PRES=1\n");
+			break;
+		case UCMD_RELAY_1_ON:
+			UARTDMA_Print(&huartdma2, "CHSTATE=1,1\n");
+			break;
+		case UCMD_RELAY_1_OFF:
+			UARTDMA_Print(&huartdma2, "CHSTATE=1,0\n");
+			break;
+		case UCMD_RELAY_2_ON:
+			UARTDMA_Print(&huartdma2, "CHSTATE=2,1\n");
+			break;
+		case UCMD_RELAY_2_OFF:
+			UARTDMA_Print(&huartdma2, "CHSTATE=2,0\n");
+			break;
+		case UCMD_RELAY_3_ON:
+			UARTDMA_Print(&huartdma2, "CHSTATE=3,1\n");
+			break;
+		case UCMD_RELAY_3_OFF:
+			UARTDMA_Print(&huartdma2, "CHSTATE=3,0\n");
+			break;
+		case UCMD_RELAY_4_ON:
+			UARTDMA_Print(&huartdma2, "CHSTATE=4,1\n");
+			break;
+		case UCMD_RELAY_4_OFF:
+			UARTDMA_Print(&huartdma2, "CHSTATE=4,0\n");
+			break;
+		case UCMD_RELAY_SCHOW_ALL:
+			UARTDMA_Print(&huartdma2, "STATESTATUS=?\n");
+			break;
+		case UCMD_LIGHT_1_ON:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=1,1\n");
+			break;
+		case UCMD_LIGHT_1_OFF:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=1,0\n");
+			break;
+		case UCMD_LIGHT_2_ON:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=2,1\n");
+			break;
+		case UCMD_LIGHT_2_OFF:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=2,0\n");
+			break;
+		case UCMD_LIGHT_3_ON:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=3,1\n");
+			break;
+		case UCMD_LIGHT_3_OFF:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=3,0\n");
+			break;
+		case UCMD_LIGHT_4_ON:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=4,1\n");
+			break;
+		case UCMD_LIGHT_4_OFF:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=4,0\n");
+			break;
+		case UCMD_LIGHT_SCHOW_ALL:
+			UARTDMA_Print(&huartdma2, "LIGHTSSTATUS=?\n");
+			break;
+		}
 
 	return 1;
 }
@@ -273,6 +386,18 @@ void SwitchControllerState()
 		}
 }
 
+/*
+ * Parsing headers:
+ * 		LED=1\n 		// LED On
+ * 		LED=0\n 		// LED Off
+ * 		STATE=?\n		// Jaki jest stan uC
+ * 		TEMP=1\n		// Jaka jest temperatura 1 czujnika
+ * 		PRES=1\n		// Jakie jest cisnienie 1 czujnika
+ * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
+ * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
+ * 		ASTATESTATUS\n	// Podaj stan wszystkich przekaznikow
+ *
+ */
 void IdleRoutine(uint8_t * AqaParameters)
 {
 
