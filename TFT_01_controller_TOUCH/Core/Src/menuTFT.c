@@ -19,7 +19,7 @@ extern float CTemp;
 extern float CPres;
 uint8_t StateChangeFlag = 0;
 
-uint32_t TimerTouch = 0;
+uint32_t TimerTouch = 0; // Timer to debouncing function
 
 MenuTFTState State = MENUTFT_INIT; // Initialization state for MenuTFT State Machine
 

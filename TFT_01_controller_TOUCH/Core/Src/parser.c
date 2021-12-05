@@ -17,7 +17,7 @@
 
 extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
-char MyName[32] = {"SLAVE1"}; // Name string
+char MyName[32] = {"MASTER1"}; // Name string
 uint8_t ChangingStateFlag;
 extern struct Measurements BMPResults;
 
@@ -28,9 +28,11 @@ float CPres = 0.0;
 float CTempWew = 0.0;
 uint8_t CWaterLvl = 0;
 uint8_t Time[3] = {0,0,0};
+uint8_t SwitchButtonState[4] = {0,0,0,0};
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////// GLOWNA FUNKCJA PARSOWANIA //////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// MAIN PARSING FUNCTION //////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
@@ -42,6 +44,8 @@ uint8_t Time[3] = {0,0,0};
  * 		PRES=1\n		// Jakie jest cisnienie 1 czujnika
  * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
  * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
+ * 		ASTATESTATUS\n	// Podaj stan wszystkich przekaznikow
+ *
  */
 
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
@@ -62,25 +66,34 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 		  UART_ParseAnswStatus();
 	  }
-	  else if (strcmp(ParsePointer, "ATEMP") == 0)
+	  else if (strcmp(ParsePointer, "ATEMP") == 0) // Answear about current Temperature
 	  {
 		  UART_ParseAnswTemp();
 	  }
-	  else if (strcmp(ParsePointer, "APRES") == 0)
+	  else if (strcmp(ParsePointer, "APRES") == 0) // Answear about current Presure
 	  {
 		  UART_ParseAnswPres();
 	  }
-	  else if (strcmp(ParsePointer, "ACHSTATE") == 0)
+	  else if (strcmp(ParsePointer, "ACHSTATE") == 0) // Answear on change status order
 	  {
 		  UART_ParseAnswChangeRelayState();
 	  }
+	  else if (strcmp(ParsePointer, "ASTATESTATUS") == 0) // Answear about current Switch Status
+	  {
+		  UART_ParseAnswRelayStateStatus();
+	  }
+
 	  //TODO: DODAC OBSLUGE PARSOWANIA BLEDOW
 	}
 }
 
 
-/////////////////////////////////////////// FUNKCJA PARSOWANIA USER LED ////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// HANDLING PARSING FUNCTION //////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Parsowanie testowej funkcji od LED
+// "LED=1\n"
 void UART_ParseLED()
 {
 	uint8_t LedState; // Received state variable
@@ -116,12 +129,17 @@ void UART_ParseLED()
 	}
 }
 
+//
+// Parsing information about current second uC state
+//"ASTATE=1\n"
 void UART_ParseAnswStatus()
 {
 	//TODO: Dodac obsluge statusu urzadzenia
 }
 
-
+//
+// Parsing information about current temperature
+//"ATEMP=23.45000"
 void UART_ParseAnswTemp()
 {
 	char* ParsePointer = strtok(NULL, ",");
@@ -141,6 +159,9 @@ void UART_ParseAnswTemp()
 	}
 }
 
+//
+// Parsing information about current presure
+//"APRES=1014.200\n"
 void UART_ParseAnswPres()
 {
 	char* ParsePointer = strtok(NULL, ",");
@@ -164,7 +185,51 @@ void UART_ParseAnswPres()
 
 void UART_ParseAnswChangeRelayState()
 {
+	//TODO!
+}
 
+//
+// Parsing information about current state of switch
+// "ASTATESTATUS=0,1,1,0\n" // Switch1-> 0, Switch2 -> 1, Switch3 -> 1, Switch4 -> 0
+void UART_ParseAnswRelayStateStatus()
+{
+	uint8_t i,j; // Iterators
+
+		for(i = 0; i<4; i++) // 4 parameters are expected
+		{
+			char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+
+			if(strlen(ParsePointer) > 0) // If string exists
+			{
+				for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
+				{
+					if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
+					{
+						sprintf(Message, "ERROR_WRONG_VALUE\n"); // If not, Error message
+						UARTDMA_Print(&huartdma2, Message); // Print message
+						return;	// And exit parsing
+					}
+
+					SwitchButtonState[i] = atof(ParsePointer); // If there are no chars, change string to integer
+				}
+			}
+			else
+			{
+				sprintf(Message, "ERROR_TOO_LESS_PARAMETERS\n"); // If not, Error message
+				UARTDMA_Print(&huartdma2, Message); // Print message
+				return;	// And exit parsing
+			}
+		}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////// ASK FOR INFORMATION //////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+uint8_t SendComand(uint8_t Comand)
+{
+
+	return 1;
 }
 
 

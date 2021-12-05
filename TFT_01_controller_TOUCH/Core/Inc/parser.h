@@ -77,6 +77,7 @@ void UART_ParseAnswStatus();
 void UART_ParseAnswTemp();
 void UART_ParseAnswPres();
 void UART_ParseAnswChangeRelayState();
+void UART_ParseAnswRelayStateStatus();
 
 
 void SwitchMotorRegular();
@@ -85,5 +86,7 @@ void PodajStatusRoutine();
 void PodajTemperatureRoutine(uint8_t NrCzujnika);
 void PodajCisnienieRoutine(uint8_t NrCzujnika);
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
+
+uint8_t SendComand(uint8_t Comand);
 
 #endif /* INC_PARSER_H_ */
