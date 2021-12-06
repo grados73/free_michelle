@@ -62,6 +62,12 @@
 #define STRING_LIGHTS_3_POZ_Y 120
 #define STRING_LIGHTS_4_POZ_Y 150
 
+//
+// Define errata begin of string in connection to begin of button
+//
+#define STRING_ERRATA_X 3
+#define STRING_ERRATA_Y 2
+
 
 
 uint8_t Msg[32];

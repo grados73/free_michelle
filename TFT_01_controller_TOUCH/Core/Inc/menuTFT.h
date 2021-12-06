@@ -31,8 +31,8 @@
 //
 //define position and size of button to change state of EVERY switch in showControlPanel()
 #define SWITCH_BUTTON_X 270
-#define SWITCH_BUTTON_W 30
-#define SWITCH_BUTTON_H 20
+#define SWITCH_BUTTON_W 33
+#define SWITCH_BUTTON_H 21
 #define SWITCH_BUTTON_R 5
 //define position of EACH ONE switch in showControlPanel()
 #define SWITCH_1_POZ_Y (STRING_SWITCH_1_POZ_Y+5)
@@ -43,8 +43,8 @@
 //
 //define position and size of button to change state of EVERY switch in showLightsControlPanel()
 #define LIGHTS_BUTTON_X 200
-#define LIGHTS_BUTTON_W 30
-#define LIGHTS_BUTTON_H 20
+#define LIGHTS_BUTTON_W 33
+#define LIGHTS_BUTTON_H 21
 #define LIGHTS_BUTTON_R 5
 //define position of EACH ONE switch in showLightsControlPanel()
 #define LIGHT_B_1_POZ_Y (STRING_LIGHTS_1_POZ_Y+5)
