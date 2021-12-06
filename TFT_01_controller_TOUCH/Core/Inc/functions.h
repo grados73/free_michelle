@@ -28,7 +28,7 @@
 // Define position string in showCurrentParameters funcion
 //
 #define PARAMETRY_STRING_POZ_X 47
-#define PARAMETRY_STRING_POZ_Y 20
+#define PARAMETRY_STRING_POZ_Y 10
 #define CZAS_POZ_X 20
 #define CZAS_POZ_Y 50
 #define TEMP_ZEW_POZ_X 20
@@ -43,8 +43,8 @@
 //
 // Define position string in showControlPanel funcion
 //
-#define PRZELACZNIKI_STRING_POZ_X 45
-#define PRZELACZNIKI_STRING_POZ_Y 20
+#define PRZELACZNIKI_STRING_POZ_X 35
+#define PRZELACZNIKI_STRING_POZ_Y 10
 #define STRING_SWITCH_POZ_X 20
 #define STRING_SWITCH_1_POZ_Y 60
 #define STRING_SWITCH_2_POZ_Y 90
@@ -55,7 +55,7 @@
 // Define position string in showLightsControlPanel funcion
 //
 #define SWIATLA_STRING_POZ_X 70
-#define SWIATLA_STRING_POZ_Y 20
+#define SWIATLA_STRING_POZ_Y 10
 #define STRING_LIGHTS_POZ_X 20
 #define STRING_LIGHTS_1_POZ_Y 60
 #define STRING_LIGHTS_2_POZ_Y 90
@@ -67,6 +67,9 @@
 //
 #define STRING_ERRATA_X 3
 #define STRING_ERRATA_Y 2
+
+#define HEADER_UNDERLINE_POZ_Y 41
+#define HEADER_UNDERLINE_COLOR ILI9341_ORANGE
 
 
 
