@@ -14,7 +14,8 @@
 // Define position and size of button
 //
 #define RIGHT_LEFT_BUTTON_R 5 //Rounding of button
-#define SWITCH_BUTTON_COLOR ILI9341_BLACK
+#define SWITCH_ON_BUTTON_COLOR ILI9341_GREENYELLOW
+#define SWITCH_OFF_BUTTON_COLOR ILI9341_RED
 
 //define position and size of button to change menu screen to RIGHT
 #define RIGHT_BUTTON_X 220
