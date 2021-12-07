@@ -54,13 +54,11 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(USER_BRD_LED1_GPIO_Port, USER_BRD_LED1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RELAY_4_Pin|RELAY_3_Pin|RELAY_2_Pin|RELAY_1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, RELAY_4_Pin|RELAY_3_Pin|RELAY_2_Pin|RELAY_1_Pin
+                          |LIGHT_4_Pin|LIGHT_3_Pin|LIGHT_2_Pin|LIGHT_1_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LIGHT_4_Pin|LIGHT_3_Pin|LIGHT_2_Pin|LIGHT_1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = USER_BRD_LED1_Pin;

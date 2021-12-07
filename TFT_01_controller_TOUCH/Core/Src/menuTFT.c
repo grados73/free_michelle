@@ -315,7 +315,7 @@ void TouchLightsActivity(void)
 				{
 					if(LightsButtonState[3] >= 1) // if is ON
 					{
-						SendComand(UCMD_LIGHT_3_OFF); // Send comannd to OFF
+						SendComand(UCMD_LIGHT_4_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
 						Len = sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
@@ -323,7 +323,7 @@ void TouchLightsActivity(void)
 					}
 					else // if is OFF
 					{
-						SendComand(UCMD_LIGHT_3_ON); // Send comannd to ON
+						SendComand(UCMD_LIGHT_4_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
 						Len = sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);

@@ -7673,8 +7673,8 @@ void TouchLightsActivity(void)
  8003ace:	2b00      	cmp	r3, #0
  8003ad0:	d032      	beq.n	8003b38 <TouchLightsActivity+0x2f4>
 					{
-						SendComand(UCMD_LIGHT_3_OFF); // Send comannd to OFF
- 8003ad2:	2012      	movs	r0, #18
+						SendComand(UCMD_LIGHT_4_OFF); // Send comannd to OFF
+ 8003ad2:	2014      	movs	r0, #20
  8003ad4:	f000 faae 	bl	8004034 <SendComand>
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
  8003ad8:	f44f 4378 	mov.w	r3, #63488	; 0xf800
@@ -7718,8 +7718,8 @@ void TouchLightsActivity(void)
 					}
 					else // if is OFF
 					{
-						SendComand(UCMD_LIGHT_3_ON); // Send comannd to ON
- 8003b38:	2011      	movs	r0, #17
+						SendComand(UCMD_LIGHT_4_ON); // Send comannd to ON
+ 8003b38:	2013      	movs	r0, #19
  8003b3a:	f000 fa7b 	bl	8004034 <SendComand>
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
  8003b3e:	f64a 73e5 	movw	r3, #45029	; 0xafe5
