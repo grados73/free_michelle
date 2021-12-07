@@ -77,6 +77,7 @@ void UART_ParseAnswStatus();
 void UART_ParseAnswTemp();
 void UART_ParseAnswPres();
 void UART_ParseAnswChangeRelayState();
+void UART_ParseAnswChangeLightState();
 void UART_ParseAnswRelayStateStatus();
 void UART_ParseAnswLightsStateStatus();
 

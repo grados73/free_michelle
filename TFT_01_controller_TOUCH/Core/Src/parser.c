@@ -79,6 +79,10 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 		  UART_ParseAnswChangeRelayState();
 	  }
+	  else if (strcmp(ParsePointer, "ACHLIGHT") == 0) // Answear on change status order
+	  {
+		  UART_ParseAnswChangeLightState();
+	  }
 	  else if (strcmp(ParsePointer, "ASTATESTATUS") == 0) // Answear about current Switch Status
 	  {
 		  UART_ParseAnswRelayStateStatus();
@@ -189,6 +193,11 @@ void UART_ParseAnswPres()
 
 
 void UART_ParseAnswChangeRelayState()
+{
+	//TODO!
+}
+
+void UART_ParseAnswChangeLightState()
 {
 	//TODO!
 }
