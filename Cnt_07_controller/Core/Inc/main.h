@@ -70,6 +70,14 @@ void Error_Handler(void);
 #define RELAY_1_GPIO_Port GPIOB
 #define USER_LED_Pin GPIO_PIN_11
 #define USER_LED_GPIO_Port GPIOA
+#define LIGHT_4_Pin GPIO_PIN_4
+#define LIGHT_4_GPIO_Port GPIOB
+#define LIGHT_3_Pin GPIO_PIN_5
+#define LIGHT_3_GPIO_Port GPIOB
+#define LIGHT_2_Pin GPIO_PIN_6
+#define LIGHT_2_GPIO_Port GPIOB
+#define LIGHT_1_Pin GPIO_PIN_7
+#define LIGHT_1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
@@ -79,5 +87,3 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

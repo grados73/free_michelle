@@ -317,6 +317,7 @@ void PodajTemperatureRoutine(uint8_t NrCzujnika)
 
 //
 // Answer about current Pressure
+//
 void PodajCisnienieRoutine(uint8_t NrCzujnika)
 {
 	float aktualne_cisnienie = 0;
@@ -375,5 +376,38 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 //
 void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 {
+	uint8_t LightNumber;
+	uint8_t NowyStan;
+	LightNumber = NrSwiatla;
+	NowyStan = Stan;
 
+	if(LightNumber == 1)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_1_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_1_Pin, GPIO_PIN_SET);
+	}
+	else if(LightNumber == 2)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_SET);
+	}
+	else if(LightNumber == 3)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_SET);
+	}
+	else if(LightNumber == 4)
+	{
+		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_RESET);
+		else HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_SET);
+	}
+	else
+	{
+		sprintf(Message, CHANGE_LIGHT_STATE_NUMBER_ERROR); // Zly numer swiatla,
+		UARTDMA_Print(&huartdma2, Message); // Print message
+		return;	// And exit parsing
+	}
+
+	sprintf(Message, "ACHLIGHT=%d,%d,DONE\n", LightNumber, NowyStan); // Potwierdzenie wykonania polecenia
+	UARTDMA_Print(&huartdma2, Message); // Print message
 }
