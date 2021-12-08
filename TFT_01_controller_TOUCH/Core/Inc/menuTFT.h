@@ -16,6 +16,7 @@
 #define RIGHT_LEFT_BUTTON_R 5 //Rounding of button
 #define SWITCH_ON_BUTTON_COLOR ILI9341_GREENYELLOW
 #define SWITCH_OFF_BUTTON_COLOR ILI9341_RED
+#define SWITCH_CLOCK_BUTTON_COLOR ILI9341_ORANGE
 
 //define position and size of button to change menu screen to RIGHT
 #define RIGHT_BUTTON_X 220
@@ -27,6 +28,11 @@
 #define LEFT_BUTTON_Y 216
 #define LEFT_BUTTON_W 100
 #define LEFT_BUTTON_H 20
+//define position and size of button to change menu screen to CLOCK
+#define MEDIUM_BUTTON_X 120
+#define MEDIUM_BUTTON_Y 216
+#define MEDIUM_BUTTON_W 90
+#define MEDIUM_BUTTON_H 20
 
 //
 //define position and size of button to change state of EVERY switch in showControlPanel()
@@ -52,17 +58,28 @@
 #define LIGHT_B_3_POZ_Y (STRING_LIGHTS_3_POZ_Y+5)
 #define LIGHT_B_4_POZ_Y (STRING_LIGHTS_4_POZ_Y+5)
 
+//define position an size of button to change current time
+#define CLOCK_BUTTON_X 240
+#define CLOCK_BUTTON2_X (CLOCK_BUTTON_X+CLOCK_BUTTON_W+10)
+#define CLOCK_BUTTON_W 30
+#define CLOCK_BUTTON_H 21
+#define CLOCK_BUTTON_R 5
+
+#define CLOCK_B_1_POZ_Y (STRING_HOUR_POZ_Y+5)
+#define CLOCK_B_2_POZ_Y (STRING_MINUTE_POZ_Y+5)
+
+
 
 //
 // Variables
 //
-
 // Structure of MenuTFT current state
 typedef enum
 {
 	MENUTFT_INIT, 			// Build GUI
 	MENUTFT_PARAMETERS, 	// Read parameters
 	MENUTFT_SWITCH,			// Show current switch state, and possibility to change them
+	MENUTFT_CLOCK,			// Set current Hour and Minute
 	MENUTFT_LIGHTS 			// Show current lights state, and possibility to change them
 } MenuTFTState;
 
@@ -70,5 +87,6 @@ void MenuTFT(void);
 void TouchParametersActivity(void);
 void TouchSwitchActivity(void);
 void TouchLightsActivity(void);
+void TouchClockActivity(void);
 
 #endif /* INC_MENUTFT_H_ */

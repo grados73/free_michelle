@@ -160,7 +160,7 @@ void UART_ParseAnswTemp()
 		//Only if on the screen are Parameters, update current Temp
 		if(State == MENUTFT_PARAMETERS)
 		{
-			Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
+			Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C ", CTemp);
 			EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
 		UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
@@ -182,7 +182,7 @@ void UART_ParseAnswPres()
 		//Only if on the screen are Parameters, update current Presure
 		if(State == MENUTFT_PARAMETERS)
 		{
-			Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
+			Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
 			EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
 		UARTDMA_Print(&huartdma2, "PRESUPSUC\n");

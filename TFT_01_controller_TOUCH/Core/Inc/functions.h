@@ -52,7 +52,7 @@
 #define STRING_SWITCH_4_POZ_Y 150
 
 //
-// Define position string in showLightsControlPanel funcion
+// Define position string in showLightsControlPanel function
 //
 #define SWIATLA_STRING_POZ_X 70
 #define SWIATLA_STRING_POZ_Y 10
@@ -71,6 +71,15 @@
 #define HEADER_UNDERLINE_POZ_Y 41
 #define HEADER_UNDERLINE_COLOR ILI9341_ORANGE
 
+//
+// Define position string in showClockSetPanel function
+//
+#define CLOCK_STRING_POZ_X 47
+#define CLOCK_STRING_POZ_Y 10
+#define STRING_HOUR_MINUTE_POZ_X 20
+#define STRING_HOUR_POZ_Y 70
+#define STRING_MINUTE_POZ_Y 110
+#define STRING_H_M_NUMBER_POZ_X 160
 
 
 uint8_t Msg[32];
@@ -81,7 +90,10 @@ uint8_t Msg[32];
 //
 uint8_t system_init();
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure);
+void ChangeHourOnScreen();
 void showControlPanel();
 void showLightsControlPanel();
+void showClockSetPanel();
+
 
 #endif /* INC_FUNCTIONS_H_ */

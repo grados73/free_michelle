@@ -12,7 +12,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "i2c.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -31,6 +33,7 @@
 #include "uartdma.h"
 #include "parser.h"
 #include "menuTFT.h"
+#include "ds3231_for_stm32_hal.h"
 /* PRRIVATE FONTS*/
 #include "EnhancedFonts/arialBlack_20ptFontInfo.h"
 #include "EnhancedFonts/arialBlack_11ptFontInfo.h"
@@ -59,6 +62,12 @@ uint8_t Msg[32];
 UARTDMA_HandleTypeDef huartdma2;
 uint8_t BufferReceive[64];
 uint16_t Xread, Yread;
+I2C_HandleTypeDef hi2c1;
+//To update current displayed clock
+extern uint8_t Time[3];
+extern MenuTFTState State;
+
+uint8_t THour, TMinutes, TSeconds;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,15 +114,31 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_SPI3_Init();
+  MX_I2C1_Init();
+  MX_TIM11_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  //
+  //Timer START
+  HAL_TIM_Base_Start_IT(&htim11);
+  // TFT controller INIT
   ILI9341_Init(&hspi1);
-
-    UARTDMA_Init(&huartdma2, &huart2);
-
+  // UART in DMA mode with use RingBuffer INIT
+  UARTDMA_Init(&huartdma2, &huart2);
+  // TFT touch controller INIT
   XPT2046_Init(&hspi3, EXTI9_5_IRQn);
+  // RTC Initialization
+  DS3231_Init(&hi2c1);
+//  __disable_irq();
+  DS3231_SetInterruptMode(DS3231_ALARM_INTERRUPT);
+  DS3231_EnableOscillator(DS3231_ENABLED);
+  DS3231_EnableAlarm2(DS3231_ENABLED);
+  DS3231_SetAlarm2Mode(DS3231_A2_EVERY_M);
+
+
+//  __enable_irq();
 
   // TO DO! - Tutaj przeprowadzić inicjalizację peryferiów i połączenia z drugim STMem
 
@@ -123,8 +148,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-	 // ILI9341_DrawImage(40, 50, logo, 240, 140);
 
 	  if(UARTDMA_IsDataReceivedReady(&huartdma2))
 	  {
@@ -143,6 +166,10 @@ int main(void)
 
 
 	  MenuTFT();
+
+//	  THour = DS3231_GetHour();
+//	  TMinutes = DS3231_GetMinute();
+//	  TSeconds = DS3231_GetSecond();
 
 
 
@@ -202,17 +229,46 @@ void SystemClock_Config(void)
   */
 static void MX_NVIC_Init(void)
 {
+  /* EXTI4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
   /* EXTI9_5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  /* I2C1_EV_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(I2C1_EV_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
+  /* USART2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
+  /* SPI3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(SPI3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(SPI3_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
+// Periodic interrupt from TIMERS Callback
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Instance == TIM11)
+	{
+		HAL_GPIO_TogglePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin);
+		ChangeHourOnScreen();
+	}
+}
+
+// Output interrupt from GPIO etc. Callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == TOUCH_IRQ_Pin)
 	{
 		XPT2046_IRQ();
+	}
+
+	if(GPIO_Pin == RTC_IRQ_Pin) // Interrupt from RTC - alarm one per minute
+	{
+		DS3231_ClearAlarm2Flag();
+
 	}
 }
 

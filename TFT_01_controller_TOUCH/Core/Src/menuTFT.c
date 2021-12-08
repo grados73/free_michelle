@@ -15,12 +15,15 @@
 #include "GFX_EnhancedFonts.h"
 #include "functions.h"
 #include "parser.h"
+#include "ds3231_for_stm32_hal.h"
 
 extern float CTemp;
 extern float CPres;
 extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
 uint8_t StateChangeFlag = 0;
+uint8_t Hours = 15;
+uint8_t Minutes = 5;
 
 uint32_t TimerTouch = 0; // Timer to debouncing function
 
@@ -59,6 +62,14 @@ void MenuTFT(void)
 		}
 		TouchLightsActivity();
 		break;
+	case MENUTFT_CLOCK:
+		if(StateChangeFlag == 1)
+		{
+			showClockSetPanel();
+			StateChangeFlag = 0;
+		}
+		TouchClockActivity();
+		break;
 	}
 }
 
@@ -89,6 +100,14 @@ void TouchParametersActivity(void)
 					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
 			{
 				State = MENUTFT_SWITCH;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the MEDIUM Button
+			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
+					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
+			{
+				State = MENUTFT_CLOCK;
 				StateChangeFlag = 1;
 			}
 			TimerTouch = HAL_GetTick();
@@ -337,5 +356,120 @@ void TouchLightsActivity(void)
 			TimerTouch = HAL_GetTick();
 		}
 	}
+}
+
+void TouchClockActivity(void)
+{
+	// Check if screen was touched
+		if(XPT2046_IsTouched())
+		{
+			EF_SetFont(&arialBlack_20ptFontInfo);
+			if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
+			{
+				uint16_t x, y; // Touch points
+
+
+				XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+				//
+				// Check if it is button to change screen
+				//
+				// Check if that point is inside the LEFT Button - back to Parameters
+				if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+						(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+				{
+					State = MENUTFT_PARAMETERS;
+					StateChangeFlag = 1;
+				}
+
+				// Check if that point is inside the RIGHT Button - Confirmed changed clock
+				else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+						(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+				{
+					DS3231_SetHour(Hours);
+					DS3231_SetMinute(Minutes);
+					DS3231_SetSecond(50);
+					sprintf((char*)Msg, "-Time Changed-");
+					EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_ORANGE, BG_COLOR, ILI9341_LIGHTGREY);
+				}
+
+				//
+				// Check if it is button to increase by an ONE (1) HOUR / MINUT - first ROW
+				//
+				else if((x >= CLOCK_BUTTON_X)&&(x <= (CLOCK_BUTTON_X + CLOCK_BUTTON_W)))
+				{
+					uint8_t Len = 0;
+					if((y >= CLOCK_B_1_POZ_Y)&&(y <= (CLOCK_B_1_POZ_Y + CLOCK_BUTTON_H))) // Add 1 Hour
+					{
+						if(Hours < 24)
+						{
+							Hours++;
+						}
+						else
+						{
+							Hours = 1;
+						}
+						Len = sprintf((char*)Msg, " %d  ", Hours);
+						EF_PutString(Msg, STRING_H_M_NUMBER_POZ_X, STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+					}
+					else if((y >= CLOCK_B_2_POZ_Y)&&(y <= (CLOCK_B_2_POZ_Y + CLOCK_BUTTON_H))) // Add 1 Minute
+					{
+						if(Minutes < 59)
+						{
+							Minutes++;
+						}
+						else
+						{
+							Minutes = 0;
+						}
+						Len = sprintf((char*)Msg, " %d  ", Minutes);
+						EF_PutString(Msg, STRING_H_M_NUMBER_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+					}
+					Len++;
+
+				}
+
+				//
+				// Check if it is button to increase by an 6 HOURS / 10 MINUTS - second ROW
+				//
+				else if((x >= (CLOCK_BUTTON2_X))&&(x <= (CLOCK_BUTTON2_X + CLOCK_BUTTON_W)))
+				{
+					uint8_t Len = 0;
+					if((y >= CLOCK_B_1_POZ_Y)&&(y <= (CLOCK_B_1_POZ_Y + CLOCK_BUTTON_H))) // Add 6 Hour
+					{
+						if(Hours < 19)
+						{
+							Hours = Hours + 6;
+						}
+						else
+						{
+							Hours = 1;
+						}
+						Len = sprintf((char*)Msg, " %d  ", Hours);
+						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X), STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+					}
+					else if((y >= CLOCK_B_2_POZ_Y)&&(y <= (CLOCK_B_2_POZ_Y + CLOCK_BUTTON_H))) // Add 10 Minute
+					{
+						if(Minutes < 49)
+						{
+							Minutes = Minutes +10;
+						}
+						else
+						{
+							Minutes = 0;
+						}
+						sprintf((char*)Msg, " %d  ", Minutes);
+						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X), STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+					}
+					Len++;
+					EF_SetFont(&arialBlack_20ptFontInfo);
+				}
+
+				TimerTouch = HAL_GetTick();
+			}
+		}
 }
 

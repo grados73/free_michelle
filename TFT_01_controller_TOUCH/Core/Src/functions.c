@@ -11,6 +11,7 @@
 #include "logo.h"
 #include "parser.h"
 #include "menuTFT.h"
+#include "ds3231_for_stm32_hal.h"
 
 extern float CTemp;
 extern float CPres;
@@ -19,6 +20,10 @@ extern uint8_t CWaterLvl ;
 extern uint8_t Time[3];
 extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
+extern MenuTFTState State;
+
+uint8_t OldHours = 0;
+uint8_t OldMinutes = 0;
 
 
 uint8_t system_init(){
@@ -68,6 +73,10 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 		// TODO dodac kreske pod naglowkiem
 	  SendComand(UCMD_TEMP_1);
 	  SendComand(UCMD_PRES_1);
+
+	  uint8_t CHour = DS3231_GetHour();
+	  uint8_t CMinute = DS3231_GetMinute();
+
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
@@ -76,9 +85,12 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
 
-	  Len = sprintf((char*)Msg, "Czas: %d : %d : %d", Time[0], Time[1], Time[2]);
+	  if ((CHour<10)&&(CMinute<10)) Len = sprintf((char*)Msg, "Czas: 0%d : 0%d", CHour, CMinute);
+	  else if(CHour<10)	Len = sprintf((char*)Msg, "Czas: 0%d : %d", CHour, CMinute);
+	  else if(CMinute<10) Len = sprintf((char*)Msg, "Czas: %d : 0%d", CHour, CMinute);
+	  else Len = sprintf((char*)Msg, "Czas: %d : %d", CHour, CMinute);
 	  EF_PutString(Msg, CZAS_POZ_X, CZAS_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
+	  Len = sprintf((char*)Msg, "Czas: %d : 0%d", CHour, CMinute);
 	  Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
 	  EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
@@ -88,7 +100,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  Len = sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
 	  EF_PutString(Msg, POZ_WODY_POZ_X, POZ_WODY_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
-	  Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa", CPres);
+	  Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
 	  EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 
@@ -100,9 +112,53 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
 	  Len = sprintf((char*)Msg, "<=LIGHTS");
 	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	  Len = sprintf((char*)Msg, ">CLOCK<");
+	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 12), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
 	  Len++;
+}
+
+void ChangeHourOnScreen()
+{
+	  uint8_t CHour = DS3231_GetHour();
+	  uint8_t CMinute = DS3231_GetMinute();
+	  if(CHour != OldHours)
+	  {
+		  if(State == MENUTFT_PARAMETERS)
+		  {
+			  if(CHour < 10)
+			  {
+				  sprintf((char*)Msg, " 0%d", CHour);
+			  }
+			  else
+			  {
+				  sprintf((char*)Msg, " %d", CHour);
+			  }
+			  EF_PutString(Msg, CZAS_POZ_X + 77 , CZAS_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+			  OldHours = CHour;
+			  }
+	  }
+	  if(CMinute != OldMinutes)
+	  {
+		  if(State == MENUTFT_PARAMETERS)
+		  {
+			  if(CMinute < 10)
+			  {
+				  sprintf((char*)Msg, " 0%d  ", CMinute);
+			  }
+			  else
+			  {
+				  sprintf((char*)Msg, " %d  ", CMinute);
+			  }
+
+			  EF_PutString(Msg, CZAS_POZ_X + 127 , CZAS_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+			  OldMinutes = CMinute;
+		  }
+	  }
+
 }
 
 void showControlPanel()
@@ -313,6 +369,55 @@ void showLightsControlPanel()
 
 }
 
+void showClockSetPanel()
+{
+	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	EF_SetFont(&arialBlack_20ptFontInfo);
 
+	uint8_t CHour = DS3231_GetHour();
+	uint8_t CMinute = DS3231_GetMinute();
+
+	uint8_t Len = sprintf((char*)Msg, "-=SET CLOCK=-");
+	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	Len = sprintf((char*)Msg, "GODZINA: %d", CHour);
+	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	Len = sprintf((char*)Msg, "MINUTA:   %d", CMinute);
+	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	EF_SetFont(&arial_11ptFontInfo);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_1_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	Len = sprintf((char*)Msg, "+1");
+	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X), (CLOCK_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON2_X, CLOCK_B_1_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	Len = sprintf((char*)Msg, "+6");
+	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X+2), (CLOCK_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_2_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	Len = sprintf((char*)Msg, "+1");
+	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X+2), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON2_X, CLOCK_B_2_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	Len = sprintf((char*)Msg, "+10");
+	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	EF_SetFont(&arial_11ptFontInfo);
+	GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	Len = sprintf((char*)Msg, "CONFIRM");
+	EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	Len = sprintf((char*)Msg, "<=BACK");
+	EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	EF_SetFont(&arialBlack_20ptFontInfo);
+
+	Len++;
+}
 
 
