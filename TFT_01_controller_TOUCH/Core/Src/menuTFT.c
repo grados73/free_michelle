@@ -74,10 +74,10 @@ void MenuTFT(void)
 	case MENUTFT_ACTIVITIES:
 		if(StateChangeFlag == 1)
 		{
-
-
+			showPreparedActivitiesPanel();
+			StateChangeFlag =0;
 		}
-
+		TouchPredefinedActivityActivity();
 		break;
 	}
 }
@@ -493,6 +493,73 @@ void TouchClockActivity(void)
 
 void TouchPredefinedActivityActivity()
 {
+	if(XPT2046_IsTouched())
+	{
+		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
+		{
+			uint16_t x, y; // Touch points
+			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+			//
+			// Check if it is button to change screen
+			//
+			// Check if that point is inside the LEFT Button
+			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+			{
+				State = MENUTFT_SWITCH;
+				StateChangeFlag = 1;
+			}
+
+			//
+			// Check if that point is in row where are button to Predefined Activity
+			//
+			else if((x >= ACTIVITY_BUTTON_X)&&(x <= (ACTIVITY_BUTTON_X + ACTIVITY_BUTTON_W)))
+			{
+				if((y >= ACTIVITY_BUTTON_1_Y)&&(y<= (ACTIVITY_BUTTON_1_Y + ACTIVITY_BUTTON_H))) // First predefined activity button
+				{
+					if(ActivityButtonState[0] >= 1) // if is ON
+					{
+						ActivityButtonState[0] = 0;
+						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+						sprintf((char*)Msg, "KARMIENIE - OFF");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+					}
+					else // if is OFF
+					{
+						ActivityButtonState[0] = 1;
+						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+						Len = sprintf((char*)Msg, "KARMIENIE - ON");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+					}
+
+				}
+
+				else if((y >= ACTIVITY_BUTTON_2_Y)&&(y<= (ACTIVITY_BUTTON_2_Y + ACTIVITY_BUTTON_H))) // Second predefined activity button
+				{
+					if(ActivityButtonState[1] >= 1) // if is ON
+					{
+						ActivityButtonState[1] = 0;
+						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+						sprintf((char*)Msg, "CZYSZCZENIE - OFF");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+					}
+					else // if is OFF
+					{
+						ActivityButtonState[1] = 1;
+						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+						Len = sprintf((char*)Msg, "CZYSZCZENIE - ON");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+					}
+
+				}
+			}
+
+
+			TimerTouch = HAL_GetTick();
+		}
+	}
+
 
 }
 
