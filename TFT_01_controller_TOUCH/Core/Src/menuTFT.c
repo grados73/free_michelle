@@ -524,13 +524,15 @@ void TouchPredefinedActivityActivity()
 						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
 						sprintf((char*)Msg, "KARMIENIE - OFF");
 						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+						predefinedActivityKarmienie(0); // Turn Activity OFF
 					}
 					else // if is OFF
 					{
 						ActivityButtonState[0] = 1;
 						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "KARMIENIE - ON");
+						sprintf((char*)Msg, "KARMIENIE - ON");
 						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+						predefinedActivityKarmienie(1);
 					}
 
 				}
@@ -543,13 +545,15 @@ void TouchPredefinedActivityActivity()
 						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
 						sprintf((char*)Msg, "CZYSZCZENIE - OFF");
 						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+						predefinedActivityCzyszczenie(0);
 					}
 					else // if is OFF
 					{
 						ActivityButtonState[1] = 1;
 						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "CZYSZCZENIE - ON");
+						sprintf((char*)Msg, "CZYSZCZENIE - ON");
 						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+						predefinedActivityCzyszczenie(1);
 					}
 
 				}

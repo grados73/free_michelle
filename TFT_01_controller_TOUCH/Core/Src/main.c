@@ -67,6 +67,8 @@ I2C_HandleTypeDef hi2c1;
 extern uint8_t Time[3];
 extern MenuTFTState State;
 
+uint8_t FeedingCounter = 0;
+
 uint8_t THour, TMinutes, TSeconds;
 /* USER CODE END PV */
 
@@ -116,6 +118,7 @@ int main(void)
   MX_SPI3_Init();
   MX_I2C1_Init();
   MX_TIM11_Init();
+  MX_TIM10_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -250,10 +253,21 @@ static void MX_NVIC_Init(void)
 // Periodic interrupt from TIMERS Callback
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	if(htim->Instance == TIM11)
+	if(htim->Instance == TIM11) // Update event one per 8 seconds
 	{
-		HAL_GPIO_TogglePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin);
 		ChangeHourOnScreen();
+	}
+	if(htim->Instance == TIM10) // Update even each second - one per second 1/s
+	{
+		if(FeedingCounter >= FEEDING_TIME_IN_S)
+		{
+			HAL_GPIO_TogglePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin);
+			predefinedActivityKarmienie(0);
+			FeedingCounter = 0;
+			HAL_TIM_Base_Stop_IT(&htim10);
+
+		}
+		FeedingCounter++;
 	}
 }
 

@@ -12,6 +12,7 @@
 #include "parser.h"
 #include "menuTFT.h"
 #include "ds3231_for_stm32_hal.h"
+#include "tim.h"
 
 extern float CTemp;
 extern float CPres;
@@ -477,7 +478,49 @@ void showPreparedActivitiesPanel()
 	}
 
 	Len++;
-
-
 }
 
+void predefinedActivityCzyszczenie(uint8_t State)
+{
+	uint8_t NowyStan = State;
+	if(NowyStan == 0) //If turn Activity OFF - Filters ON
+	{
+		SendComand(UCMD_RELAY_1_ON);
+		SendComand(UCMD_RELAY_2_ON);
+		SendComand(UCMD_RELAY_3_ON);
+		SendComand(UCMD_RELAY_4_ON);
+	}
+	else 	//If turn Activity ON - Filters OFF, Lights - ON
+	{
+		SendComand(UCMD_RELAY_1_OFF);
+		SendComand(UCMD_RELAY_2_OFF);
+		SendComand(UCMD_RELAY_3_OFF);
+		SendComand(UCMD_RELAY_4_OFF);
+
+		SendComand(UCMD_LIGHT_1_ON);
+		SendComand(UCMD_LIGHT_2_ON);
+		SendComand(UCMD_LIGHT_3_ON);
+		SendComand(UCMD_LIGHT_4_ON);
+	}
+}
+
+void predefinedActivityKarmienie(uint8_t State)
+{
+	uint8_t NowyStan = State;
+	if(NowyStan == 0) //If turn Activity OFF - Filters ON
+	{
+		SendComand(UCMD_RELAY_1_ON);
+		SendComand(UCMD_RELAY_2_ON);
+		SendComand(UCMD_RELAY_3_ON);
+		SendComand(UCMD_RELAY_4_ON);
+	}
+	else 	//If turn Activity ON - Filters OFF, Lights - ON
+	{
+		SendComand(UCMD_RELAY_1_OFF);
+		SendComand(UCMD_RELAY_2_OFF);
+		SendComand(UCMD_RELAY_3_OFF);
+		SendComand(UCMD_RELAY_4_OFF);
+		HAL_TIM_Base_Start_IT(&htim10); // start Timer to count time of feeding
+	}
+
+}

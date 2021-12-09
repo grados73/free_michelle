@@ -180,7 +180,7 @@ void UART_ParseAnswPres()
 	{
 		CPres = atof(ParsePointer); // If there are no chars, change string to integer
 
-		//Only if on the screen are Parameters, update current Presure
+		//Only if on the screen are Parameters, update current Pressure
 		if(State == MENUTFT_PARAMETERS)
 		{
 			Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);

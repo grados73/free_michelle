@@ -90,10 +90,14 @@ uint8_t Msg[32];
 //
 uint8_t system_init();
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure);
-void ChangeHourOnScreen();
+void showPreparedActivitiesPanel();
 void showControlPanel();
 void showLightsControlPanel();
 void showClockSetPanel();
+
+void ChangeHourOnScreen();
+void predefinedActivityKarmienie(uint8_t State);
+void predefinedActivityCzyszczenie(uint8_t State);
 
 
 #endif /* INC_FUNCTIONS_H_ */

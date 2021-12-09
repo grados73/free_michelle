@@ -75,7 +75,7 @@ void Error_Handler(void);
 #define TOUCH_IRQ_GPIO_Port GPIOA
 #define TOUCH_IRQ_EXTI_IRQn EXTI9_5_IRQn
 /* USER CODE BEGIN Private defines */
-
+#define FEEDING_TIME_IN_S 5
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
