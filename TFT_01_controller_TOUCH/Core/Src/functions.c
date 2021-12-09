@@ -195,6 +195,11 @@ void showControlPanel()
 	  Len = sprintf((char*)Msg, "<=PARAM");
 	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 
+	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	  Len = sprintf((char*)Msg, "ACTIVITIES");
+	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
+
 
 
 
@@ -420,4 +425,19 @@ void showClockSetPanel()
 	Len++;
 }
 
+void showPreparedActivitiesPanel()
+{
+	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	EF_SetFont(&arialBlack_20ptFontInfo);
+
+	uint8_t CHour = DS3231_GetHour();
+	uint8_t CMinute = DS3231_GetMinute();
+
+	uint8_t Len = sprintf((char*)Msg, "-=ACTIVITIES=-");
+	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_BLUE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+
+}
 

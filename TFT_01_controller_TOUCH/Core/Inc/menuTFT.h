@@ -80,6 +80,7 @@ typedef enum
 	MENUTFT_PARAMETERS, 	// Read parameters
 	MENUTFT_SWITCH,			// Show current switch state, and possibility to change them
 	MENUTFT_CLOCK,			// Set current Hour and Minute
+	MENUTFT_ACTIVITIES,		// Show possible Activities connected with pre-prepared actions
 	MENUTFT_LIGHTS 			// Show current lights state, and possibility to change them
 } MenuTFTState;
 
@@ -88,5 +89,6 @@ void TouchParametersActivity(void);
 void TouchSwitchActivity(void);
 void TouchLightsActivity(void);
 void TouchClockActivity(void);
+void TouchPredefinedActivityActivity();
 
 #endif /* INC_MENUTFT_H_ */

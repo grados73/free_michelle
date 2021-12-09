@@ -70,6 +70,14 @@ void MenuTFT(void)
 		}
 		TouchClockActivity();
 		break;
+	case MENUTFT_ACTIVITIES:
+		if(StateChangeFlag == 1)
+		{
+
+
+		}
+
+		break;
 	}
 }
 
@@ -143,6 +151,15 @@ void TouchSwitchActivity(void)
 				State = MENUTFT_LIGHTS;
 				StateChangeFlag = 1;
 			}
+
+			// Check if that point is inside the MEDIUM Button
+			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
+					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
+			{
+				State = MENUTFT_ACTIVITIES;
+				StateChangeFlag = 1;
+			}
+
 			//
 			// Check if it is button to change SWITCH status
 			//
@@ -390,7 +407,7 @@ void TouchClockActivity(void)
 					DS3231_SetMinute(Minutes);
 					DS3231_SetSecond(50);
 					sprintf((char*)Msg, "-Time Changed-");
-					EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_ORANGE, BG_COLOR, ILI9341_LIGHTGREY);
+					EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_GREEN, BG_COLOR, ILI9341_LIGHTGREY);
 				}
 
 				//
