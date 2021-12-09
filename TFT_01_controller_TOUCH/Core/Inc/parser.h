@@ -98,9 +98,13 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
  * 	4	=>	PRES=1\n			// Jakie jest cisnienie 1 czujnika
  * 	5	=>	CHSTATE=1,0\n		// Zmien stan przekaznika 1 na wylaczony
  * 	6	=>	CHSTATE=2,1\n		// Zmien stan przekaznika 2 na wlaczony
+ * 	23	=>	CHSTATE=0,1\n		// Zmien stan wszystkich przekaznikow na wlaczony
+ * 	24	=>	CHSTATE=0,0\n		// Zmien stan wszystkich przekaznikow na wylaczony
  * 	21	=>	STATESTATUS=?\n		// Podaj stan wszystkich przekaznikow
  * 	13  =>	CHLIGHT=1,0\n		// Zmien stan swiatla 1 na wylaczony
  * 	15  =>  CHLIGHT=2,1\n		// Zmien stan swiatla 2 na wlaczony
+ *  25  =>	CHLIGHT=0,1\n		// Zmien stan wszystkich swiatel na wlaczony
+ *  26  =>	CHLIGHT=0,0\n		// Zmien stan wszystkich swiatel na wylaczony
  * 	22	=>	LIGHTSSTATUS=?\n	// Podaj stan wszytskich swiatel
  *
  */
@@ -120,6 +124,8 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
 #define UCMD_RELAY_4_ON 11
 #define UCMD_RELAY_4_OFF 12
 #define UCMD_RELAY_SCHOW_ALL 21
+#define UCMD_RELAY_ALL_ON 23
+#define UCMD_RELAY_ALL_OFF 24
 //***********************//
 #define UCMD_LIGHT_1_ON 13
 #define UCMD_LIGHT_1_OFF 14
@@ -129,6 +135,8 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
 #define UCMD_LIGHT_3_OFF 18
 #define UCMD_LIGHT_4_ON 19
 #define UCMD_LIGHT_4_OFF 20
+#define UCMD_LIGHT_ALL_ON 25
+#define UCMD_LIGHT_ALL_OFF 26
 #define UCMD_LIGHT_SCHOW_ALL 22
 
 

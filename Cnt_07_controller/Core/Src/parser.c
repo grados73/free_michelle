@@ -21,6 +21,8 @@ extern UARTDMA_HandleTypeDef huartdma2;
 char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
+uint8_t RelayState[4]= {0};
+uint8_t LightState[4]= {0};
 extern struct Measurements BMPResults;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +74,14 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  else if(strcmp(ParsePointer, "CHLIGHT") == 0)
 	  {
 	  	  UART_ParseChangeLightState();
+	  }
+	  else if(strcmp(ParsePointer, "STATESTATUS") == 0)
+	  {
+	  	  UART_ParseAnsStateStatus();
+	  }
+	  else if(strcmp(ParsePointer, "LIGHTSSTATUS") == 0)
+	  {
+	  	  UART_ParseAnsLightStatus();
 	  }
 	}
 }
@@ -287,7 +297,73 @@ void UART_ParseChangeLightState()
 			UARTDMA_Print(&huartdma2, Message); // Print message
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// STATUS parsing function
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////"ASTATESTATUS=0,1,1,0\n" // Switch1-> 0, Switch2 -> 1, Switch3 -> 1, Switch4 -> 0
+void UART_ParseAnsStateStatus()
+{
+	sprintf(Message, "ASTATESTATUS=%d,%d,%d,%d\n",RelayState[0],RelayState[1],RelayState[2],RelayState[3]);
+	UARTDMA_Print(&huartdma2, Message); // Print message
+}
+
+//// "ALIGHTSSTATUS=0,1,1,0\n" // Light1-> 0, Light2 -> 1, Light3 -> 1, Light4 -> 0
+void UART_ParseAnsLightStatus()
+{
+	sprintf(Message, "ALIGHTSSTATUS=%d,%d,%d,%d\n", LightState[0], LightState[1], LightState[2], LightState[3]);
+	UARTDMA_Print(&huartdma2, Message); // Print message
+}
+
+// Ta wersja sie nie kompilue
+////"ASTATESTATUS=0,1,1,0\n" // Switch1-> 0, Switch2 -> 1, Switch3 -> 1, Switch4 -> 0
+//void UART_ParseAnsStateStatus()
+//{
+//	char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+//
+//	// Should be now: ParsePointer == 1'\0'
+//
+//	if(strlen(ParsePointer) > 0) // If string exists
+//	{
+//	uint8_t StateStatusTable[4];
+//	//if GPIO_PIN_RESET => 1(ON), GPIO_PIN_SET => 0(OFF)
+//	if(HAL_GPIO_ReadPin(RELAY_1_GPIO_Port, RELAY_1_Pin))StateStatusTable[0] = 0;
+//	else StateStatusTable[0] = 1;
+//
+//	if(HAL_GPIO_ReadPin(RELAY_2_GPIO_Port, RELAY_2_Pin))StateStatusTable[1] = 0;
+//	else StateStatusTable[1] = 1;
+//
+//	if(HAL_GPIO_ReadPin(RELAY_3_GPIO_Port, RELAY_3_Pin))StateStatusTable[2] = 0;
+//	else StateStatusTable[2] = 1;
+//
+//	if(HAL_GPIO_ReadPin(RELAY_4_GPIO_Port, RELAY_4_Pin))StateStatusTable[3] = 0;
+//	else StateStatusTable[3] = 1;
+//	sprintf(Message, "ASTATESTATUS=%d,%d,%d,%d\n",StateStatusTable[0],StateStatusTable[1],StateStatusTable[2],StateStatusTable[3]);
+//	UARTDMA_Print(&huartdma2, Message); // Print message
+//	}
+//}
+
+//// "ALIGHTSSTATUS=0,1,1,0\n" // Light1-> 0, Light2 -> 1, Light3 -> 1, Light4 -> 0
+//void UART_ParseAnsLightStatus()
+//{
+//	uint8_t StateStatusTable[4];
+//	//if GPIO_PIN_RESET => 1(ON), GPIO_PIN_SET => 0(OFF)
+//	if(HAL_GPIO_ReadPin(LIGHT_1_GPIO_Port, LIGHT_1_Pin))StateStatusTable[0] = 0;
+//	else StateStatusTable[0] = 1;
+//
+//	if(HAL_GPIO_ReadPin(LIGHT_2_GPIO_Port, LIGHT_2_Pin))StateStatusTable[1] = 0;
+//	else StateStatusTable[1] = 1;
+//
+//	if(HAL_GPIO_ReadPin(LIGHT_3_GPIO_Port, LIGHT_3_Pin))StateStatusTable[2] = 0;
+//	else StateStatusTable[2] = 1;
+//
+//	if(HAL_GPIO_ReadPin(LIGHT_4_GPIO_Port, LIGHT_4_Pin))StateStatusTable[3] = 0;
+//	else StateStatusTable[3] = 1;
+//	sprintf(Message, "ALIGHTSSTATUS=%d,%d,%d,%d\n", StateStatusTable[0], StateStatusTable[1], StateStatusTable[2], StateStatusTable[3]);
+//	UARTDMA_Print(&huartdma2, Message); // Print message
+//}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////// ORDERS EXECUTIVE FUNCTIONS ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -340,25 +416,48 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	Przekaznik = NrPrzekaznika;
 	NowyStan = Stan;
 
-	if(NrPrzekaznika == 1)
+	if(NrPrzekaznika == 0)
+	{
+		if(Stan == 1)
+			{
+			HAL_GPIO_WritePin(RELAY_1_GPIO_Port, RELAY_1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(RELAY_2_GPIO_Port, RELAY_2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(RELAY_3_GPIO_Port, RELAY_3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(RELAY_4_GPIO_Port, RELAY_4_Pin, GPIO_PIN_RESET);
+			}
+		else
+			{
+			HAL_GPIO_WritePin(RELAY_1_GPIO_Port, RELAY_1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(RELAY_2_GPIO_Port, RELAY_2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(RELAY_3_GPIO_Port, RELAY_3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(RELAY_4_GPIO_Port, RELAY_4_Pin, GPIO_PIN_SET);
+			}
+			RelayState[0] = RelayState[1] = RelayState[2] = RelayState[3] = Stan;
+	}
+
+	else if(NrPrzekaznika == 1)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(RELAY_1_GPIO_Port, RELAY_1_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(RELAY_1_GPIO_Port, RELAY_1_Pin, GPIO_PIN_SET);
+		RelayState[0] = Stan;
 	}
 	else if(NrPrzekaznika == 2)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(RELAY_2_GPIO_Port, RELAY_2_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(RELAY_2_GPIO_Port, RELAY_2_Pin, GPIO_PIN_SET);
+		RelayState[1] = Stan;
 	}
 	else if(NrPrzekaznika == 3)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(RELAY_3_GPIO_Port, RELAY_3_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(RELAY_3_GPIO_Port, RELAY_3_Pin, GPIO_PIN_SET);
+		RelayState[2] = Stan;
 	}
 	else if(NrPrzekaznika == 4)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(RELAY_4_GPIO_Port, RELAY_4_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(RELAY_4_GPIO_Port, RELAY_4_Pin, GPIO_PIN_SET);
+		RelayState[3] = Stan;
 	}
 	else
 	{
@@ -381,25 +480,48 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 	LightNumber = NrSwiatla;
 	NowyStan = Stan;
 
-	if(LightNumber == 1)
+	if(LightNumber == 0)
+	{
+			if(Stan == 1)
+			{
+				HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_1_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_RESET);
+			}
+			else
+			{
+				HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_1_Pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_SET);
+			}
+				LightState[0] = LightState[1] = LightState[2] = LightState[3] =	Stan;
+	}
+
+	else if(LightNumber == 1)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_1_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_1_GPIO_Port, LIGHT_1_Pin, GPIO_PIN_SET);
+		LightState[0] = Stan;
 	}
 	else if(LightNumber == 2)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_SET);
+		LightState[0] = Stan;
 	}
 	else if(LightNumber == 3)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_SET);
+		LightState[0] = Stan;
 	}
 	else if(LightNumber == 4)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_SET);
+		LightState[0] = Stan;
 	}
 	else
 	{

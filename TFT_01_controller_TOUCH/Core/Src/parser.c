@@ -88,7 +88,7 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 		  UART_ParseAnswRelayStateStatus();
 	  }
-	  else if (strcmp(ParsePointer, "ALIGHTSSTATUS=?\n") == 0) // Answear about current Switch Status
+	  else if (strcmp(ParsePointer, "ALIGHTSSTATUS") == 0) // Answear about current Switch Status
 	  {
 		  UART_ParseAnswLightsStateStatus();
 	  }
@@ -161,6 +161,7 @@ void UART_ParseAnswTemp()
 		//Only if on the screen are Parameters, update current Temp
 		if(State == MENUTFT_PARAMETERS)
 		{
+			EF_SetFont(&arialBlack_20ptFontInfo);
 			Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C ", CTemp);
 			EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
@@ -183,6 +184,7 @@ void UART_ParseAnswPres()
 		//Only if on the screen are Parameters, update current Pressure
 		if(State == MENUTFT_PARAMETERS)
 		{
+			EF_SetFont(&arialBlack_20ptFontInfo);
 			Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
 			EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
@@ -320,8 +322,14 @@ uint8_t SendComand(uint8_t Command)
 		case UCMD_RELAY_4_OFF:
 			UARTDMA_Print(&huartdma2, "CHSTATE=4,0\n");
 			break;
+		case UCMD_RELAY_ALL_ON:
+			UARTDMA_Print(&huartdma2, "CHSTATE=0,1\n");
+			break;
+		case UCMD_RELAY_ALL_OFF:
+			UARTDMA_Print(&huartdma2, "CHSTATE=0,0\n");
+			break;
 		case UCMD_RELAY_SCHOW_ALL:
-			UARTDMA_Print(&huartdma2, "STATESTATUS=?\n");
+			UARTDMA_Print(&huartdma2, "STATESTATUS=0,0\n");
 			break;
 		case UCMD_LIGHT_1_ON:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=1,1\n");
@@ -347,8 +355,14 @@ uint8_t SendComand(uint8_t Command)
 		case UCMD_LIGHT_4_OFF:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=4,0\n");
 			break;
+		case UCMD_LIGHT_ALL_ON:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=0,1\n");
+			break;
+		case UCMD_LIGHT_ALL_OFF:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=0,0\n");
+			break;
 		case UCMD_LIGHT_SCHOW_ALL:
-			UARTDMA_Print(&huartdma2, "LIGHTSSTATUS=?\n");
+			UARTDMA_Print(&huartdma2, "LIGHTSSTATUS=0,0\n");
 			break;
 		}
 

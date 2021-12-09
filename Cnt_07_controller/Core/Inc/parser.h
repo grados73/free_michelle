@@ -38,6 +38,8 @@ void UART_ParseTemp();
 void UART_ParsePres();
 void UART_ParseChangeRelayState();
 void UART_ParseChangeLightState();
+void UART_ParseAnsStateStatus();
+void UART_ParseAnsLightStatus();
 
 
 void SwitchMotorRegular();

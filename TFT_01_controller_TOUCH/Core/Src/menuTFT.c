@@ -23,6 +23,7 @@ extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
 extern uint8_t ActivityButtonState[2];
 uint8_t StateChangeFlag = 0;
+uint8_t ClockChangeFlag = 0;
 uint8_t Hours = 15;
 uint8_t Minutes = 5;
 
@@ -67,6 +68,7 @@ void MenuTFT(void)
 		if(StateChangeFlag == 1)
 		{
 			showClockSetPanel();
+			ClockChangeFlag = 1;
 			StateChangeFlag = 0;
 		}
 		TouchClockActivity();
@@ -389,6 +391,14 @@ void TouchClockActivity(void)
 
 				XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
 
+				if( 1 == ClockChangeFlag) // If we just get inside this screen we must get current Hour and Minutes to easlier change them, but only once
+				{
+					Hours = DS3231_GetHour();
+					Minutes = DS3231_GetMinute();
+					ClockChangeFlag = 0;
+				}
+
+
 				//
 				// Check if it is button to change screen
 				//
@@ -456,6 +466,7 @@ void TouchClockActivity(void)
 					uint8_t Len = 0;
 					if((y >= CLOCK_B_1_POZ_Y)&&(y <= (CLOCK_B_1_POZ_Y + CLOCK_BUTTON_H))) // Add 6 Hour
 					{
+
 						if(Hours < 19)
 						{
 							Hours = Hours + 6;
@@ -465,7 +476,7 @@ void TouchClockActivity(void)
 							Hours = 1;
 						}
 						Len = sprintf((char*)Msg, " %d  ", Hours);
-						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X), STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X-3), STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 					}
 					else if((y >= CLOCK_B_2_POZ_Y)&&(y <= (CLOCK_B_2_POZ_Y + CLOCK_BUTTON_H))) // Add 10 Minute
@@ -479,7 +490,7 @@ void TouchClockActivity(void)
 							Minutes = 0;
 						}
 						sprintf((char*)Msg, " %d  ", Minutes);
-						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X), STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X-4), STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 					}
 					Len++;
@@ -493,8 +504,10 @@ void TouchClockActivity(void)
 
 void TouchPredefinedActivityActivity()
 {
+
 	if(XPT2046_IsTouched())
 	{
+		EF_SetFont(&arial_11ptFontInfo);
 		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
 		{
 			uint16_t x, y; // Touch points
@@ -522,16 +535,20 @@ void TouchPredefinedActivityActivity()
 					{
 						ActivityButtonState[0] = 0;
 						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						sprintf((char*)Msg, "KARMIENIE - OFF");
-						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+						sprintf((char*)Msg, "KARMIENIE");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_1_X_ERRATA), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+						sprintf((char*)Msg, "OFF");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_ON_OFF_X_ERRATA), (ACTIVITY_BUTTON_1_Y+STRING_ACTIVITIES_Y_INTER), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						predefinedActivityKarmienie(0); // Turn Activity OFF
 					}
 					else // if is OFF
 					{
 						ActivityButtonState[0] = 1;
-						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						sprintf((char*)Msg, "KARMIENIE - ON");
-						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
+						sprintf((char*)Msg, "KARMIENIE");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_1_X_ERRATA), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
+						sprintf((char*)Msg, "ON");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_ON_OFF_X_ERRATA), (ACTIVITY_BUTTON_1_Y+STRING_ACTIVITIES_Y_INTER), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
 						predefinedActivityKarmienie(1);
 					}
 
@@ -543,16 +560,20 @@ void TouchPredefinedActivityActivity()
 					{
 						ActivityButtonState[1] = 0;
 						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						sprintf((char*)Msg, "CZYSZCZENIE - OFF");
-						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+						sprintf((char*)Msg, "CZYSZCZENIE");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_2_X_ERRATA), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+						sprintf((char*)Msg, "OFF");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_ON_OFF_X_ERRATA), (ACTIVITY_BUTTON_2_Y+STRING_ACTIVITIES_Y_INTER), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						predefinedActivityCzyszczenie(0);
 					}
 					else // if is OFF
 					{
 						ActivityButtonState[1] = 1;
-						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						sprintf((char*)Msg, "CZYSZCZENIE - ON");
-						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+						GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
+						sprintf((char*)Msg, "CZYSZCZENIE");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_2_X_ERRATA), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
+						sprintf((char*)Msg, "ON");
+						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_ON_OFF_X_ERRATA), (ACTIVITY_BUTTON_2_Y+STRING_ACTIVITIES_Y_INTER), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
 						predefinedActivityCzyszczenie(1);
 					}
 
