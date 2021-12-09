@@ -20,6 +20,7 @@ extern uint8_t CWaterLvl ;
 extern uint8_t Time[3];
 extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
+extern uint8_t ActivityButtonState[2];
 extern MenuTFTState State;
 
 uint8_t OldHours = 0;
@@ -430,13 +431,52 @@ void showPreparedActivitiesPanel()
 	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	EF_SetFont(&arialBlack_20ptFontInfo);
 
-	uint8_t CHour = DS3231_GetHour();
-	uint8_t CMinute = DS3231_GetMinute();
-
 	uint8_t Len = sprintf((char*)Msg, "-=ACTIVITIES=-");
 	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_BLUE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
 	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	EF_SetFont(&arial_11ptFontInfo);
+	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	Len = sprintf((char*)Msg, "<=BACK");
+	EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	EF_SetFont(&arialBlack_20ptFontInfo);
+
+	 //
+	 // Draw current state of Activities button
+	 //
+	 // First Button
+	 //
+	if(ActivityButtonState[0] >= 1)
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		Len = sprintf((char*)Msg, "KARMIENIE - ON");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	}
+	else
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		Len = sprintf((char*)Msg, "KARMIENIE - OFF");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	}
+	 //
+	 // Second Button
+	 //
+	if(ActivityButtonState[1] >= 1)
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		Len = sprintf((char*)Msg, "CZYSZCZENIE - ON");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	}
+	else
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		Len = sprintf((char*)Msg, "CZYSZCZENIE - OFF");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	}
+
+	Len++;
 
 
 }

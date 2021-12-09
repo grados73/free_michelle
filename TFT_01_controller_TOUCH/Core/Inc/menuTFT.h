@@ -68,6 +68,14 @@
 #define CLOCK_B_1_POZ_Y (STRING_HOUR_POZ_Y+5)
 #define CLOCK_B_2_POZ_Y (STRING_MINUTE_POZ_Y+5)
 
+//define position and size of button to change activity state
+#define ACTIVITY_BUTTON_X 100
+#define ACTIVITY_BUTTON_W 120
+#define ACTIVITY_BUTTON_H 40
+#define ACTIVITY_BUTTON_R 10
+#define ACTIVITY_BUTTON_1_Y 60
+#define ACTIVITY_BUTTON_2_Y 120
+
 
 
 //

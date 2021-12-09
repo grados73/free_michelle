@@ -21,6 +21,7 @@ extern float CTemp;
 extern float CPres;
 extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
+extern uint8_t ActivityButtonState[2];
 uint8_t StateChangeFlag = 0;
 uint8_t Hours = 15;
 uint8_t Minutes = 5;
@@ -488,5 +489,10 @@ void TouchClockActivity(void)
 				TimerTouch = HAL_GetTick();
 			}
 		}
+}
+
+void TouchPredefinedActivityActivity()
+{
+
 }
 
