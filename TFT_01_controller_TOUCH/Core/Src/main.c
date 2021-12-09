@@ -4,8 +4,9 @@
   * @file           : main.c
   * @project		: free_michelle
   * @author			: grados73 - https://github.com/grados73
-  * @purpose		: kontroler dotykowego wyswietlacza TFT do interfejsu komunikacji z
-  * 					uzytkownikiem dla projektu sterownika akwarium
+  * @purpose		: TFT touch display controller for communication interface with
+  * 				  user for aquarium controller project named "FREE MICHELLE"
+  *
   ******************************************************************************
   **/
 /* USER CODE END Header */
@@ -25,19 +26,19 @@
 #include "stdio.h"
 #include "stdlib.h"
 /* PRRIVATE FILES */
-#include "TFT_ILI9341.h"
+#include "TFT_ILI9341.h"	//TFT
 #include "GFX_Color.h"
 #include "GFX_EnhancedFonts.h"
-#include "XPT2064.h"
+#include "XPT2064.h"	//touch
 #include "functions.h"
 #include "uartdma.h"
 #include "parser.h"
 #include "menuTFT.h"
-#include "ds3231_for_stm32_hal.h"
+#include "ds3231_for_stm32_hal.h"	//RTC
 /* PRRIVATE FONTS*/
 #include "EnhancedFonts/arialBlack_20ptFontInfo.h"
 #include "EnhancedFonts/arialBlack_11ptFontInfo.h"
-#include "EnhancedFonts/ArialBlack_28pts_bold.h" //Bez polskich znakow!
+#include "EnhancedFonts/ArialBlack_28pts_bold.h" // fonts without polish char! Warning!
 
 /* USER CODE END Includes */
 
@@ -58,18 +59,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t Msg[32];
+//
+// Private Variables
+//
 UARTDMA_HandleTypeDef huartdma2;
-uint8_t BufferReceive[64];
-uint16_t Xread, Yread;
 I2C_HandleTypeDef hi2c1;
-//To update current displayed clock
-extern uint8_t Time[3];
+//
+// To update current displayed clock - current TFT screen displayed
 extern MenuTFTState State;
-
+//
+// To count time duration Activity
 uint8_t FeedingCounter = 0;
-
-uint8_t THour, TMinutes, TSeconds;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -134,17 +134,8 @@ int main(void)
   XPT2046_Init(&hspi3, EXTI9_5_IRQn);
   // RTC Initialization
   DS3231_Init(&hi2c1);
-//  __disable_irq();
   DS3231_SetInterruptMode(DS3231_ALARM_INTERRUPT);
   DS3231_EnableOscillator(DS3231_ENABLED);
-  DS3231_EnableAlarm2(DS3231_ENABLED);
-  DS3231_SetAlarm2Mode(DS3231_A2_EVERY_M);
-
-
-//  __enable_irq();
-
-  // TO DO! - Tutaj przeprowadzić inicjalizację peryferiów i połączenia z drugim STMem
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -167,16 +158,11 @@ int main(void)
 	  //
 	  XPT2046_Task();
 
-
+	  //
+	  // CURRENT DISPLAYED SCREEN
 	  MenuTFT();
 
-//	  THour = DS3231_GetHour();
-//	  TMinutes = DS3231_GetMinute();
-//	  TSeconds = DS3231_GetSecond();
-
-
-
-    /* USER CODE END WHILE */
+	  /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }

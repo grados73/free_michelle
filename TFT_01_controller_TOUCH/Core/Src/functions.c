@@ -1,11 +1,14 @@
-/*
- * functions.c
- *
- *  	Author: grados73
- *
- *	TODO! " zamienić wszytskie delaye i dodać tu inicjalizację !!!
- *
- */
+/**
+  ******************************************************************************
+  ******************************************************************************
+  * @file           : functions.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: file with functions to operate on screen etc.
+
+  ******************************************************************************
+  ******************************************************************************
+  **/
 
 #include "functions.h"
 #include "logo.h"
@@ -27,18 +30,25 @@ extern MenuTFTState State;
 uint8_t OldHours = 0;
 uint8_t OldMinutes = 0;
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	FUNCTIONS TO DISPLAY EACH KIND OF SCREEN
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Display INITIALIZATION screen
+//
 uint8_t system_init(){
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  ILI9341_DrawImage(40, 50, logo, 240, 140);
 //	  GFX_Image(40, 50, logo, 240, 140); //usunieta wolniejsza wersja rysowania
 
-	  HAL_Delay(200); // !!!! TODO
-
 	  EF_SetFont(&arialBlack_20ptFontInfo);
-	  uint8_t Len = sprintf((char*)Msg, "Inicjalizacja...");
+	  sprintf((char*)Msg, "Inicjalizacja...");
 	  EF_PutString(Msg, 60, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
-	  Len++;
+
+	  //
+	  // Draw Rectangle to indicate progress of INITIALIZATION
 	  GFX_DrawRoundRectangle(60, 200, 20, 20, 5, ILI9341_RED);
 	  GFX_DrawRoundRectangle(90, 200, 20, 20, 5, ILI9341_RED);
 	  GFX_DrawRoundRectangle(120, 200, 20, 20, 5, ILI9341_RED);
@@ -46,33 +56,35 @@ uint8_t system_init(){
 	  GFX_DrawRoundRectangle(180, 200, 20, 20, 5, ILI9341_RED);
 	  GFX_DrawRoundRectangle(210, 200, 20, 20, 5, ILI9341_RED);
 	  GFX_DrawRoundRectangle(240, 200, 20, 20, 5, ILI9341_RED);
+	  	  HAL_Delay(200);
 
-	  	  HAL_Delay(100); // !!!! TODO
 	  GFX_DrawFillRoundRectangle(60, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  SendComand(UCMD_TEMP_1);
-	  	  SendComand(UCMD_PRES_1);
-	  	  HAL_Delay(100); // !!!! TODO
+	  	  HAL_Delay(100);
 	  GFX_DrawFillRoundRectangle(90, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  HAL_Delay(100); // !!!! TODO
+  	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature
+	  	  HAL_Delay(100);
 	  GFX_DrawFillRoundRectangle(120, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
-	  	  HAL_Delay(100); // !!!! TODO
+  	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
+	  	  HAL_Delay(100);
 	  GFX_DrawFillRoundRectangle(150, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  HAL_Delay(100); // !!!! TODO
+  	  	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
+	  	  HAL_Delay(100);
 	  GFX_DrawFillRoundRectangle(180, 200, 20, 20, 5, ILI9341_GREEN);
 	  	  SendComand(UCMD_LIGHT_SCHOW_ALL); // ASK for current lights state
-	  	  HAL_Delay(100); // !!!! TODO
+	  	  HAL_Delay(100);
 	  GFX_DrawFillRoundRectangle(210, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  HAL_Delay(100); // !!!! TODO
+	  	  HAL_Delay(100);
 	  GFX_DrawFillRoundRectangle(240, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  HAL_Delay(200); // !!!! TODO
+	  	  HAL_Delay(200);
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
 }
 
+//
+// Display current PARAMETERS screen
+//
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure)
 {
-		// TODO dodac kreske pod naglowkiem
 	  SendComand(UCMD_TEMP_1);
 	  SendComand(UCMD_PRES_1);
 
@@ -82,51 +94,392 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
-	  uint8_t Len = sprintf((char*)Msg, "-=PARAMETRY=-");
+	  //
+	  // Display HEADER
+	  sprintf((char*)Msg, "-=PARAMETRY=-");
 	  EF_PutString(Msg, PARAMETRY_STRING_POZ_X, PARAMETRY_STRING_POZ_Y, ILI9341_DARKCYAN, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
 
-	  if ((CHour<10)&&(CMinute<10)) Len = sprintf((char*)Msg, "Czas: 0%d : 0%d", CHour, CMinute);
-	  else if(CHour<10)	Len = sprintf((char*)Msg, "Czas: 0%d : %d", CHour, CMinute);
-	  else if(CMinute<10) Len = sprintf((char*)Msg, "Czas: %d : 0%d", CHour, CMinute);
-	  else Len = sprintf((char*)Msg, "Czas: %d : %d", CHour, CMinute);
+	  //
+	  // Display PARAMETERS
+	  if ((CHour<10)&&(CMinute<10)) sprintf((char*)Msg, "Czas: 0%d : 0%d", CHour, CMinute);
+	  else if(CHour<10)	sprintf((char*)Msg, "Czas: 0%d : %d", CHour, CMinute);
+	  else if(CMinute<10) sprintf((char*)Msg, "Czas: %d : 0%d", CHour, CMinute);
+	  else sprintf((char*)Msg, "Czas: %d : %d", CHour, CMinute);
 	  EF_PutString(Msg, CZAS_POZ_X, CZAS_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	  Len = sprintf((char*)Msg, "Czas: %d : 0%d", CHour, CMinute);
-	  Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
+
+	  sprintf((char*)Msg, "Temp. zewn: %.2f`C", CTemp);
 	  EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
-	  Len = sprintf((char*)Msg, "Temp. wewn: %.2f`C", CTempWew);
+	  sprintf((char*)Msg, "Temp. wewn: %.2f`C", CTempWew);
 	  EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
-	  Len = sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
+	  sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
 	  EF_PutString(Msg, POZ_WODY_POZ_X, POZ_WODY_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
-	  Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
+	  sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
 	  EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
+	  //
+	  // Display button to change screen
+	  EF_SetFont(&arial_11ptFontInfo);
+	  // Right button
+	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "CONTROL=>");
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  // Left button
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "<=LIGHTS");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  // Medium button
+	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	  sprintf((char*)Msg, ">CLOCK<");
+	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 12), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+}
 
+//
+// Display control panel to change SWITCH STATE
+//
+void showControlPanel()
+{
+	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
+
+	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
+
+	  // Display HEADER
+	  sprintf((char*)Msg, "-=PRZEŁĄCZNIKI=-");
+	  EF_PutString(Msg, PRZELACZNIKI_STRING_POZ_X, PRZELACZNIKI_STRING_POZ_Y, ILI9341_BLUE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	  //
+	  // Display Strings with name of SWITCH
+	  sprintf((char*)Msg, "PRZEŁĄCZNIK 1:");
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  sprintf((char*)Msg, "PRZEŁĄCZNIK 2:");
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	  sprintf((char*)Msg, "PRZEŁĄCZNIK 3:");
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  sprintf((char*)Msg, "PRZEŁĄCZNIK 4:");
+	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  //
+	  // Display button to change screen
 	  EF_SetFont(&arial_11ptFontInfo);
 	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	  Len = sprintf((char*)Msg, "CONTROL=>");
+	  sprintf((char*)Msg, "LIGHTS=>");
 	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 
 	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	  Len = sprintf((char*)Msg, "<=LIGHTS");
+	  sprintf((char*)Msg, "<=PARAM");
 	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 
 	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
-	  Len = sprintf((char*)Msg, ">CLOCK<");
-	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 12), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  sprintf((char*)Msg, "ACTIVITIES");
+	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
-	  Len++;
+	  //
+	  // Draw current state of switches button
+	  //
+	  // First Switch
+	  //
+	  EF_SetFont(&arial_11ptFontInfo);
+	  if(SwitchesButtonState[0] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  //
+	  // Second Switch
+	  //
+	  if(SwitchesButtonState[1] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_2_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_2_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  //
+	  // Third Switch
+	  //
+	  if(SwitchesButtonState[2] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_3_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_3_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  //
+	  // Fourth Switch
+	  //
+	  if(SwitchesButtonState[3] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_4_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_4_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
 }
 
+//
+// Display screen to change LIGHTS
+//
+void showLightsControlPanel()
+{
+	  SendComand(UCMD_LIGHT_SCHOW_ALL); // ASK for current lights state
+
+	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	  EF_SetFont(&arialBlack_20ptFontInfo);
+
+	  // Display Header
+	  sprintf((char*)Msg, "-=ŚWIATŁA=-");
+	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	  // Display String with name of LIGHT
+	  sprintf((char*)Msg, "ŚWIATŁO 1:");
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  sprintf((char*)Msg, "ŚWIATŁO 2:");
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	  sprintf((char*)Msg, "ŚWIATŁO 3:");
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  sprintf((char*)Msg, "ŚWIATŁO 4:");
+	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	  //
+	  // Display button to change screen
+	  EF_SetFont(&arial_11ptFontInfo);
+	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "PARAM=>");
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "<=CONTROL");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  //
+	  // Draw current state of lights button
+	  //
+	  // First Light
+	  //
+	  EF_SetFont(&arial_11ptFontInfo);
+	  if(LightsButtonState[0] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_1_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_1_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  //
+	  // Second Light
+	  //
+	  if(LightsButtonState[1] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_2_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_2_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  //
+	  // Third Light
+	  //
+	  if(LightsButtonState[2] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_3_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_3_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  //
+	  // Fourth Light
+	  //
+	  if(LightsButtonState[3] >= 1)
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		  sprintf((char*)Msg, "ON");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+	  else
+	  {
+		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		  sprintf((char*)Msg, "OFF");
+		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	  }
+}
+
+//
+// Display screen to change current CLOCK
+//
+void showClockSetPanel()
+{
+	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	EF_SetFont(&arialBlack_20ptFontInfo);
+
+	uint8_t CHour = DS3231_GetHour();
+	uint8_t CMinute = DS3231_GetMinute();
+
+	//
+	// Display HEADER string
+	sprintf((char*)Msg, "-=SET CLOCK=-");
+	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	sprintf((char*)Msg, "GODZINA: %d", CHour);
+	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+
+	sprintf((char*)Msg, "MINUTA:   %d", CMinute);
+	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	// Display string on button
+	EF_SetFont(&arial_11ptFontInfo);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_1_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	sprintf((char*)Msg, "+1");
+	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X), (CLOCK_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON2_X, CLOCK_B_1_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	sprintf((char*)Msg, "+6");
+	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X+2), (CLOCK_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_2_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	sprintf((char*)Msg, "+1");
+	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X+2), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON2_X, CLOCK_B_2_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	sprintf((char*)Msg, "+10");
+	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
+	//
+	// Display button to change screen
+	EF_SetFont(&arial_11ptFontInfo);
+	GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	sprintf((char*)Msg, "CONFIRM");
+	EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	sprintf((char*)Msg, "<=BACK");
+	EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+}
+
+//
+// Display screen with Activities
+//
+void showPreparedActivitiesPanel()
+{
+	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+	EF_SetFont(&arialBlack_20ptFontInfo);
+
+	// Display Header
+	sprintf((char*)Msg, "-=ACTIVITIES=-");
+	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_BLUE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	//
+	// Display button to change screen
+	EF_SetFont(&arial_11ptFontInfo);
+	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	sprintf((char*)Msg, "<=BACK");
+	EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	EF_SetFont(&arialBlack_20ptFontInfo);
+
+	//
+	// Draw current state of Activities button
+	//
+	// First Button
+	//
+	if(ActivityButtonState[0] >= 1)
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		sprintf((char*)Msg, "KARMIENIE - ON");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	}
+	else
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		sprintf((char*)Msg, "KARMIENIE - OFF");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	}
+	 //
+	 // Second Button
+	 //
+	if(ActivityButtonState[1] >= 1)
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+		sprintf((char*)Msg, "CZYSZCZENIE - ON");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+	}
+	else
+	{
+		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
+		sprintf((char*)Msg, "CZYSZCZENIE - OFF");
+		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Another functions connected with screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Change displayed time, if is other than current time
+//
 void ChangeHourOnScreen()
 {
 	  uint8_t CHour = DS3231_GetHour();
 	  uint8_t CMinute = DS3231_GetMinute();
+
+	  //
+	  // Change HOURES
 	  if(CHour != OldHours)
 	  {
 		  if(State == MENUTFT_PARAMETERS)
@@ -141,8 +494,10 @@ void ChangeHourOnScreen()
 			  }
 			  EF_PutString(Msg, CZAS_POZ_X + 77 , CZAS_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 			  OldHours = CHour;
-			  }
+		  }
 	  }
+	  //
+	  // Change MINUTES
 	  if(CMinute != OldMinutes)
 	  {
 		  if(State == MENUTFT_PARAMETERS)
@@ -156,330 +511,17 @@ void ChangeHourOnScreen()
 				  sprintf((char*)Msg, " %d  ", CMinute);
 			  }
 
-			  EF_PutString(Msg, CZAS_POZ_X + 127 , CZAS_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+			  EF_PutString(Msg, CZAS_POZ_X + 128 , CZAS_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 			  OldMinutes = CMinute;
 		  }
 	  }
 
 }
 
-void showControlPanel()
-{
 
-	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
-
-	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-	  EF_SetFont(&arialBlack_20ptFontInfo);
-
-	  uint8_t Len = sprintf((char*)Msg, "-=PRZEŁĄCZNIKI=-");
-	  EF_PutString(Msg, PRZELACZNIKI_STRING_POZ_X, PRZELACZNIKI_STRING_POZ_Y, ILI9341_BLUE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
-	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
-
-	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 1:");
-	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 2:");
-	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 3:");
-	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "PRZEŁĄCZNIK 4:");
-	  EF_PutString(Msg, STRING_SWITCH_POZ_X, STRING_SWITCH_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  EF_SetFont(&arial_11ptFontInfo);
-	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	  Len = sprintf((char*)Msg, "LIGHTS=>");
-	  EF_PutString(Msg, (RIGHT_BUTTON_X + 3), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	  Len = sprintf((char*)Msg, "<=PARAM");
-	  EF_PutString(Msg, (LEFT_BUTTON_X + 10), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
-	  Len = sprintf((char*)Msg, "ACTIVITIES");
-	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-	  EF_SetFont(&arialBlack_20ptFontInfo);
-
-
-
-
-	  //
-	  // Draw current state of switches button
-	  //
-	  // First Switch
-	  //
-	  EF_SetFont(&arial_11ptFontInfo);
-	  if(SwitchesButtonState[0] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  //
-	  // Second Switch
-	  //
-	  if(SwitchesButtonState[1] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_2_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_2_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  //
-	  // Third Switch
-	  //
-	  if(SwitchesButtonState[2] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_3_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_3_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  //
-	  // Fourth Switch
-	  //
-	  if(SwitchesButtonState[3] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_4_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_4_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  Len++;
-	  EF_SetFont(&arialBlack_20ptFontInfo);
-
-
-}
-
-void showLightsControlPanel()
-{
-	  SendComand(UCMD_LIGHT_SCHOW_ALL); // ASK for current lights state
-
-	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-	  EF_SetFont(&arialBlack_20ptFontInfo);
-
-	  uint8_t Len = sprintf((char*)Msg, "-=ŚWIATŁA=-");
-	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
-	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
-
-	  Len = sprintf((char*)Msg, "ŚWIATŁO 1:");
-	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_1_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "ŚWIATŁO 2:");
-	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_2_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "ŚWIATŁO 3:");
-	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_3_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  Len = sprintf((char*)Msg, "ŚWIATŁO 4:");
-	  EF_PutString(Msg, STRING_LIGHTS_POZ_X, STRING_LIGHTS_4_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	  EF_SetFont(&arial_11ptFontInfo);
-	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	  Len = sprintf((char*)Msg, "PARAM=>");
-	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	  Len = sprintf((char*)Msg, "<=CONTROL");
-	  EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	  //
-	  // Draw current state of lights button
-	  //
-	  // First Light
-	  //
-	  EF_SetFont(&arial_11ptFontInfo);
-	  if(LightsButtonState[0] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_1_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_1_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  //
-	  // Second Light
-	  //
-	  if(LightsButtonState[1] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_2_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_2_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  //
-	  // Third Light
-	  //
-	  if(LightsButtonState[2] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_3_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_3_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  //
-	  // Fourth Light
-	  //
-	  if(LightsButtonState[3] >= 1)
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "ON");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-	  else
-	  {
-		  GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		  Len = sprintf((char*)Msg, "OFF");
-		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	  }
-
-	  Len++;
-	  EF_SetFont(&arialBlack_20ptFontInfo);
-
-}
-
-void showClockSetPanel()
-{
-	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-	EF_SetFont(&arialBlack_20ptFontInfo);
-
-	uint8_t CHour = DS3231_GetHour();
-	uint8_t CMinute = DS3231_GetMinute();
-
-	uint8_t Len = sprintf((char*)Msg, "-=SET CLOCK=-");
-	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
-	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
-
-	Len = sprintf((char*)Msg, "GODZINA: %d", CHour);
-	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-
-	Len = sprintf((char*)Msg, "MINUTA:   %d", CMinute);
-	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
-
-	EF_SetFont(&arial_11ptFontInfo);
-
-	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_1_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
-	Len = sprintf((char*)Msg, "+1");
-	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X), (CLOCK_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
-
-	GFX_DrawFillRoundRectangle(CLOCK_BUTTON2_X, CLOCK_B_1_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
-	Len = sprintf((char*)Msg, "+6");
-	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X+2), (CLOCK_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
-
-	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_2_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
-	Len = sprintf((char*)Msg, "+1");
-	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X+2), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
-
-	GFX_DrawFillRoundRectangle(CLOCK_BUTTON2_X, CLOCK_B_2_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
-	Len = sprintf((char*)Msg, "+10");
-	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
-
-	EF_SetFont(&arial_11ptFontInfo);
-	GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	Len = sprintf((char*)Msg, "CONFIRM");
-	EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	Len = sprintf((char*)Msg, "<=BACK");
-	EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	EF_SetFont(&arialBlack_20ptFontInfo);
-
-	Len++;
-}
-
-void showPreparedActivitiesPanel()
-{
-	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-	EF_SetFont(&arialBlack_20ptFontInfo);
-
-	uint8_t Len = sprintf((char*)Msg, "-=ACTIVITIES=-");
-	EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_BLUE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
-	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
-	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
-
-	EF_SetFont(&arial_11ptFontInfo);
-	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
-	Len = sprintf((char*)Msg, "<=BACK");
-	EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
-
-	EF_SetFont(&arialBlack_20ptFontInfo);
-
-	 //
-	 // Draw current state of Activities button
-	 //
-	 // First Button
-	 //
-	if(ActivityButtonState[0] >= 1)
-	{
-		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		Len = sprintf((char*)Msg, "KARMIENIE - ON");
-		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-	}
-	else
-	{
-		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		Len = sprintf((char*)Msg, "KARMIENIE - OFF");
-		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	}
-	 //
-	 // Second Button
-	 //
-	if(ActivityButtonState[1] >= 1)
-	{
-		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-		Len = sprintf((char*)Msg, "CZYSZCZENIE - ON");
-		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-	}
-	else
-	{
-		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_2_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		Len = sprintf((char*)Msg, "CZYSZCZENIE - OFF");
-		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ERRATA_X), (ACTIVITY_BUTTON_2_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-	}
-
-	Len++;
-}
-
+//
+// Action make during predefined activity - first activity
+//
 void predefinedActivityCzyszczenie(uint8_t State)
 {
 	uint8_t NowyStan = State;
@@ -504,6 +546,9 @@ void predefinedActivityCzyszczenie(uint8_t State)
 	}
 }
 
+//
+// Action make during predefined activity - first activity
+//
 void predefinedActivityKarmienie(uint8_t State)
 {
 	uint8_t NowyStan = State;
