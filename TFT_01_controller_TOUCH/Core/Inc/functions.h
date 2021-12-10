@@ -25,7 +25,7 @@
 
 
 //
-// Define position string in showCurrentParameters funcion
+// Define position string in showCurrentParameters function
 //
 #define PARAMETRY_STRING_POZ_X 47
 #define PARAMETRY_STRING_POZ_Y 10

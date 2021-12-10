@@ -329,7 +329,7 @@ uint8_t SendComand(uint8_t Command)
 			UARTDMA_Print(&huartdma2, "CHSTATE=0,0\n");
 			break;
 		case UCMD_RELAY_SCHOW_ALL:
-			UARTDMA_Print(&huartdma2, "STATESTATUS=0,0\n");
+			UARTDMA_Print(&huartdma2, "CHSTATE=7,7\n");
 			break;
 		case UCMD_LIGHT_1_ON:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=1,1\n");
@@ -362,7 +362,7 @@ uint8_t SendComand(uint8_t Command)
 			UARTDMA_Print(&huartdma2, "CHLIGHT=0,0\n");
 			break;
 		case UCMD_LIGHT_SCHOW_ALL:
-			UARTDMA_Print(&huartdma2, "LIGHTSSTATUS=0,0\n");
+			UARTDMA_Print(&huartdma2, "CHLIGHT=7,7\n");
 			break;
 		}
 
