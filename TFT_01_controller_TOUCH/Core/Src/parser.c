@@ -32,21 +32,30 @@ uint8_t SwitchesButtonState[4] = {0,0,0,0};
 uint8_t LightsButtonState[4] = {0,0,0,0};
 uint8_t ActivityButtonState[2] = {0,0};
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////// MAIN PARSING FUNCTION //////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// MAIN PARSING FUNCTION
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
- * Parsing headers:
- * 		LED=1\n 			// LED On
- * 		LED=0\n 			// LED Off
- * 		STATE=?\n			// Jaki jest stan uC
- * 		TEMP=1\n			// Jaka jest temperatura 1 czujnika
- * 		PRES=1\n			// Jakie jest cisnienie 1 czujnika
- * 		CHSTATE=1,0\n		// Zmien stan przekaznika 1 na wylaczony
- * 		CHSTATE=2,1\n		// Zmien stan przekaznika 2 na wlaczony
- * 		ASTATESTATUS=?\n	// Podaj stan wszystkich przekaznikow
+ * SENDING COMAND ID NUMBER
+ *	0 	=>	LED=1\n 			// LED On
+ * 	1	=>	LED=0\n 			// LED Off
+ * 	2	=>	STATE=?\n			// Jaki jest stan uC
+ * 	3	=>	TEMP=1\n			// Jaka jest temperatura 1 czujnika
+ * 	4	=>	PRES=1\n			// Jakie jest cisnienie 1 czujnika
+ * 	5	=>	CHSTATE=1,0\n		// Zmien stan przekaznika 1 na wylaczony
+ * 	6	=>	CHSTATE=2,1\n		// Zmien stan przekaznika 2 na wlaczony
+ * 	23	=>	CHSTATE=0,1\n		// Zmien stan wszystkich przekaznikow na wlaczony
+ * 	24	=>	CHSTATE=0,0\n		// Zmien stan wszystkich przekaznikow na wylaczony
+ * 	21	=>	STATESTATUS=?\n		// Podaj stan wszystkich przekaznikow
+ * 	13  =>	CHLIGHT=1,0\n		// Zmien stan swiatla 1 na wylaczony
+ * 	15  =>  CHLIGHT=2,1\n		// Zmien stan swiatla 2 na wlaczony
+ *  25  =>	CHLIGHT=0,1\n		// Zmien stan wszystkich swiatel na wlaczony
+ *  26  =>	CHLIGHT=0,0\n		// Zmien stan wszystkich swiatel na wylaczony
+ * 	22	=>	LIGHTSSTATUS=?\n	// Podaj stan wszytskich swiatel
  *
  */
 
@@ -92,17 +101,18 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 		  UART_ParseAnswLightsStateStatus();
 	  }
-
 	  //TODO: DODAC OBSLUGE PARSOWANIA BLEDOW
 	}
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////// HANDLING PARSING FUNCTION //////////////////////////////////////////////////////////////////////////
+//
+// HANDLING PARSING FUNCTION
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Parsowanie testowej funkcji od LED
+// Parsing testing function to change state of LED
 // "LED=1\n"
 void UART_ParseLED()
 {
@@ -144,16 +154,15 @@ void UART_ParseLED()
 //"ASTATE=1\n"
 void UART_ParseAnswStatus()
 {
-	//TODO: Dodac obsluge statusu urzadzenia
+	//TODO: Add handling of state machine
 }
 
 //
 // Parsing information about current temperature
-//"ATEMP=23.45000"
+//"ATEMP=23.45000\n"
 void UART_ParseAnswTemp()
 {
 	char* ParsePointer = strtok(NULL, ",");
-	uint8_t Len;
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
 		CTemp = atof(ParsePointer); // If there are no chars, change string to integer
@@ -162,11 +171,10 @@ void UART_ParseAnswTemp()
 		if(State == MENUTFT_PARAMETERS)
 		{
 			EF_SetFont(&arialBlack_20ptFontInfo);
-			Len = sprintf((char*)Msg, "Temp. zewn: %.2f`C ", CTemp);
+			sprintf((char*)Msg, "Temp. zewn: %.2f`C ", CTemp);
 			EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
-		UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
-		Len++;
+		//UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
 	}
 }
 
@@ -176,7 +184,6 @@ void UART_ParseAnswTemp()
 void UART_ParseAnswPres()
 {
 	char* ParsePointer = strtok(NULL, ",");
-	uint8_t Len;
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
 		CPres = atof(ParsePointer); // If there are no chars, change string to integer
@@ -185,11 +192,10 @@ void UART_ParseAnswPres()
 		if(State == MENUTFT_PARAMETERS)
 		{
 			EF_SetFont(&arialBlack_20ptFontInfo);
-			Len = sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
+			sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
 			EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
-		UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
-		Len++;
+		//UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
 	}
 }
 
@@ -212,31 +218,29 @@ void UART_ParseAnswRelayStateStatus()
 {
 	uint8_t i,j; // Iterators
 
-		for(i = 0; i<4; i++) // 4 parameters are expected
+	for(i = 0; i<4; i++) // 4 parameters are expected
+	{
+		char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+		if(strlen(ParsePointer) > 0) // If string exists
 		{
-			char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
-
-			if(strlen(ParsePointer) > 0) // If string exists
+			for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
 			{
-				for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
+				if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
 				{
-					if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
-					{
-						sprintf(Message, "ERROR_WRONG_VALUE\n"); // If not, Error message
-						UARTDMA_Print(&huartdma2, Message); // Print message
-						return;	// And exit parsing
-					}
-
-					SwitchesButtonState[i] = atof(ParsePointer); // If there are no chars, change string to integer
+					sprintf(Message, "ERROR_WRONG_VALUE\n"); // If not, Error message
+					UARTDMA_Print(&huartdma2, Message); // Print message
+					return;	// And exit parsing
 				}
-			}
-			else
-			{
-				sprintf(Message, "ERROR_TOO_LESS_PARAMETERS\n"); // If not, Error message
-				UARTDMA_Print(&huartdma2, Message); // Print message
-				return;	// And exit parsing
+				SwitchesButtonState[i] = atoi(ParsePointer); // If there are no chars, change string to integer
 			}
 		}
+		else
+		{
+			sprintf(Message, "ERROR_TOO_LESS_PARAMETERS\n"); // If not, Error message
+			UARTDMA_Print(&huartdma2, Message); // Print message
+			return;	// And exit parsing
+		}
+	}
 }
 
 //
@@ -246,35 +250,36 @@ void UART_ParseAnswLightsStateStatus()
 {
 	uint8_t i,j; // Iterators
 
-			for(i = 0; i<4; i++) // 4 parameters are expected
+	for(i = 0; i<4; i++) // 4 parameters are expected
+	{
+		char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+		if(strlen(ParsePointer) > 0) // If string exists
+		{
+			for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
 			{
-				char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
-
-				if(strlen(ParsePointer) > 0) // If string exists
+				if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
 				{
-					for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
-					{
-						if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
-						{
-							sprintf(Message, "ERROR_WRONG_VALUE\n"); // If not, Error message
-							UARTDMA_Print(&huartdma2, Message); // Print message
-							return;	// And exit parsing
-						}
-
-						LightsButtonState[i] = atof(ParsePointer); // If there are no chars, change string to integer
-					}
-				}
-				else
-				{
-					sprintf(Message, "ERROR_TOO_LESS_PARAMETERS\n"); // If not, Error message
+					sprintf(Message, "ERROR_WRONG_VALUE\n"); // If not, Error message
 					UARTDMA_Print(&huartdma2, Message); // Print message
 					return;	// And exit parsing
 				}
+				// Main action to write value
+				LightsButtonState[i] = atoi(ParsePointer); // If there are no chars, change string to integer
 			}
+		}
+		else
+		{
+			sprintf(Message, "ERROR_TOO_LESS_PARAMETERS\n"); // If not, Error message
+			UARTDMA_Print(&huartdma2, Message); // Print message
+			return;	// And exit parsing
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////// ASK FOR INFORMATION //////////////////////////////////////////////////////////////////////////
+//
+// Ask for informations
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 uint8_t SendComand(uint8_t Command)
@@ -365,97 +370,6 @@ uint8_t SendComand(uint8_t Command)
 			UARTDMA_Print(&huartdma2, "CHLIGHT=7,7\n");
 			break;
 		}
-
 	return 1;
 }
-
-
-
-
-
-
-
-///////////////////////////////////////////// MASZYNA STANOW ////////////////////////////////
-
-CONTROLLER_STATE ControlerRegulator;
-uint8_t AqaParameters[3];
-
-void SwitchControllerState()
-{
-	switch(ControlerRegulator){
-		case IDLE:
-			IdleRoutine(AqaParameters);
-			break;
-		case INITIALIZATION:
-			InitializationRoutine(AqaParameters);
-			break;
-		case PARAMETERS:
-			ParametersRoutine(AqaParameters);
-			break;
-		case SW_CONTROLLING:
-			SwitchControlingRoutine(AqaParameters);
-			break;
-		case LIGHT_CONTROLLING:
-			LightControllingRoutine(AqaParameters);
-			break;
-		case LIGHT_TIMERS:
-			LightTimersRoutine(AqaParameters);
-			break;
-		case CONNECTION_ERROR:
-			ConnectionErrorRoutine(AqaParameters);
-			break;
-		default:
-			break;
-
-		}
-}
-
-/*
- * Parsing headers:
- * 		LED=1\n 		// LED On
- * 		LED=0\n 		// LED Off
- * 		STATE=?\n		// Jaki jest stan uC
- * 		TEMP=1\n		// Jaka jest temperatura 1 czujnika
- * 		PRES=1\n		// Jakie jest cisnienie 1 czujnika
- * 		CHSTATE=1,0\n	// Zmien stan przekaznika 1 na wylaczony
- * 		CHSTATE=2,1\n	// Zmien stan przekaznika 2 na wlaczony
- * 		ASTATESTATUS\n	// Podaj stan wszystkich przekaznikow
- *
- */
-void IdleRoutine(uint8_t * AqaParameters)
-{
-
-}
-
-void InitializationRoutine(uint8_t * AqaParameters)
-{
-	// TODO - DODAĆ OBSŁUGĘ RETURNA, JAK ZWRACA 1 TO PRZECHODZI DO PARAMETERS A JAK NIE TO DO ERRORS
-	system_init();
-}
-
-void ParametersRoutine(uint8_t * AqaParameters)
-{
-
-}
-
-void SwitchControlingRoutine(uint8_t * AqaParameters)
-{
-
-}
-
-void LightControllingRoutine(uint8_t * AqaParameters)
-{
-
-}
-
-void LightTimersRoutine(uint8_t * AqaParameters)
-{
-
-}
-
-void ConnectionErrorRoutine(uint8_t * AqaParameters)
-{
-
-}
-
 

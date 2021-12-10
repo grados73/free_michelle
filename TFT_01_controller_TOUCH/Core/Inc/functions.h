@@ -63,6 +63,16 @@
 #define STRING_LIGHTS_4_POZ_Y 150
 
 //
+// Define position string in showClockSetPanel function
+//
+#define CLOCK_STRING_POZ_X 47
+#define CLOCK_STRING_POZ_Y 10
+#define STRING_HOUR_MINUTE_POZ_X 20
+#define STRING_HOUR_POZ_Y 70
+#define STRING_MINUTE_POZ_Y 110
+#define STRING_H_M_NUMBER_POZ_X 160
+
+//
 // Define errata begin of string in connection to begin of button
 //
 #define STRING_ERRATA_X 3
@@ -75,15 +85,7 @@
 #define HEADER_UNDERLINE_POZ_Y 41
 #define HEADER_UNDERLINE_COLOR ILI9341_ORANGE
 
-//
-// Define position string in showClockSetPanel function
-//
-#define CLOCK_STRING_POZ_X 47
-#define CLOCK_STRING_POZ_Y 10
-#define STRING_HOUR_MINUTE_POZ_X 20
-#define STRING_HOUR_POZ_Y 70
-#define STRING_MINUTE_POZ_Y 110
-#define STRING_H_M_NUMBER_POZ_X 160
+
 
 
 uint8_t Msg[32];

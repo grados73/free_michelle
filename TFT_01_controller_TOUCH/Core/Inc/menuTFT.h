@@ -11,7 +11,7 @@
 #define SWITCH_DEBOUNCING_TIME_MS 1000
 
 //
-// Define position and size of button
+// Define position, color and size of button
 //
 #define RIGHT_LEFT_BUTTON_R 5 //Rounding of button
 #define SWITCH_ON_BUTTON_COLOR ILI9341_GREENYELLOW
@@ -22,7 +22,7 @@
 //define position and size of button to change menu screen to RIGHT
 #define RIGHT_BUTTON_X 220
 #define RIGHT_BUTTON_Y 216
-#define RIGHT_BUTTON_W 100
+#define RIGHT_BUTTON_W 95
 #define RIGHT_BUTTON_H 20
 //define position and size of button to change menu screen to LEFT
 #define LEFT_BUTTON_X 10
@@ -59,7 +59,7 @@
 #define LIGHT_B_3_POZ_Y (STRING_LIGHTS_3_POZ_Y+5)
 #define LIGHT_B_4_POZ_Y (STRING_LIGHTS_4_POZ_Y+5)
 
-//define position an size of button to change current time
+//define position and size of button to change current time
 #define CLOCK_BUTTON_X 240
 #define CLOCK_BUTTON2_X (CLOCK_BUTTON_X+CLOCK_BUTTON_W+10)
 #define CLOCK_BUTTON_W 30
@@ -93,6 +93,8 @@ typedef enum
 	MENUTFT_LIGHTS 			// Show current lights state, and possibility to change them
 } MenuTFTState;
 
+//
+// Declaration of function to handling touch in each screen
 void MenuTFT(void);
 void TouchParametersActivity(void);
 void TouchSwitchActivity(void);

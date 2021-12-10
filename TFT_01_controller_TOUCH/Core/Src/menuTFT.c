@@ -1,5 +1,6 @@
 /**
   ******************************************************************************
+  ******************************************************************************
   * @file           : menuTFT.c
   * @project		: free_michelle
   * @author			: grados73 - https://github.com/grados73
@@ -22,8 +23,8 @@ extern float CPres;
 extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
 extern uint8_t ActivityButtonState[2];
-uint8_t StateChangeFlag = 0;
-uint8_t ClockChangeFlag = 0;
+uint8_t StateChangeFlag = 0; // using to indicate change screen activity
+uint8_t ClockChangeFlag = 0; // using to indicate change screen to Clock Set
 uint8_t Hours = 15;
 uint8_t Minutes = 5;
 
@@ -31,6 +32,12 @@ uint32_t TimerTouch = 0; // Timer to debouncing function
 
 MenuTFTState State = MENUTFT_INIT; // Initialization state for MenuTFT State Machine
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	MAIN FUNCTION TO HANDLING STAND MACHINE OF SCREEN
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MenuTFT(void)
 {
 	switch(State)
@@ -41,7 +48,7 @@ void MenuTFT(void)
 		StateChangeFlag = 1;
 		break;
 	case MENUTFT_PARAMETERS:
-		if(StateChangeFlag == 1)
+		if(StateChangeFlag == 1) // make only one time
 		{
 			showCurrentParameters(CTemp, 0, 0, 0, CPres);
 			StateChangeFlag = 0;
@@ -49,7 +56,7 @@ void MenuTFT(void)
 		TouchParametersActivity();
 		break;
 	case MENUTFT_SWITCH:
-		if(StateChangeFlag == 1)
+		if(StateChangeFlag == 1) // make only one time
 		{
 			showControlPanel();
 			StateChangeFlag = 0;
@@ -57,7 +64,7 @@ void MenuTFT(void)
 		TouchSwitchActivity();
 		break;
 	case MENUTFT_LIGHTS:
-		if(StateChangeFlag == 1)
+		if(StateChangeFlag == 1) // make only one time
 		{
 			showLightsControlPanel();
 			StateChangeFlag = 0;
@@ -65,7 +72,7 @@ void MenuTFT(void)
 		TouchLightsActivity();
 		break;
 	case MENUTFT_CLOCK:
-		if(StateChangeFlag == 1)
+		if(StateChangeFlag == 1) // make only one time
 		{
 			showClockSetPanel();
 			ClockChangeFlag = 1;
@@ -74,7 +81,7 @@ void MenuTFT(void)
 		TouchClockActivity();
 		break;
 	case MENUTFT_ACTIVITIES:
-		if(StateChangeFlag == 1)
+		if(StateChangeFlag == 1) // make only one time
 		{
 			showPreparedActivitiesPanel();
 			StateChangeFlag =0;
@@ -84,7 +91,11 @@ void MenuTFT(void)
 	}
 }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Parameters Screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TouchParametersActivity(void)
 {
 	// Check if screen was touched
@@ -126,6 +137,11 @@ void TouchParametersActivity(void)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Switches Screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TouchSwitchActivity(void)
 {
 	// Check if screen was touched
@@ -170,14 +186,15 @@ void TouchSwitchActivity(void)
 			else if((x >= SWITCH_BUTTON_X)&&(x <= (SWITCH_BUTTON_X + SWITCH_BUTTON_W)))
 			{
 				EF_SetFont(&arial_11ptFontInfo);
-				uint8_t Len = 0;
-				if((y >= SWITCH_1_POZ_Y)&&(y <= (SWITCH_1_POZ_Y + SWITCH_BUTTON_H)))	//FIRST SWITCH
+				//
+				// FIRST SWITCH
+				if((y >= SWITCH_1_POZ_Y)&&(y <= (SWITCH_1_POZ_Y + SWITCH_BUTTON_H)))
 				{
 					if(SwitchesButtonState[0] >= 1) // if is ON
 					{
 						SendComand(UCMD_RELAY_1_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[0] = 0;
 					}
@@ -185,19 +202,21 @@ void TouchSwitchActivity(void)
 					{
 						SendComand(UCMD_RELAY_1_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_1_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[0] = 1;
 					}
 
 				}
-				else if((y >= SWITCH_2_POZ_Y)&&(y <= (SWITCH_2_POZ_Y + SWITCH_BUTTON_H)))	//SECOND SWITCH
+				//
+				// SECOND SWITCH
+				else if((y >= SWITCH_2_POZ_Y)&&(y <= (SWITCH_2_POZ_Y + SWITCH_BUTTON_H)))
 				{
 					if(SwitchesButtonState[1] >= 1) // if is ON
 					{
 						SendComand(UCMD_RELAY_2_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_2_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[1] = 0;
 					}
@@ -205,18 +224,20 @@ void TouchSwitchActivity(void)
 					{
 						SendComand(UCMD_RELAY_2_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_2_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[1] = 1;
 					}
 				}
-				else if((y >= SWITCH_3_POZ_Y)&&(y <= (SWITCH_3_POZ_Y + SWITCH_BUTTON_H)))	//THIRD SWITCH
+				//
+				// THIRD SWITCH
+				else if((y >= SWITCH_3_POZ_Y)&&(y <= (SWITCH_3_POZ_Y + SWITCH_BUTTON_H)))
 				{
 					if(SwitchesButtonState[2] >= 1) // if is ON
 					{
 						SendComand(UCMD_RELAY_3_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_3_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[2] = 0;
 					}
@@ -224,18 +245,20 @@ void TouchSwitchActivity(void)
 					{
 						SendComand(UCMD_RELAY_3_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_3_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[2] = 1;
 					}
 				}
-				else if((y >= SWITCH_4_POZ_Y)&&(y <= (SWITCH_4_POZ_Y + SWITCH_BUTTON_H)))	//FOURTH SWITCH
+				//
+				// FOURTH SWITCH
+				else if((y >= SWITCH_4_POZ_Y)&&(y <= (SWITCH_4_POZ_Y + SWITCH_BUTTON_H)))
 				{
 					if(SwitchesButtonState[3] >= 1) // if is ON
 					{
 						SendComand(UCMD_RELAY_4_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_4_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[3] = 0;
 					}
@@ -243,12 +266,11 @@ void TouchSwitchActivity(void)
 					{
 						SendComand(UCMD_RELAY_4_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(SWITCH_BUTTON_X, SWITCH_4_POZ_Y, SWITCH_BUTTON_W, SWITCH_BUTTON_H, SWITCH_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[3] = 1;
 					}
 				}
-				Len++;
 				EF_SetFont(&arialBlack_20ptFontInfo);
 			}
 			TimerTouch = HAL_GetTick();
@@ -256,6 +278,11 @@ void TouchSwitchActivity(void)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Lights Screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TouchLightsActivity(void)
 {
 	// Check if screen was touched
@@ -292,14 +319,16 @@ void TouchLightsActivity(void)
 			else if((x >= LIGHTS_BUTTON_X)&&(x <= (LIGHTS_BUTTON_X + LIGHTS_BUTTON_W)))
 			{
 				EF_SetFont(&arial_11ptFontInfo);
-				uint8_t Len = 0;
-				if((y >= LIGHT_B_1_POZ_Y)&&(y <= (LIGHT_B_1_POZ_Y + LIGHTS_BUTTON_H))) // FIRST LIGHT
+
+				//
+				// FIRST LIGHT
+				if((y >= LIGHT_B_1_POZ_Y)&&(y <= (LIGHT_B_1_POZ_Y + LIGHTS_BUTTON_H)))
 				{
 					if(LightsButtonState[0] >= 1) // if is ON
 					{
 						SendComand(UCMD_LIGHT_1_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_1_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[0] = 0;
 					}
@@ -307,18 +336,20 @@ void TouchLightsActivity(void)
 					{
 						SendComand(UCMD_LIGHT_1_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_1_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[0] = 1;
 					}
 				}
-				else if((y >= LIGHT_B_2_POZ_Y)&&(y <= (LIGHT_B_2_POZ_Y + LIGHTS_BUTTON_H))) // SECOND LIGHT
+				//
+				// SECOND LIGHT
+				else if((y >= LIGHT_B_2_POZ_Y)&&(y <= (LIGHT_B_2_POZ_Y + LIGHTS_BUTTON_H)))
 				{
 					if(LightsButtonState[1] >= 1) // if is ON
 					{
 						SendComand(UCMD_LIGHT_2_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_2_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[1] = 0;
 					}
@@ -326,18 +357,21 @@ void TouchLightsActivity(void)
 					{
 						SendComand(UCMD_LIGHT_2_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_2_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[1] = 1;
 					}
 				}
-				else if((y >= LIGHT_B_3_POZ_Y)&&(y <= (LIGHT_B_3_POZ_Y + LIGHTS_BUTTON_H))) // THIRD LIGHT
+
+				//
+				// THIRD LIGHT
+				else if((y >= LIGHT_B_3_POZ_Y)&&(y <= (LIGHT_B_3_POZ_Y + LIGHTS_BUTTON_H)))
 				{
 					if(LightsButtonState[2] >= 1) // if is ON
 					{
 						SendComand(UCMD_LIGHT_3_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_3_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[2] = 0;
 					}
@@ -345,18 +379,21 @@ void TouchLightsActivity(void)
 					{
 						SendComand(UCMD_LIGHT_3_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_3_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[2] = 1;
 					}
 				}
-				else if((y >= LIGHT_B_4_POZ_Y)&&(y <= (LIGHT_B_4_POZ_Y + LIGHTS_BUTTON_H))) // FOURTH LIGHT
+
+				//
+				// FOURTH LIGHT
+				else if((y >= LIGHT_B_4_POZ_Y)&&(y <= (LIGHT_B_4_POZ_Y + LIGHTS_BUTTON_H)))
 				{
 					if(LightsButtonState[3] >= 1) // if is ON
 					{
 						SendComand(UCMD_LIGHT_4_OFF); // Send comannd to OFF
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "OFF");
+						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[3] = 0;
 					}
@@ -364,12 +401,11 @@ void TouchLightsActivity(void)
 					{
 						SendComand(UCMD_LIGHT_4_ON); // Send comannd to ON
 						GFX_DrawFillRoundRectangle(LIGHTS_BUTTON_X, LIGHT_B_4_POZ_Y, LIGHTS_BUTTON_W, LIGHTS_BUTTON_H, LIGHTS_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
-						Len = sprintf((char*)Msg, "ON");
+						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[3] = 1;
 					}
 				}
-				Len++;
 				EF_SetFont(&arialBlack_20ptFontInfo);
 			}
 
@@ -378,6 +414,11 @@ void TouchLightsActivity(void)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Set CLOCK Screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TouchClockActivity(void)
 {
 	// Check if screen was touched
@@ -388,16 +429,14 @@ void TouchClockActivity(void)
 			{
 				uint16_t x, y; // Touch points
 
-
 				XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
 
-				if( 1 == ClockChangeFlag) // If we just get inside this screen we must get current Hour and Minutes to easlier change them, but only once
+				if( 1 == ClockChangeFlag) // If we just get inside this screen we must get current Hour and Minutes to easier change them, but only once
 				{
 					Hours = DS3231_GetHour();
 					Minutes = DS3231_GetMinute();
 					ClockChangeFlag = 0;
 				}
-
 
 				//
 				// Check if it is button to change screen
@@ -426,7 +465,7 @@ void TouchClockActivity(void)
 				//
 				else if((x >= CLOCK_BUTTON_X)&&(x <= (CLOCK_BUTTON_X + CLOCK_BUTTON_W)))
 				{
-					uint8_t Len = 0;
+
 					if((y >= CLOCK_B_1_POZ_Y)&&(y <= (CLOCK_B_1_POZ_Y + CLOCK_BUTTON_H))) // Add 1 Hour
 					{
 						if(Hours < 24)
@@ -437,7 +476,7 @@ void TouchClockActivity(void)
 						{
 							Hours = 1;
 						}
-						Len = sprintf((char*)Msg, " %d  ", Hours);
+						sprintf((char*)Msg, " %d  ", Hours);
 						EF_PutString(Msg, STRING_H_M_NUMBER_POZ_X, STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 					}
@@ -451,10 +490,9 @@ void TouchClockActivity(void)
 						{
 							Minutes = 0;
 						}
-						Len = sprintf((char*)Msg, " %d  ", Minutes);
+						sprintf((char*)Msg, " %d  ", Minutes);
 						EF_PutString(Msg, STRING_H_M_NUMBER_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 					}
-					Len++;
 
 				}
 
@@ -463,7 +501,6 @@ void TouchClockActivity(void)
 				//
 				else if((x >= (CLOCK_BUTTON2_X))&&(x <= (CLOCK_BUTTON2_X + CLOCK_BUTTON_W)))
 				{
-					uint8_t Len = 0;
 					if((y >= CLOCK_B_1_POZ_Y)&&(y <= (CLOCK_B_1_POZ_Y + CLOCK_BUTTON_H))) // Add 6 Hour
 					{
 
@@ -475,7 +512,7 @@ void TouchClockActivity(void)
 						{
 							Hours = 1;
 						}
-						Len = sprintf((char*)Msg, " %d  ", Hours);
+						sprintf((char*)Msg, " %d  ", Hours);
 						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X-3), STRING_HOUR_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 					}
@@ -493,26 +530,29 @@ void TouchClockActivity(void)
 						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X-4), STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 					}
-					Len++;
 					EF_SetFont(&arialBlack_20ptFontInfo);
 				}
-
 				TimerTouch = HAL_GetTick();
 			}
 		}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Predefined Activity Screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TouchPredefinedActivityActivity()
 {
-
 	if(XPT2046_IsTouched())
 	{
-		EF_SetFont(&arial_11ptFontInfo);
+
 		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
 		{
 			uint16_t x, y; // Touch points
 			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
 
+			EF_SetFont(&arial_11ptFontInfo);
 			//
 			// Check if it is button to change screen
 			//
@@ -579,8 +619,6 @@ void TouchPredefinedActivityActivity()
 
 				}
 			}
-
-
 			TimerTouch = HAL_GetTick();
 		}
 	}
