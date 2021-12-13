@@ -105,5 +105,7 @@ void ChangeHourOnScreen();
 void predefinedActivityKarmienie(uint8_t State);
 void predefinedActivityCzyszczenie(uint8_t State);
 
+void drawCurrentStateOfLights();
+void drawCurrentStateOfSwitches();
 
 #endif /* INC_FUNCTIONS_H_ */

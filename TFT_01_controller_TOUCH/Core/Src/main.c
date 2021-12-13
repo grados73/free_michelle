@@ -8,7 +8,6 @@
   * 				  user for aquarium controller project named "FREE MICHELLE"
   * @todo			: Confirmation of make orders
   * 				: Read real state of relay / light
-  * 				: Read temperature inside
   * 				: Read water LVL
   * 				: Read PH
   * 				: Control WS2812b LEDs (82szt)

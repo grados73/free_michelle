@@ -16,6 +16,7 @@
 #include "stdio.h"
 #include "functions.h"
 #include "ds18b20.h"
+#include "stm32f4xx_hal.h"
 
 
 extern UARTDMA_HandleTypeDef huartdma2;
@@ -217,8 +218,6 @@ void UART_ParsePres()
 void UART_ParseChangeRelayState()
 {
 		uint8_t i,j; // Iterators
-		//TODO!!! DO SPRAWDZENIA ZMIANA Z FOLATA NA uint8_t
-		//float RelayParameters[2]; // Numer Przekaznika, Stan
 		uint8_t RelayParameters[2]; // Numer Przekaznika, Stan
 
 		for(i = 0; i<2; i++) // 2 parametry sa oczekiwane - numer przekaznika i stan
@@ -317,7 +316,6 @@ void PodajStatusRoutine()
 void PodajTemperatureRoutine(uint8_t NrCzujnika)
 {
 	float aktualna_temperatura = 0;
-
 	if(NrCzujnika == 1)
 	{
 		aktualna_temperatura = BMPResults.Temp;
@@ -330,8 +328,8 @@ void PodajTemperatureRoutine(uint8_t NrCzujnika)
 			aktualna_temperatura = 0.0;
 		}
 	}
-	sprintf(Message, "ATEMP=%d,%f\n", NrCzujnika, aktualna_temperatura);
-	UARTDMA_Print(&huartdma2, Message);
+		sprintf(Message, "ATEMP=%d,%f\n", NrCzujnika, aktualna_temperatura);
+		UARTDMA_Print(&huartdma2, Message);
 }
 
 //
@@ -404,7 +402,7 @@ void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan)
 	}
 	else if(NrPrzekaznika == 7) // Show status of all relay
 	{
-		sprintf(Message, "ASTATESTATUS=%d,%d,%d,%d\n",RelayState[0],RelayState[1],RelayState[2],RelayState[3]);
+		sprintf(Message, "ASSTATUS=%d,%d,%d,%d\n",RelayState[0],RelayState[1],RelayState[2],RelayState[3]);
 		UARTDMA_Print(&huartdma2, Message); // Print message
 		return;
 	}
@@ -458,23 +456,23 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_2_GPIO_Port, LIGHT_2_Pin, GPIO_PIN_SET);
-		LightState[0] = Stan;
+		LightState[1] = Stan;
 	}
 	else if(LightNumber == 3)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_SET);
-		LightState[0] = Stan;
+		LightState[2] = Stan;
 	}
 	else if(LightNumber == 4)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_RESET);
 		else HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_SET);
-		LightState[0] = Stan;
+		LightState[3] = Stan;
 	}
 	else if(LightNumber == 7) //show status of all lights
 	{
-		sprintf(Message, "ALIGHTSSTATUS=%d,%d,%d,%d\n", LightState[0], LightState[1], LightState[2], LightState[3]);
+		sprintf(Message, "ALSTATUS=%d,%d,%d,%d\n", LightState[0], LightState[1], LightState[2], LightState[3]);
 		UARTDMA_Print(&huartdma2, Message); // Print message
 		return;
 	}

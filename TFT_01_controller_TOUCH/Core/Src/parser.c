@@ -94,11 +94,11 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  {
 		  UART_ParseAnswChangeLightState();
 	  }
-	  else if (strcmp(ParsePointer, "ASTATESTATUS") == 0) // Answear about current Switch Status
+	  else if (strcmp(ParsePointer, "ASSTATUS") == 0) // Answear about current Switch Status
 	  {
 		  UART_ParseAnswRelayStateStatus();
 	  }
-	  else if (strcmp(ParsePointer, "ALIGHTSSTATUS") == 0) // Answear about current Switch Status
+	  else if (strcmp(ParsePointer, "ALSTATUS") == 0) // Answear about current Switch Status
 	  {
 		  UART_ParseAnswLightsStateStatus();
 	  }
@@ -184,9 +184,9 @@ void UART_ParseAnswTemp()
 				}
 				else if(NrCzujnika == 2)
 				{
-						if (CTemp == 0.0)
+						if (CTemp == 0.0) // Error in connection to ds18b20
 							{
-							CTemp = LCTemp; // Error in connection to ds18b20
+							CTemp = LCTemp;
 							EF_SetFont(&arialBlack_20ptFontInfo);
 							sprintf((char*)Msg, "Temp. wewn: %.2f`C ", CTemp);
 							EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
@@ -268,6 +268,8 @@ void UART_ParseAnswRelayStateStatus()
 			UARTDMA_Print(&huartdma2, Message); // Print message
 			return;	// And exit parsing
 		}
+		//Update current displaying sate fo buttons
+		if(State == MENUTFT_SWITCH)	drawCurrentStateOfSwitches();
 	}
 }
 
@@ -301,6 +303,8 @@ void UART_ParseAnswLightsStateStatus()
 			UARTDMA_Print(&huartdma2, Message); // Print message
 			return;	// And exit parsing
 		}
+		//draw button with current state
+		if(State == MENUTFT_LIGHTS) drawCurrentStateOfLights();
 	}
 }
 
@@ -327,6 +331,9 @@ uint8_t SendComand(uint8_t Command)
 			break;
 		case UCMD_TEMP_1:
 			UARTDMA_Print(&huartdma2, "TEMP=1\n");
+			break;
+		case UCMD_TEMP_2:
+			UARTDMA_Print(&huartdma2, "TEMP=2\n");
 			break;
 		case UCMD_PRES_1:
 			UARTDMA_Print(&huartdma2, "PRES=1\n");
