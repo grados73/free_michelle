@@ -219,9 +219,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		}
 		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME)
 		{
-//			PodajTemperatureRoutine(1);
-//			PodajCisnienieRoutine(1);
-//			PodajTemperatureRoutine(2);
+			PodajTemperatureRoutine(1);
+			PodajCisnienieRoutine(1);
+			PodajTemperatureRoutine(2);
 			RefreshMeasurementDataCounter = 0;
 		}
 		RefreshMeasurementDataCounter++;

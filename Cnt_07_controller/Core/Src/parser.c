@@ -246,9 +246,6 @@ void UART_ParseChangeRelayState()
 			}
 		}
 		ZmienStanPrzekRoutine(RelayParameters[0], RelayParameters[1]);
-		sprintf(Message, CHANGE_RELAY_STATE_CONFIRMATION); // If CHANGED
-		UARTDMA_Print(&huartdma2, Message); // Print message
-
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -287,8 +284,8 @@ void UART_ParseChangeLightState()
 				}
 			}
 			ZmienStanSwiatlaRoutine(LightParameters[0], LightParameters[1]);
-			sprintf(Message, CHANGE_LIGHT_STATE_CONFIRMATION); // If CHANGED
-			UARTDMA_Print(&huartdma2, Message); // Print message
+//			sprintf(Message, CHANGE_LIGHT_STATE_CONFIRMATION); // If CHANGED
+//			UARTDMA_Print(&huartdma2, Message); // Print message
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
