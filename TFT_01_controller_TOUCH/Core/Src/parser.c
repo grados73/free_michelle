@@ -24,6 +24,7 @@ extern struct Measurements BMPResults;
 extern MenuTFTState State;
 
 float CTemp = 0.0;
+float LCTemp = 0.0;
 float CPres = 0.0;
 float CTempWew = 0.0;
 uint8_t CWaterLvl = 0;
@@ -162,21 +163,48 @@ void UART_ParseAnswStatus()
 //"ATEMP=23.45000\n"
 void UART_ParseAnswTemp()
 {
+	uint8_t NrCzujnika = 0;
 	char* ParsePointer = strtok(NULL, ",");
 	if(strlen(ParsePointer) > 0) // If string exists
 	{
-		CTemp = atof(ParsePointer); // If there are no chars, change string to integer
+			NrCzujnika = atoi(ParsePointer);
+			if(strlen(ParsePointer) > 0)
+			{
+				char* ParsePointer = strtok(NULL, ","); // Look for next token or end of string
+				CTemp = atof(ParsePointer); // If there are no chars, change string to integer
+			}
+			//Only if on the screen are Parameters, update current Temp
+			if(State == MENUTFT_PARAMETERS)
+			{
+				if(NrCzujnika == 1)
+				{
+						EF_SetFont(&arialBlack_20ptFontInfo);
+						sprintf((char*)Msg, "Temp. zewn: %.2f`C ", CTemp);
+						EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+				}
+				else if(NrCzujnika == 2)
+				{
+						if (CTemp == 0.0)
+							{
+							CTemp = LCTemp; // Error in connection to ds18b20
+							EF_SetFont(&arialBlack_20ptFontInfo);
+							sprintf((char*)Msg, "Temp. wewn: %.2f`C ", CTemp);
+							EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+							}
+						else
+						{
+							EF_SetFont(&arialBlack_20ptFontInfo);
+							sprintf((char*)Msg, "Temp. wewn: %.2f`C ", CTemp);
+							EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+							LCTemp = CTemp;
+						}
 
-		//Only if on the screen are Parameters, update current Temp
-		if(State == MENUTFT_PARAMETERS)
-		{
-			EF_SetFont(&arialBlack_20ptFontInfo);
-			sprintf((char*)Msg, "Temp. zewn: %.2f`C ", CTemp);
-			EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+				}
+			}
 		}
 		//UARTDMA_Print(&huartdma2, "TEMPUPSUC\n");
 	}
-}
+
 
 //
 // Parsing information about current presure
