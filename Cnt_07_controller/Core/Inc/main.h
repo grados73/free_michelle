@@ -68,6 +68,8 @@ void Error_Handler(void);
 #define RELAY_2_GPIO_Port GPIOB
 #define RELAY_1_Pin GPIO_PIN_15
 #define RELAY_1_GPIO_Port GPIOB
+#define USART_1_WIRE_DS_Pin GPIO_PIN_9
+#define USART_1_WIRE_DS_GPIO_Port GPIOA
 #define USER_LED_Pin GPIO_PIN_11
 #define USER_LED_GPIO_Port GPIOA
 #define LIGHT_4_Pin GPIO_PIN_4

@@ -30,6 +30,8 @@
 #include "functions.h"
 #include "uartdma.h"
 #include "parser.h"
+#include "ds18b20.h"
+
 #include "string.h"
 #include "stdlib.h"
 #include "stdio.h"
@@ -59,6 +61,10 @@ float CTemp, CPressure;
 UARTDMA_HandleTypeDef huartdma2;
 uint8_t BufferReceive[64];
 uint8_t RefreshMeasurementDataCounter = 0;
+
+// PHYSICAL ADRESS OF DS18B20 SENSORS
+const uint8_t ds1[] = { 0x28, 0x5b, 0x9d, 0x96, 0x3a, 0x19, 0x1, 0xcf }; // zew
+const uint8_t ds2[] = { 0x28, 0xff, 0x8e, 0xfc, 0x71, 0x15, 0x3, 0xf7 }; // wew
 
 /* USER CODE END PV */
 
@@ -106,6 +112,7 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_TIM10_Init();
+  MX_USART1_UART_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -113,6 +120,9 @@ int main(void)
    bmp280_init();
    HAL_TIM_Base_Start_IT(&htim10);
    UARTDMA_Init(&huartdma2, &huart2);
+   if (ds18b20_init() != HAL_OK) {
+      Error_Handler();
+    }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -203,10 +213,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		CPressure = BMPResults.Pressure;
 		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Podlaczyc diode sygnalizujaca pomiary - to musi zostac!
 
+		if (RefreshMeasurementDataCounter == (DATA_RELEASE_TIME - 1)) // one second before sending current parameters
+		{
+			ds18b20_start_measure(ds1);
+		}
 		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME)
 		{
 			PodajTemperatureRoutine(1);
 			PodajCisnienieRoutine(1);
+			PodajTemperatureRoutine(2);
 			RefreshMeasurementDataCounter = 0;
 		}
 		RefreshMeasurementDataCounter++;

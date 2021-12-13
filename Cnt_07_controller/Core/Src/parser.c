@@ -15,6 +15,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "functions.h"
+#include "ds18b20.h"
 
 
 extern UARTDMA_HandleTypeDef huartdma2;
@@ -24,6 +25,8 @@ uint8_t ChangingStateFlag;
 uint8_t RelayState[4]= {0};
 uint8_t LightState[4]= {0};
 extern struct Measurements BMPResults;
+extern const uint8_t ds1[]; // zew
+extern const uint8_t ds2[]; // wew
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -319,7 +322,15 @@ void PodajTemperatureRoutine(uint8_t NrCzujnika)
 	{
 		aktualna_temperatura = BMPResults.Temp;
 	}
-	sprintf(Message, "ATEMP=%f\n", aktualna_temperatura);
+	else if (NrCzujnika == 2)
+	{
+		aktualna_temperatura = ds18b20_get_temp(ds1);
+		if( aktualna_temperatura >= 84)
+		{
+			aktualna_temperatura = 0.0;
+		}
+	}
+	sprintf(Message, "ATEMP=%d,%f\n", NrCzujnika, aktualna_temperatura);
 	UARTDMA_Print(&huartdma2, Message);
 }
 
