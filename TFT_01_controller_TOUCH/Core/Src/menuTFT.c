@@ -616,7 +616,6 @@ void TouchPredefinedActivityActivity()
 						EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_ON_OFF_X_ERRATA), (ACTIVITY_BUTTON_2_Y+STRING_ACTIVITIES_Y_INTER), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_ACTIVITY_BUTTON_COLOR);
 						predefinedActivityCzyszczenie(1);
 					}
-
 				}
 			}
 			TimerTouch = HAL_GetTick();

@@ -6,6 +6,15 @@
   * @author			: grados73 - https://github.com/grados73
   * @purpose		: TFT touch display controller for communication interface with
   * 				  user for aquarium controller project named "FREE MICHELLE"
+  * @todo			: Confirmation of make orders
+  * 				: Read real state of relay / light
+  * 				: Read temperature inside
+  * 				: Read water LVL
+  * 				: Read PH
+  * 				: Control WS2812b LEDs (82szt)
+  * 				: Schedule of activity
+  * 				: Online access by ESP with push messages
+  * 				: UPS
   *
   ******************************************************************************
   **/
@@ -162,7 +171,7 @@ int main(void)
 	  // CURRENT DISPLAYED SCREEN
 	  MenuTFT();
 
-	  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
