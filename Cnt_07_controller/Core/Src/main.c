@@ -31,6 +31,7 @@
 #include "uartdma.h"
 #include "parser.h"
 #include "ds18b20.h"
+#include "ws2812b.h"
 
 #include "string.h"
 #include "stdlib.h"
@@ -113,16 +114,23 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM10_Init();
   MX_USART1_UART_Init();
+  MX_TIM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
    bmp280_init();
+
    HAL_TIM_Base_Start_IT(&htim10);
+
    UARTDMA_Init(&huartdma2, &huart2);
+
    if (ds18b20_init() != HAL_OK) {
       Error_Handler();
     }
+
+   ws2812b_init();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -141,6 +149,7 @@ int main(void)
 	  // TRANSMIT
 	  //
 	  UARTDMA_TransmitEvent(&huartdma2);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

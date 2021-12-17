@@ -6,12 +6,11 @@
   * @author			: grados73 - https://github.com/grados73
   * @purpose		: TFT touch display controller for communication interface with
   * 				  user for aquarium controller project named "FREE MICHELLE"
-  * @todo			: Confirmation of make orders
-  * 				: Read real state of relay / light
+  * @todo			: Use confirmation of make orders
   * 				: Read water LVL
   * 				: Read PH
   * 				: Control WS2812b LEDs (82szt)
-  * 				: Schedule of activity
+  * 				: Schedule of activity (need EEPROM memory)
   * 				: Online access by ESP with push messages
   * 				: UPS
   *
