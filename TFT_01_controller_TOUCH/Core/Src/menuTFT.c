@@ -642,6 +642,12 @@ void TouchPredefinedActivityActivity()
 	}
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on LEDs WS2812b controlling screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TouchWSLedActivity(void)
 {
 	// Check if screen was touched
@@ -689,7 +695,7 @@ void TouchWSLedActivity(void)
 							NrOfLeds = 1;
 						}
 						if(NrOfLeds < 10)sprintf((char*)Msg, "  %d ", NrOfLeds);
-						else sprintf((char*)Msg, " %d ", NrOfLeds);
+						else sprintf((char*)Msg, " %d", NrOfLeds);
 						EF_PutString(Msg, STRING_WS_LED_POZ_NUMBER_X, STRING_WS_LED_ILOSC_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 					}
 					else if((x >= WS_LED_BUTTON_2_X)&&(x <= (WS_LED_BUTTON_2_X + WS_LED_BUTTON_W))) // Add +10 LED
@@ -704,16 +710,92 @@ void TouchWSLedActivity(void)
 						}
 					// Display String
 					if(NrOfLeds < 10)sprintf((char*)Msg, "  %d ", NrOfLeds);
-					else sprintf((char*)Msg, " %d ", NrOfLeds);
+					else sprintf((char*)Msg, " %d", NrOfLeds);
 					EF_PutString(Msg, STRING_WS_LED_POZ_NUMBER_X, STRING_WS_LED_ILOSC_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 					}
 
 
-					else if((x >= WS_LED_BUTTON_2_X)&&(x <= (WS_LED_BUTTON_2_X + WS_LED_BUTTON_W))) // OK - confirm number of LEDs
+					else if((x >= WS_LED_BUTTON_3_X)&&(x <= (WS_LED_BUTTON_3_X + WS_LED_BUTTON_W))) // OK - confirm and send number of LEDs
 					{
-
+						SendComand(UCMD_WS_NUMBER_LED);
+						EF_SetFont(&arial_11ptFontInfo);
+						GFX_DrawFillRoundRectangle(WS_LED_BUTTON_3_X, WS_B_1_POZ_Y, WS_LED_BUTTON_W, WS_LED_BUTTON_H, WS_LED_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
+						sprintf((char*)Msg, "OK");
+						EF_PutString(Msg, (WS_LED_BUTTON_3_X+STRING_ERRATA_X+1), (WS_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
+						//TODO! Dodać zapis do EEPROM!
 					}
+				}
 
+				//
+				// Check if it is second line button to change LEDs to WHITE
+				//
+				else if((y >= WS_B_2_POZ_Y)&&(y <= (WS_B_2_POZ_Y + WS_LED_BUTTON_H)))
+				{
+					if((x >= WS_WHITE_BUTTON_1_X)&&(x <= (WS_WHITE_BUTTON_1_X + WS_COLOR_BUTTON_W))) // MAX
+					{
+						SendComand(UCMD_WS_LED_WHITE_MAX);
+					}
+					else if((x >= WS_WHITE_BUTTON_2_X)&&(x <= (WS_WHITE_BUTTON_2_X + WS_COLOR_BUTTON_W))) // MID
+					{
+						SendComand(UCMD_WS_LED_WHITE_MID);
+					}
+					else if((x >= WS_WHITE_BUTTON_3_X)&&(x <= (WS_WHITE_BUTTON_3_X + WS_COLOR_BUTTON_W))) // MIN
+					{
+						SendComand(UCMD_WS_LED_WHITE_MIN);
+					}
+				}
+
+				//
+				// Check if it is third line button to change LEDs to BLUE
+				//
+				else if((y >= WS_B_3_POZ_Y)&&(y <= (WS_B_3_POZ_Y + WS_LED_BUTTON_H)))
+				{
+					if((x >= WS_WHITE_BUTTON_1_X)&&(x <= (WS_WHITE_BUTTON_1_X + WS_COLOR_BUTTON_W))) // MAX
+					{
+						SendComand(UCMD_WS_LED_BLUE_MAX);
+					}
+					else if((x >= WS_WHITE_BUTTON_2_X)&&(x <= (WS_WHITE_BUTTON_2_X + WS_COLOR_BUTTON_W))) // MID
+					{
+						SendComand(UCMD_WS_LED_BLUE_MID);
+					}
+					else if((x >= WS_WHITE_BUTTON_3_X)&&(x <= (WS_WHITE_BUTTON_3_X + WS_COLOR_BUTTON_W))) // MIN
+					{
+						SendComand(UCMD_WS_LED_BLUE_MIN);
+					}
+				}
+
+				//
+				// Check if it is fourth line button to change LEDs to Predefined
+				//
+				else if((y >= WS_B_4_POZ_Y)&&(y <= (WS_B_4_POZ_Y + WS_LED_BUTTON_H)))
+				{
+					if((x >= WS_PREDEFINED_BUTTON_1_X)&&(x <= (WS_PREDEFINED_BUTTON_1_X + WS_PREDEFINED_BUTTON_W))) // MAX
+					{
+						SendComand(UCMD_WS_LED_DAILY);
+					}
+					else if((x >= WS_PREDEFINED_BUTTON_2_X)&&(x <= (WS_PREDEFINED_BUTTON_2_X + WS_PREDEFINED_BUTTON_W))) // MID
+					{
+						SendComand(UCMD_WS_LED_WHITE_OFF);
+					}
+					else if((x >= WS_PREDEFINED_BUTTON_3_X)&&(x <= (WS_PREDEFINED_BUTTON_3_X + WS_PREDEFINED_BUTTON_W))) // MIN
+					{
+						SendComand(UCMD_WS_LED_NIGHT);
+					}
+				}
+
+				//
+				// Check if it is fifth line button to change LEDs to Predefined animations
+				//
+				else if((y >= WS_B_5_POZ_Y)&&(y <= (WS_B_5_POZ_Y + WS_LED_BUTTON_H)))
+				{
+					if((x >= WS_PREDEFINED_ACT_BUTTON_1_X)&&(x <= (WS_PREDEFINED_ACT_BUTTON_1_X + WS_PREDEFINED_BUTTON_W))) // MAX
+					{
+						SendComand(UCMD_WS_ANIMATION_SUNRISE);
+					}
+					else if((x >= WS_PREDEFINED_ACT_BUTTON_2_X)&&(x <= (WS_PREDEFINED_ACT_BUTTON_2_X + WS_PREDEFINED_BUTTON_W))) // MID
+					{
+						SendComand(UCMD_WS_ANIMATION_SUNSET);
+					}
 				}
 				TimerTouch = HAL_GetTick();
 			}

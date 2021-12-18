@@ -32,6 +32,7 @@ uint8_t Time[3] = {0,0,0};
 uint8_t SwitchesButtonState[4] = {0,0,0,0};
 uint8_t LightsButtonState[4] = {0,0,0,0};
 uint8_t ActivityButtonState[2] = {0,0};
+extern uint8_t NrOfLeds;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,7 +436,9 @@ uint8_t SendComand(uint8_t Command)
 			UARTDMA_Print(&huartdma2, "CHLIGHT=9,8\n");
 			break;
 		case UCMD_WS_NUMBER_LED:
-			UARTDMA_Print(&huartdma2, "CHLIGHT=9,%d\n", NrOfLeds);
+			if(NrOfLeds < 9) NrOfLeds = 9; // Minimum number of Leds is 9
+			sprintf(Message, "CHLIGHT=9,%d\n", NrOfLeds);
+			UARTDMA_Print(&huartdma2, Message); // Print message
 			break;
 		case UCMD_WS_ANIMATION_SUNRISE:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=8,1\n");
