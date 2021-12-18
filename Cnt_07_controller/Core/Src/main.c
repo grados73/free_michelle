@@ -130,7 +130,16 @@ int main(void)
     }
 
    ws2812b_init();
+   ws2812b_LightDaily(WS2812B_BRIGHTNESS_MIN_PWR);
 
+//	  uint8_t r = 0;
+//	  uint8_t g = 150;
+//	  uint8_t b = 250;
+//
+//	  for (int led = 0; led < 16; led++) {
+//	    ws2812b_SetColor(led, r, g, b);
+//	  }
+//	  ws2812b_update();
   /* USER CODE END 2 */
 
   /* Infinite loop */

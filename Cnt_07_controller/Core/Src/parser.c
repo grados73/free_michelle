@@ -17,6 +17,7 @@
 #include "functions.h"
 #include "ds18b20.h"
 #include "stm32f4xx_hal.h"
+#include "ws2812b.h"
 
 
 extern UARTDMA_HandleTypeDef huartdma2;
@@ -28,6 +29,7 @@ uint8_t LightState[4]= {0};
 extern struct Measurements BMPResults;
 extern const uint8_t ds1[]; // zew
 extern const uint8_t ds2[]; // wew
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -461,6 +463,8 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 		else HAL_GPIO_WritePin(LIGHT_3_GPIO_Port, LIGHT_3_Pin, GPIO_PIN_SET);
 		LightState[2] = Stan;
 	}
+
+
 	else if(LightNumber == 4)
 	{
 		if(Stan == 1) HAL_GPIO_WritePin(LIGHT_4_GPIO_Port, LIGHT_4_Pin, GPIO_PIN_RESET);
@@ -472,6 +476,47 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 		sprintf(Message, "ALSTATUS=%d,%d,%d,%d\n", LightState[0], LightState[1], LightState[2], LightState[3]);
 		UARTDMA_Print(&huartdma2, Message); // Print message
 		return;
+	}
+
+	// controling of ws2812b
+	else if(LightNumber == 9)
+	{
+		if (Stan == 0) // TURN WS LED OFF
+		{
+			ws2812b_LightTurnOff();
+		}
+		else if(Stan == 1) // Turn ON - WHITE - HIGH BRIGHTENESS
+		{
+			ws2812b_LightWhite(WS2812B_BRIGHTNESS_MAX_PWR);
+		}
+		else if(Stan == 2) // Turn ON - WHITE - MIDDING BRIGHTENESS
+		{
+			ws2812b_LightWhite(WS2812B_BRIGHTNESS_MID_PWR);
+		}
+		else if(Stan == 3) // Turn ON - WHITE - LOW BRIGHTENESS
+		{
+			ws2812b_LightWhite(WS2812B_BRIGHTNESS_MIN_PWR);
+		}
+		else if(Stan == 4) // Turn ON - BLUE - HIGH BRIGHTENESS
+		{
+			ws2812b_LightBlue(WS2812B_BRIGHTNESS_MAX_PWR);
+		}
+		else if(Stan == 5) // Turn ON - BLUE - MIDDING BRIGHTENESS
+		{
+			ws2812b_LightBlue(WS2812B_BRIGHTNESS_MID_PWR);
+		}
+		else if(Stan == 6) // Turn ON - BLUE - LOW BRIGHTENESS
+		{
+			ws2812b_LightBlue(WS2812B_BRIGHTNESS_MIN_PWR);
+		}
+		else if(Stan == 7) // Turn ON - WHITE - WARM DALLY BRIGHTENESS
+		{
+			ws2812b_LightDaily(WS2812B_BRIGHTNESS_MID_PWR);
+		}
+		else if(Stan == 8) // Turn ON - NIGHT LIGHTS
+		{
+			ws2812b_LightNight(WS2812B_BRIGHTNESS_MID_PWR);
+		}
 	}
 
 	else

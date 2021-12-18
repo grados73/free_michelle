@@ -13,6 +13,8 @@
 #define RESET_LEN		50
 #define LED_N			16
 
+uint8_t NumberOfLedsWS2812b = LED_N;
+
 const uint8_t gamma8[] = {
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,
@@ -75,7 +77,7 @@ void ws2812b_wait(void)
 }
 
 
-void ws2812b_set_color(uint32_t led, uint8_t red, uint8_t green, uint8_t blue)
+void ws2812b_SetColor(uint32_t led, uint8_t red, uint8_t green, uint8_t blue)
 {
 	if (led < LED_N)
 	{
@@ -84,4 +86,88 @@ void ws2812b_set_color(uint32_t led, uint8_t red, uint8_t green, uint8_t blue)
 		set_byte(RESET_LEN + 24 * led + 16, gamma8[blue % 256]);
 	}
 }
+
+//
+//
+//
+void ws2812b_LightTurnOff(void)
+{
+	uint8_t r = 0;	// RED
+	uint8_t g = 0;	// GREEN
+	uint8_t b = 0;	// BLUE
+
+	for (uint32_t led = 0; led < NumberOfLedsWS2812b; led++)
+	{
+		ws2812b_SetColor(led, r, g, b);
+	}
+	ws2812b_update();
+}
+
+//
+// Turn On Lights with WHITE Color
+//
+void ws2812b_LightWhite(uint8_t Brightness)
+{
+	uint8_t r = 0;	// RED
+	uint8_t g = 0;	// GREEN
+	uint8_t b = 0;	// BLUE
+
+	r = g = b = Brightness;
+
+	for (uint32_t led = 0; led < NumberOfLedsWS2812b; led++)
+	{
+		ws2812b_SetColor(led, r, g, b);
+	}
+		ws2812b_update();
+}
+
+//
+// Turn On Lights with Blue Color
+//
+void ws2812b_LightBlue(uint8_t Brightness)
+{
+	uint8_t r = 0;	// RED
+	uint8_t g = 0;	// GREEN
+	uint8_t b = Brightness;	// BLUE
+
+	for (uint32_t led = 0; led < NumberOfLedsWS2812b; led++)
+	{
+		ws2812b_SetColor(led, r, g, b);
+	}
+		ws2812b_update();
+}
+
+//
+// Turn On Lights with Warm Daily Yellow Color
+//
+void ws2812b_LightDaily(uint8_t Brightness)
+{
+	uint8_t r = ((220*Brightness)/255);
+	uint8_t g = ((200*Brightness)/255);
+	uint8_t b = ((100*Brightness)/255);
+
+	for (uint32_t led = 0; led < NumberOfLedsWS2812b; led++)
+	{
+		ws2812b_SetColor(led, r, g, b);
+	}
+		ws2812b_update();
+}
+
+//
+// Turn On Lights with Night Lights
+//
+void ws2812b_LightNight(uint8_t Brightness)
+{
+	uint8_t r = 0;
+	uint8_t g = ((150*Brightness)/255);
+	uint8_t b = ((250*Brightness)/255);
+
+	for (uint32_t led = 0; led < NumberOfLedsWS2812b; led++)
+	{
+		ws2812b_SetColor(led, r, g, b);
+	}
+		ws2812b_update();
+}
+
+
 

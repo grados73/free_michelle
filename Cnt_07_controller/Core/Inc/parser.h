@@ -18,7 +18,10 @@
 
 #define MY_ADRESS 2 //Adres danego urządzenia
 
+
+//
 //////////////////////////////////////// ERRORS //////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 #define LED_FORMAT_ERROR "LED=ERR_FORMAT\n"
 #define TEMPERATURE_FORMAT_ERROR "ATEMP=ERR_FORMAT\n"
 #define PRESURE_FORMAT_ERROR "APRES=ERR_FORMAT\n"
