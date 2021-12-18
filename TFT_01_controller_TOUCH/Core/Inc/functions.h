@@ -73,6 +73,17 @@
 #define STRING_H_M_NUMBER_POZ_X 160
 
 //
+// Define position string in showWSLedPanel function
+//
+#define WS_LED_STRING_POZ_X 70
+#define WS_LED_STRING_POZ_Y 10
+#define STRING_WS_LED_POZ_X 20
+#define STRING_WS_LED_ILOSC_POZ_Y 60
+#define STRING_WS_LED_WHITE_POZ_Y 90
+#define STRING_WS_LED_BLUE_POZ_Y 120
+
+
+//
 // Define errata begin of string in connection to begin of button
 //
 #define STRING_ERRATA_X 3
@@ -100,6 +111,7 @@ void showPreparedActivitiesPanel();
 void showControlPanel();
 void showLightsControlPanel();
 void showClockSetPanel();
+void showWSLedPanel();
 
 void ChangeHourOnScreen();
 void predefinedActivityKarmienie(uint8_t State);

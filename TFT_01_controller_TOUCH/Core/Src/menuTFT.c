@@ -88,6 +88,14 @@ void MenuTFT(void)
 		}
 		TouchPredefinedActivityActivity();
 		break;
+	case MENUTFT_WS_LED:
+		if(StateChangeFlag == 1) // make only one time
+		{
+			showWSLedPanel();
+			StateChangeFlag =0;
+		}
+
+		break;
 	}
 }
 
@@ -309,6 +317,14 @@ void TouchLightsActivity(void)
 					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
 			{
 				State = MENUTFT_PARAMETERS;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the MEDIUM Button
+			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
+					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
+			{
+				State = MENUTFT_WS_LED;
 				StateChangeFlag = 1;
 			}
 
