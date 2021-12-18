@@ -90,6 +90,8 @@ uint8_t SendComand(uint8_t Command);
  *  25  =>	CHLIGHT=0,1\n		// Zmien stan wszystkich swiatel na wlaczony
  *  26  =>	CHLIGHT=0,0\n		// Zmien stan wszystkich swiatel na wylaczony
  * 	22	=>	LIGHTSSTATUS=?\n	// Podaj stan wszytskich swiatel
+ * 	28	=>	CHLIGHT=9,0\n		// Wylacz LEDy WS2812b
+ * 	36	=>	CHLIGHT=9,9\n		// Ustaw ilosc diod, wszystko wieksze nic 9 oznacza ilosc diod
  *
  */
 
@@ -128,5 +130,19 @@ uint8_t SendComand(uint8_t Command);
 #define UCMD_LIGHT_ALL_ON 25
 #define UCMD_LIGHT_ALL_OFF 26
 #define UCMD_LIGHT_SCHOW_ALL 22
+//***********************//
+#define UCMD_WS_LED_WHITE_OFF 28
+#define UCMD_WS_LED_WHITE_MAX 29
+#define UCMD_WS_LED_WHITE_MID 30
+#define UCMD_WS_LED_WHITE_MIN 31
+#define UCMD_WS_LED_BLUE_MAX 32
+#define UCMD_WS_LED_BLUE_MID 33
+#define UCMD_WS_LED_BLUE_MIN 34
+#define UCMD_WS_LED_DAILY 35
+#define UCMD_WS_LED_NIGHT 36
+#define UCMD_WS_NUMBER_LED 37
+#define UCMD_WS_ANIMATION_SUNRISE 38
+#define UCMD_WS_ANIMATION_SUNSET 39
+
 
 #endif /* INC_PARSER_H_ */

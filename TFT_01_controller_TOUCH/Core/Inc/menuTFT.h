@@ -144,5 +144,6 @@ void TouchSwitchActivity(void);
 void TouchLightsActivity(void);
 void TouchClockActivity(void);
 void TouchPredefinedActivityActivity();
+void TouchWSLedActivity(void);
 
 #endif /* INC_MENUTFT_H_ */

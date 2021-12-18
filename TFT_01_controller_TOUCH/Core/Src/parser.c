@@ -404,6 +404,27 @@ uint8_t SendComand(uint8_t Command)
 		case UCMD_LIGHT_SCHOW_ALL:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=7,7\n");
 			break;
+
+		case UCMD_WS_LED_WHITE_OFF:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,0\n");
+			break;
+		case UCMD_WS_LED_WHITE_MAX:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,1\n");
+			break;
+		case UCMD_WS_LED_WHITE_MID:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,2\n");
+			break;
+		case UCMD_WS_LED_WHITE_MIN:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,3\n");
+			break;
+		case UCMD_WS_LED_BLUE_MAX:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,4\n");
+			break;
+		case UCMD_WS_LED_BLUE_MID:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,5\n");
+			break;
+
+
 		}
 	return 1;
 }

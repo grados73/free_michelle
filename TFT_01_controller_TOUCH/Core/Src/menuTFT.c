@@ -25,8 +25,10 @@ extern uint8_t LightsButtonState[4];
 extern uint8_t ActivityButtonState[2];
 uint8_t StateChangeFlag = 0; // using to indicate change screen activity
 uint8_t ClockChangeFlag = 0; // using to indicate change screen to Clock Set
+uint8_t WSLedChangeFlag = 0; // using to indicate change screen to WS LEDs Set
 uint8_t Hours = 15;
 uint8_t Minutes = 5;
+uint8_t NrOfLeds = 15;
 
 uint32_t TimerTouch = 0; // Timer to debouncing function
 
@@ -84,7 +86,7 @@ void MenuTFT(void)
 		if(StateChangeFlag == 1) // make only one time
 		{
 			showPreparedActivitiesPanel();
-			StateChangeFlag =0;
+			StateChangeFlag = 0;
 		}
 		TouchPredefinedActivityActivity();
 		break;
@@ -92,9 +94,10 @@ void MenuTFT(void)
 		if(StateChangeFlag == 1) // make only one time
 		{
 			showWSLedPanel();
-			StateChangeFlag =0;
+			WSLedChangeFlag = 1;
+			StateChangeFlag = 0;
 		}
-
+		TouchWSLedActivity();
 		break;
 	}
 }
@@ -540,7 +543,7 @@ void TouchClockActivity(void)
 						}
 						else
 						{
-							Minutes = 0;
+							Minutes = (Minutes + 10) % 60;
 						}
 						sprintf((char*)Msg, " %d  ", Minutes);
 						EF_PutString(Msg, (STRING_H_M_NUMBER_POZ_X-4), STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
@@ -637,7 +640,84 @@ void TouchPredefinedActivityActivity()
 			TimerTouch = HAL_GetTick();
 		}
 	}
-
-
 }
+
+void TouchWSLedActivity(void)
+{
+	// Check if screen was touched
+		if(XPT2046_IsTouched())
+		{
+			EF_SetFont(&arialBlack_20ptFontInfo);
+			if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
+			{
+				uint16_t x, y; // Touch points
+
+				XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+				if( 1 == ClockChangeFlag) // If we just get inside this screen we must get number of LEDs, but we do it only once
+				{
+					//TODO! Przeczytac ilosc diod z EEPROMu
+					WSLedChangeFlag = 0;
+				}
+
+				//
+				// Check if it is button to change screen
+				//
+				// Check if that point is inside the LEFT Button - back to Parameters
+				if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+						(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+				{
+					State = MENUTFT_LIGHTS;
+					StateChangeFlag = 1;
+				}
+
+
+				//
+				// Check if it is button to increase number of LEDs - first line
+				//
+				else if((y >= WS_B_1_POZ_Y)&&(y <= (WS_B_1_POZ_Y + WS_LED_BUTTON_H)))
+				{
+
+					if((x >= WS_LED_BUTTON_1_X)&&(x <= (WS_LED_BUTTON_1_X + WS_LED_BUTTON_W))) // Add +1 LED
+					{
+						if(NrOfLeds < 98)
+						{
+							NrOfLeds++;
+						}
+						else
+						{
+							NrOfLeds = 1;
+						}
+						if(NrOfLeds < 10)sprintf((char*)Msg, "  %d ", NrOfLeds);
+						else sprintf((char*)Msg, " %d ", NrOfLeds);
+						EF_PutString(Msg, STRING_WS_LED_POZ_NUMBER_X, STRING_WS_LED_ILOSC_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+					}
+					else if((x >= WS_LED_BUTTON_2_X)&&(x <= (WS_LED_BUTTON_2_X + WS_LED_BUTTON_W))) // Add +10 LED
+					{
+						if(NrOfLeds < 90)
+						{
+							NrOfLeds = NrOfLeds + 10;
+						}
+						else
+						{
+							NrOfLeds = (NrOfLeds + 10) % 99;
+						}
+					// Display String
+					if(NrOfLeds < 10)sprintf((char*)Msg, "  %d ", NrOfLeds);
+					else sprintf((char*)Msg, " %d ", NrOfLeds);
+					EF_PutString(Msg, STRING_WS_LED_POZ_NUMBER_X, STRING_WS_LED_ILOSC_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+					}
+
+
+					else if((x >= WS_LED_BUTTON_2_X)&&(x <= (WS_LED_BUTTON_2_X + WS_LED_BUTTON_W))) // OK - confirm number of LEDs
+					{
+
+					}
+
+				}
+				TimerTouch = HAL_GetTick();
+			}
+		}
+}
+
 

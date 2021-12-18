@@ -26,6 +26,7 @@ extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
 extern uint8_t ActivityButtonState[2];
 extern MenuTFTState State;
+extern uint8_t NrOfLeds;
 
 uint8_t OldHours = 0;
 uint8_t OldMinutes = 0;
@@ -384,7 +385,7 @@ void showWSLedPanel()
 	GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
 
 	// Display String
-	sprintf((char*)Msg, "ILOŚĆ LED: 10");
+	sprintf((char*)Msg, "ILOŚĆ LED: %d", NrOfLeds);
 	EF_PutString(Msg, STRING_WS_LED_POZ_X, STRING_WS_LED_ILOSC_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	sprintf((char*)Msg, "WHITE:");
