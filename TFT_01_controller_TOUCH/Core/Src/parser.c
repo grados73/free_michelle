@@ -338,6 +338,7 @@ uint8_t SendComand(uint8_t Command)
 		case UCMD_PRES_1:
 			UARTDMA_Print(&huartdma2, "PRES=1\n");
 			break;
+
 		case UCMD_RELAY_1_ON:
 			UARTDMA_Print(&huartdma2, "CHSTATE=1,1\n");
 			break;
@@ -371,6 +372,7 @@ uint8_t SendComand(uint8_t Command)
 		case UCMD_RELAY_SCHOW_ALL:
 			UARTDMA_Print(&huartdma2, "CHSTATE=7,7\n");
 			break;
+
 		case UCMD_LIGHT_1_ON:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=1,1\n");
 			break;
@@ -423,8 +425,24 @@ uint8_t SendComand(uint8_t Command)
 		case UCMD_WS_LED_BLUE_MID:
 			UARTDMA_Print(&huartdma2, "CHLIGHT=9,5\n");
 			break;
-
-
+		case UCMD_WS_LED_BLUE_MIN:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,6\n");
+			break;
+		case UCMD_WS_LED_DAILY:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,7\n");
+			break;
+		case UCMD_WS_LED_NIGHT:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,8\n");
+			break;
+		case UCMD_WS_NUMBER_LED:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=9,%d\n", NrOfLeds);
+			break;
+		case UCMD_WS_ANIMATION_SUNRISE:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=8,1\n");
+			break;
+		case UCMD_WS_ANIMATION_SUNSET:
+			UARTDMA_Print(&huartdma2, "CHLIGHT=8,4\n");
+			break;
 		}
 	return 1;
 }
