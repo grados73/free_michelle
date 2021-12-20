@@ -67,6 +67,7 @@ void ws2812b_init(void)
 void ws2812b_update(void)
 {
 	HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_2, (uint32_t*)led_buffer, sizeof(led_buffer));
+//	HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_2, (uint32_t*)led_buffer, sizeof(led_buffer));
 	//HAL_TIM_PWM_Start_DMA(&htim3, TIM_CHANNEL_1, (uint32_t*)led_buffer, sizeof(led_buffer));
 }
 
