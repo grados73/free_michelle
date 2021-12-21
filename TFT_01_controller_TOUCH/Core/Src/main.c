@@ -126,6 +126,7 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM11_Init();
   MX_TIM10_Init();
+  MX_I2C3_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();

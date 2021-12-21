@@ -71,7 +71,7 @@ void Error_Handler(void);
 #define TFT_RST_GPIO_Port GPIOB
 #define TFT_DC_Pin GPIO_PIN_14
 #define TFT_DC_GPIO_Port GPIOB
-#define TOUCH_IRQ_Pin GPIO_PIN_8
+#define TOUCH_IRQ_Pin GPIO_PIN_9
 #define TOUCH_IRQ_GPIO_Port GPIOA
 #define TOUCH_IRQ_EXTI_IRQn EXTI9_5_IRQn
 /* USER CODE BEGIN Private defines */
