@@ -42,6 +42,7 @@
 #include "parser.h"
 #include "menuTFT.h"
 #include "ds3231_for_stm32_hal.h"	//RTC
+#include "eeprom.h"
 /* PRRIVATE FONTS*/
 #include "EnhancedFonts/arialBlack_20ptFontInfo.h"
 #include "EnhancedFonts/arialBlack_11ptFontInfo.h"
@@ -144,6 +145,14 @@ int main(void)
   DS3231_Init(&hi2c1);
   DS3231_SetInterruptMode(DS3231_ALARM_INTERRUPT);
   DS3231_EnableOscillator(DS3231_ENABLED);
+
+  uint8_t test = 0x5A;
+  if (eeprom_write(0x10, &test, sizeof(test)) != HAL_OK)
+    Error_Handler();
+
+  uint8_t result = 0;
+  while (eeprom_read(0x10, &result, sizeof(result)) != HAL_OK)
+    {}
   /* USER CODE END 2 */
 
   /* Infinite loop */
