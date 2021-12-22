@@ -23,6 +23,8 @@
 #include "functions.h"
 #include "uartdma.h"
 
+#define INIT_TIME_IN_MS 2000
+#define ONE_MODULE_INIT_TIME_IN_MS (INIT_TIME_IN_MS/10)
 
 //
 // Define position string in showCurrentParameters function

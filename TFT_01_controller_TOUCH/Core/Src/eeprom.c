@@ -91,11 +91,6 @@ void EEPROM_RelayStateRestore(void)
 
 }
 
-
-
-
-
-
 void EEPROM_LightStateRestore(void)
 {
 	if(EEPROM_LightStateRead(1)) SendComand(UCMD_LIGHT_1_ON);

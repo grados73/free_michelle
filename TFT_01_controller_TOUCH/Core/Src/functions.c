@@ -47,67 +47,98 @@ static uint32_t LastTime = 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 uint8_t system_init(){
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
-	  ILI9341_DrawImage(40, 50, logo, 240, 140);
-//	  GFX_Image(40, 50, logo, 240, 140); //usunieta wolniejsza wersja rysowania
+	  //
+	  // Draw Image with LOGO
+	  ILI9341_DrawImage(30, 50, logo, 240, 140);
 
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 	  sprintf((char*)Msg, "Inicjalizacja...");
-	  EF_PutString(Msg, 60, 20, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_BLACK);
+	  EF_PutString(Msg, 60, 10, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  //
 	  // Draw Rectangle to indicate progress of INITIALIZATION
 	  LastTime = HAL_GetTick();
-	  GFX_DrawRoundRectangle(60, 200, 20, 20, 5, ILI9341_RED);
-	  GFX_DrawRoundRectangle(90, 200, 20, 20, 5, ILI9341_RED);
-	  GFX_DrawRoundRectangle(120, 200, 20, 20, 5, ILI9341_RED);
-	  GFX_DrawRoundRectangle(150, 200, 20, 20, 5, ILI9341_RED);
-	  GFX_DrawRoundRectangle(180, 200, 20, 20, 5, ILI9341_RED);
-	  GFX_DrawRoundRectangle(210, 200, 20, 20, 5, ILI9341_RED);
-	  GFX_DrawRoundRectangle(240, 200, 20, 20, 5, ILI9341_RED);
-	  	  initWait(200);
+	  GFX_DrawRoundRectangle(60, 190, 20, 20, 5, ILI9341_RED);
+	  GFX_DrawRoundRectangle(90, 190, 20, 20, 5, ILI9341_RED);
+	  GFX_DrawRoundRectangle(120, 190, 20, 20, 5, ILI9341_RED);
+	  GFX_DrawRoundRectangle(150, 190, 20, 20, 5, ILI9341_RED);
+	  GFX_DrawRoundRectangle(180, 190, 20, 20, 5, ILI9341_RED);
+	  GFX_DrawRoundRectangle(210, 190, 20, 20, 5, ILI9341_RED);
+	  GFX_DrawRoundRectangle(240, 190, 20, 20, 5, ILI9341_RED);
+	  LastTime = HAL_GetTick();
+	  EF_SetFont(&arial_11ptFontInfo);
+	  	  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 	  	  LastTime = HAL_GetTick();
 
-	  GFX_DrawFillRoundRectangle(60, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  SendComand(UCMD_TEMP_2);	// ASK for current temperature inside
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//First step of initialization
+//
+	  GFX_DrawFillRoundRectangle(60, 190, 20, 20, 5, ILI9341_GREEN);
 	  	  eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)); // read number of leds
-	  	  SendComand(UCMD_WS_NUMBER_LED);
-	  	  UARTDMA_TransmitEvent(&huartdma2);
-	  	  	  initWait(100);
+	  	  SendComand(UCMD_WS_NUMBER_LED); // Send number of LEDs
+	  	  UARTDMA_TransmitEvent(&huartdma2); // TRANSMIT
+
+		  sprintf((char*)Msg, "Akt. inf. o ledach...    ");
+		  EF_PutString(Msg, 20, 220, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	  	  	  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 	  	  	  LastTime = HAL_GetTick();
 
-	  GFX_DrawFillRoundRectangle(90, 200, 20, 20, 5, ILI9341_GREEN);
-  	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Second step of initialization
+//
+	  GFX_DrawFillRoundRectangle(90, 190, 20, 20, 5, ILI9341_GREEN);
+	  	  SendComand(UCMD_TEMP_2);	// ASK for current temperature inside
   	  	  EEPROM_RelayStateRestore(); // Restore state of relay to state before power off, from EEPROM memory
-  	  	  UARTDMA_TransmitEvent(&huartdma2);
-  	  	  	  initWait(100);
+  	  	  UARTDMA_TransmitEvent(&huartdma2); // TRANSMIT
+
+		  sprintf((char*)Msg, "Akt. inf. o przekaźnikach...  ");
+		  EF_PutString(Msg, 20, 220, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+  	  	  	  initWait(ONE_MODULE_INIT_TIME_IN_MS);
   	  	  	  LastTime = HAL_GetTick();
 
-	  GFX_DrawFillRoundRectangle(120, 200, 20, 20, 5, ILI9341_GREEN);
-
-
-			  initWait(100);
-			  LastTime = HAL_GetTick();
-
-	  GFX_DrawFillRoundRectangle(150, 200, 20, 20, 5, ILI9341_GREEN);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Third step of initialization
+//
+	  GFX_DrawFillRoundRectangle(120, 190, 20, 20, 5, ILI9341_GREEN);
 	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
+
+			  initWait(ONE_MODULE_INIT_TIME_IN_MS);
+			  LastTime = HAL_GetTick();
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Fourth step of initialization
+//
+	  GFX_DrawFillRoundRectangle(150, 190, 20, 20, 5, ILI9341_GREEN);
   	  	  EEPROM_LightStateRestore(); // Restore state of lights to state before power off, from EEPROM memory
-  	  	  UARTDMA_TransmitEvent(&huartdma2);
-			  initWait(100);
+  	  	  UARTDMA_TransmitEvent(&huartdma2); // TRANSMIT
+
+		  sprintf((char*)Msg, "Akt. inf. o światlach...    ");
+		  EF_PutString(Msg, 20, 220, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+			  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 			  LastTime = HAL_GetTick();
 
-	  GFX_DrawFillRoundRectangle(180, 200, 20, 20, 5, ILI9341_GREEN);
-
-			  initWait(100);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Fifth step of initialization
+//
+	  GFX_DrawFillRoundRectangle(180, 190, 20, 20, 5, ILI9341_GREEN);
+	  	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
+			  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 			  LastTime = HAL_GetTick();
 
-	  GFX_DrawFillRoundRectangle(210, 200, 20, 20, 5, ILI9341_GREEN);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Sixth step of initialization
+//
+	  GFX_DrawFillRoundRectangle(210, 190, 20, 20, 5, ILI9341_GREEN);
 	  	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
-			  initWait(100);
+			  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 			  LastTime = HAL_GetTick();
-
-	  GFX_DrawFillRoundRectangle(240, 200, 20, 20, 5, ILI9341_GREEN);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Fifth step of initialization
+//
+	  GFX_DrawFillRoundRectangle(240, 190, 20, 20, 5, ILI9341_GREEN);
 	  	  SendComand(UCMD_LIGHT_SCHOW_ALL); // ASK for current lights state
-			  initWait(300);
+	  	  UARTDMA_TransmitEvent(&huartdma2); // TRANSMIT
+			  initWait(2*ONE_MODULE_INIT_TIME_IN_MS);
 			  LastTime = HAL_GetTick();
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
@@ -122,6 +153,7 @@ uint8_t system_init(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure)
 {
+	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  SendComand(UCMD_TEMP_1);
 	  SendComand(UCMD_PRES_1);
 	  SendComand(UCMD_TEMP_2);
@@ -129,7 +161,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  uint8_t CHour = DS3231_GetHour();
 	  uint8_t CMinute = DS3231_GetMinute();
 
-	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
+
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 
 	  //
