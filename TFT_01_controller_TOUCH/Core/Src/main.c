@@ -146,13 +146,10 @@ int main(void)
   DS3231_SetInterruptMode(DS3231_ALARM_INTERRUPT);
   DS3231_EnableOscillator(DS3231_ENABLED);
 
-//  uint8_t test = 101;
-//  if (eeprom_write(0x10, &test, sizeof(test)) != HAL_OK)
-//    Error_Handler();
-//
-//  uint8_t result = 0;
-//  while (eeprom_read(0x10, &result, sizeof(result)) != HAL_OK)
-    {}
+
+  uint8_t result = 0;
+  while (eeprom_read(0x01, &result, sizeof(result)) != HAL_OK)
+  Error_Handler();
   /* USER CODE END 2 */
 
   /* Infinite loop */

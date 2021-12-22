@@ -17,6 +17,7 @@
 #include "functions.h"
 #include "parser.h"
 #include "ds3231_for_stm32_hal.h"
+#include "eeprom.h"
 
 extern float CTemp;
 extern float CPres;
@@ -662,7 +663,7 @@ void TouchWSLedActivity(void)
 
 				if( 1 == ClockChangeFlag) // If we just get inside this screen we must get number of LEDs, but we do it only once
 				{
-					//TODO! Przeczytac ilosc diod z EEPROMu
+					while(eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)) != HAL_OK); // read number of leds
 					WSLedChangeFlag = 0;
 				}
 
@@ -722,7 +723,8 @@ void TouchWSLedActivity(void)
 						GFX_DrawFillRoundRectangle(WS_LED_BUTTON_3_X, WS_B_1_POZ_Y, WS_LED_BUTTON_W, WS_LED_BUTTON_H, WS_LED_BUTTON_R, SWITCH_ON_BUTTON_COLOR);
 						sprintf((char*)Msg, "OK");
 						EF_PutString(Msg, (WS_LED_BUTTON_3_X+STRING_ERRATA_X+1), (WS_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
-						//TODO! Dodać zapis do EEPROM!
+						// Write chosen number of LEDs to EEPROM memory
+						eeprom_write(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds));
 					}
 				}
 

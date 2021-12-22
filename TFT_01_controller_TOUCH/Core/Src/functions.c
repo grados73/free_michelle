@@ -16,6 +16,7 @@
 #include "menuTFT.h"
 #include "ds3231_for_stm32_hal.h"
 #include "tim.h"
+#include "eeprom.h"
 
 extern float CTemp;
 extern float CPres;
@@ -63,6 +64,7 @@ uint8_t system_init(){
 
 	  GFX_DrawFillRoundRectangle(60, 200, 20, 20, 5, ILI9341_GREEN);
 	  	  HAL_Delay(100);
+	  	  while(eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)) != HAL_OK); // read number of leds
 	  GFX_DrawFillRoundRectangle(90, 200, 20, 20, 5, ILI9341_GREEN);
   	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature
 	  	  HAL_Delay(100);
