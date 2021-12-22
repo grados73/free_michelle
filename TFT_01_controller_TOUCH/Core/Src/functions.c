@@ -539,7 +539,14 @@ void predefinedActivityCzyszczenie(uint8_t State)
 	uint8_t NowyStan = State;
 	if(NowyStan == 0) //If turn Activity OFF - Filters ON
 	{
-		SendComand(UCMD_RELAY_ALL_ON);
+		// Read which Relay was ON before turn on activity and restore state before activity
+		if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
+		if(EEPROM_RelayStateRead(2)) SendComand(UCMD_RELAY_2_ON);
+		if(EEPROM_RelayStateRead(3)) SendComand(UCMD_RELAY_3_ON);
+		if(EEPROM_RelayStateRead(4)) SendComand(UCMD_RELAY_4_ON);
+
+		//TODO: To samo zrobic swiatlami, sprawdzic ktore byly wylaczone przed aktywnoscia i je spowrotem wylaczyc
+
 	}
 	else 	//If turn Activity ON - Filters OFF, Lights - ON
 	{
@@ -558,13 +565,10 @@ void predefinedActivityKarmienie(uint8_t State)
 	uint8_t NowyStan = State;
 	if(NowyStan == 0) //If turn Activity OFF - Filters ON
 	{
-		SendComand(UCMD_RELAY_ALL_ON);
-		EF_SetFont(&arial_11ptFontInfo);
-		GFX_DrawFillRoundRectangle(ACTIVITY_BUTTON_X, ACTIVITY_BUTTON_1_Y, ACTIVITY_BUTTON_W, ACTIVITY_BUTTON_H, ACTIVITY_BUTTON_R, SWITCH_OFF_BUTTON_COLOR);
-		sprintf((char*)Msg, "KARMIENIE");
-		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_1_X_ERRATA), (ACTIVITY_BUTTON_1_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
-		sprintf((char*)Msg, "OFF");
-		EF_PutString(Msg, (ACTIVITY_BUTTON_X+STRING_ACTIVITIES_ON_OFF_X_ERRATA), (ACTIVITY_BUTTON_1_Y+STRING_ACTIVITIES_Y_INTER), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
+		if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
+		if(EEPROM_RelayStateRead(2)) SendComand(UCMD_RELAY_2_ON);
+		if(EEPROM_RelayStateRead(3)) SendComand(UCMD_RELAY_3_ON);
+		if(EEPROM_RelayStateRead(4)) SendComand(UCMD_RELAY_4_ON);
 
 	}
 	else 	//If turn Activity ON - Filters OFF, Lights - ON

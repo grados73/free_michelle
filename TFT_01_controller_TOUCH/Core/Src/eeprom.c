@@ -45,4 +45,15 @@ void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
 	else if(RelayNumber == 3) eeprom_write(EEPROM_ADR_RELAY_3_STATE, &State, sizeof(State));
 	else if(RelayNumber == 4) eeprom_write(EEPROM_ADR_RELAY_4_STATE, &State, sizeof(State));
 }
+uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
+{
+	uint8_t AktualnyStan = 0;
+	if(RelayNumber == 1) eeprom_read(EEPROM_ADR_RELAY_1_STATE, &AktualnyStan, sizeof(AktualnyStan));
+	else if(RelayNumber == 2) eeprom_read(EEPROM_ADR_RELAY_2_STATE, &AktualnyStan, sizeof(AktualnyStan));
+	else if(RelayNumber == 3) eeprom_read(EEPROM_ADR_RELAY_3_STATE, &AktualnyStan, sizeof(AktualnyStan));
+	else if(RelayNumber == 4) eeprom_read(EEPROM_ADR_RELAY_4_STATE, &AktualnyStan, sizeof(AktualnyStan));
+
+	return AktualnyStan;
+}
+
 
