@@ -36,3 +36,4 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size)
 
     return rc;
 }
+
