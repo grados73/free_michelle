@@ -359,6 +359,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[0] = 0;
+						EEPROM_LightStateUpdate(1, 0);
 					}
 					else // if is OFF
 					{
@@ -367,6 +368,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[0] = 1;
+						EEPROM_LightStateUpdate(1, 1);
 					}
 				}
 				//
@@ -380,6 +382,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[1] = 0;
+						EEPROM_LightStateUpdate(2, 0);
 					}
 					else // if is OFF
 					{
@@ -388,6 +391,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[1] = 1;
+						EEPROM_LightStateUpdate(2, 1);
 					}
 				}
 
@@ -402,6 +406,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[2] = 0;
+						EEPROM_LightStateUpdate(3, 0);
 					}
 					else // if is OFF
 					{
@@ -410,6 +415,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[2] = 1;
+						EEPROM_LightStateUpdate(3, 1);
 					}
 				}
 
@@ -424,6 +430,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[3] = 0;
+						EEPROM_LightStateUpdate(4, 0);
 					}
 					else // if is OFF
 					{
@@ -432,6 +439,7 @@ void TouchLightsActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						LightsButtonState[3] = 1;
+						EEPROM_LightStateUpdate(4, 1);
 					}
 				}
 				EF_SetFont(&arialBlack_20ptFontInfo);

@@ -66,49 +66,47 @@ uint8_t system_init(){
 	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(60, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  while(eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)) != HAL_OK); // read number of leds
-	 	  initWait(100);
-	  	  LastTime = HAL_GetTick();
+	  	  SendComand(UCMD_TEMP_2);	// ASK for current temperature inside
+	  	  eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)); // read number of leds
+	  	  	  initWait(100);
+	  	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(90, 200, 20, 20, 5, ILI9341_GREEN);
-  	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature
+  	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
   	  	  EEPROM_RelayStateRestore(); // Restore state of relay to state before power off, from EEPROM memory
-	  	  initWait(100);
-	  	  LastTime = HAL_GetTick();
+  	  	  	  initWait(100);
+  	  	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(120, 200, 20, 20, 5, ILI9341_GREEN);
   	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
-	  	  initWait(100);
-	  	  LastTime = HAL_GetTick();
+  	  	  EEPROM_LightStateRestore(); // Restore state of lights to state before power off, from EEPROM memory
+			  initWait(100);
+			  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(150, 200, 20, 20, 5, ILI9341_GREEN);
-  	  	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
-	  	  initWait(100);
-	  	  LastTime = HAL_GetTick();
+
+			  initWait(100);
+			  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(180, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  SendComand(UCMD_LIGHT_SCHOW_ALL); // ASK for current lights state
-	  	  initWait(100);
-	  	  LastTime = HAL_GetTick();
+
+			  initWait(100);
+			  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(210, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  SendComand(UCMD_TEMP_2);
-	  	  initWait(100);
-	  	  LastTime = HAL_GetTick();
+	  	  SendComand(UCMD_RELAY_SCHOW_ALL); // ASK for current relay state
+			  initWait(100);
+			  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(240, 200, 20, 20, 5, ILI9341_GREEN);
-	  	  initWait(300);
-	  	  LastTime = HAL_GetTick();
+	  	  SendComand(UCMD_LIGHT_SCHOW_ALL); // ASK for current lights state
+			  initWait(300);
+			  LastTime = HAL_GetTick();
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
 }
 
-void initWait(uint32_t TimeInMs)
-{
-    while (HAL_GetTick() - LastTime <= TimeInMs)
-    {
-    }
-}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -565,6 +563,7 @@ void predefinedActivityCzyszczenie(uint8_t State)
 	{
 		// Read which Relay was ON before turn on activity and restore state before activity
 		EEPROM_RelayStateRestore();
+		EEPROM_LightStateRestore();
 
 		//TODO: To samo zrobic swiatlami, sprawdzic ktore byly wylaczone przed aktywnoscia i je spowrotem wylaczyc
 
@@ -734,4 +733,11 @@ void drawCurrentStateOfLights()
 	  }
 }
 
-
+//
+// Function to wait but only if it is necessary
+void initWait(uint32_t TimeInMs)
+{
+    while (HAL_GetTick() - LastTime <= TimeInMs)
+    {
+    }
+}
