@@ -17,6 +17,7 @@
 #include "ds3231_for_stm32_hal.h"
 #include "tim.h"
 #include "eeprom.h"
+#include "uartdma.h"
 
 extern float CTemp;
 extern float CPres;
@@ -28,6 +29,7 @@ extern uint8_t LightsButtonState[4];
 extern uint8_t ActivityButtonState[2];
 extern MenuTFTState State;
 extern uint8_t NrOfLeds;
+extern UARTDMA_HandleTypeDef huartdma2;
 
 uint8_t OldHours = 0;
 uint8_t OldMinutes = 0;
@@ -69,25 +71,27 @@ uint8_t system_init(){
 	  	  SendComand(UCMD_TEMP_2);	// ASK for current temperature inside
 	  	  eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)); // read number of leds
 	  	  SendComand(UCMD_WS_NUMBER_LED);
+	  	  UARTDMA_TransmitEvent(&huartdma2);
 	  	  	  initWait(100);
 	  	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(90, 200, 20, 20, 5, ILI9341_GREEN);
   	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
   	  	  EEPROM_RelayStateRestore(); // Restore state of relay to state before power off, from EEPROM memory
-  	  	 // EEPROM_LightStateRestore(); // Restore state of lights to state before power off, from EEPROM memory
-
+  	  	  UARTDMA_TransmitEvent(&huartdma2);
   	  	  	  initWait(100);
   	  	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(120, 200, 20, 20, 5, ILI9341_GREEN);
-  	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
+
 
 			  initWait(100);
 			  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(150, 200, 20, 20, 5, ILI9341_GREEN);
-
+	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
+  	  	  EEPROM_LightStateRestore(); // Restore state of lights to state before power off, from EEPROM memory
+  	  	  UARTDMA_TransmitEvent(&huartdma2);
 			  initWait(100);
 			  LastTime = HAL_GetTick();
 

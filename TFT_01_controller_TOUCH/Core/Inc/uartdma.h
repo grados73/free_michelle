@@ -11,7 +11,7 @@
 #include "ring_buffer.h"
 
 
-#define DMA_RX_BUFFER_SIZE          128
+#define DMA_RX_BUFFER_SIZE          64
 #define DMA_TX_BUFFER_SIZE          128
 
 typedef struct

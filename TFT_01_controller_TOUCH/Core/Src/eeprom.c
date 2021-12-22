@@ -80,15 +80,6 @@ uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
 
 void EEPROM_RelayStateRestore(void)
 {
-	if(EEPROM_LightStateRead(1)) SendComand(UCMD_LIGHT_1_ON);
-	else SendComand(UCMD_LIGHT_1_OFF);
-	if(EEPROM_LightStateRead(2)) SendComand(UCMD_LIGHT_2_ON);
-	else SendComand(UCMD_LIGHT_2_OFF);
-	if(EEPROM_LightStateRead(3)) SendComand(UCMD_LIGHT_3_ON);
-	else SendComand(UCMD_LIGHT_3_OFF);
-	if(EEPROM_LightStateRead(4)) SendComand(UCMD_LIGHT_4_ON);
-	else SendComand(UCMD_LIGHT_4_OFF);
-
 	if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
 	else SendComand(UCMD_RELAY_1_OFF);
 	if(EEPROM_RelayStateRead(2)) SendComand(UCMD_RELAY_2_ON);
@@ -107,5 +98,12 @@ void EEPROM_RelayStateRestore(void)
 
 void EEPROM_LightStateRestore(void)
 {
-
+	if(EEPROM_LightStateRead(1)) SendComand(UCMD_LIGHT_1_ON);
+	else SendComand(UCMD_LIGHT_1_OFF);
+	if(EEPROM_LightStateRead(2)) SendComand(UCMD_LIGHT_2_ON);
+	else SendComand(UCMD_LIGHT_2_OFF);
+	if(EEPROM_LightStateRead(3)) SendComand(UCMD_LIGHT_3_ON);
+	else SendComand(UCMD_LIGHT_3_OFF);
+	if(EEPROM_LightStateRead(4)) SendComand(UCMD_LIGHT_4_ON);
+	else SendComand(UCMD_LIGHT_4_OFF);
 }
