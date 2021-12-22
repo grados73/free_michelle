@@ -221,5 +221,6 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size);
 // Functions initializations
 void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState);
 uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber);
+void EEPROM_RelayStateRestore(void);
 
 #endif /* INC_EEPROM_H_ */

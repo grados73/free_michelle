@@ -106,6 +106,7 @@ uint8_t Msg[32];
 //
 // Prototype of functions
 //
+void initWait(uint32_t TimeInMs);
 uint8_t system_init();
 void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, uint8_t water_lvl, float presure);
 void showPreparedActivitiesPanel();

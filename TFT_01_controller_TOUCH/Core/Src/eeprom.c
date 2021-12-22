@@ -7,6 +7,7 @@
 
 #include "eeprom.h"
 #include "i2c.h"
+#include "parser.h"
 
 #define EEPROM_ADDR     0xA0
 #define WRITE_TIMEOUT   6
@@ -54,6 +55,18 @@ uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
 	else if(RelayNumber == 4) eeprom_read(EEPROM_ADR_RELAY_4_STATE, &AktualnyStan, sizeof(AktualnyStan));
 
 	return AktualnyStan;
+}
+
+void EEPROM_RelayStateRestore(void)
+{
+	if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
+	else SendComand(UCMD_RELAY_1_OFF);
+	if(EEPROM_RelayStateRead(2)) SendComand(UCMD_RELAY_2_ON);
+	else SendComand(UCMD_RELAY_2_OFF);
+	if(EEPROM_RelayStateRead(3)) SendComand(UCMD_RELAY_3_ON);
+	else SendComand(UCMD_RELAY_3_OFF);
+	if(EEPROM_RelayStateRead(4)) SendComand(UCMD_RELAY_4_ON);
+	else SendComand(UCMD_RELAY_4_OFF);
 }
 
 
