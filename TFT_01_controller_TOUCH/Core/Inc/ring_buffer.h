@@ -8,7 +8,7 @@
 #ifndef INC_RING_BUFFER_H_
 #define INC_RING_BUFFER_H_
 
-#define RING_BUFFER_SIZE 65
+#define RING_BUFFER_SIZE 128
 
 //
 // Return status from Ring Buffer functions

@@ -68,18 +68,21 @@ uint8_t system_init(){
 	  GFX_DrawFillRoundRectangle(60, 200, 20, 20, 5, ILI9341_GREEN);
 	  	  SendComand(UCMD_TEMP_2);	// ASK for current temperature inside
 	  	  eeprom_read(EEPROM_ADR_NUMBER_WS_LEDS, &NrOfLeds, sizeof(NrOfLeds)); // read number of leds
+	  	  SendComand(UCMD_WS_NUMBER_LED);
 	  	  	  initWait(100);
 	  	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(90, 200, 20, 20, 5, ILI9341_GREEN);
   	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
   	  	  EEPROM_RelayStateRestore(); // Restore state of relay to state before power off, from EEPROM memory
+  	  	 // EEPROM_LightStateRestore(); // Restore state of lights to state before power off, from EEPROM memory
+
   	  	  	  initWait(100);
   	  	  	  LastTime = HAL_GetTick();
 
 	  GFX_DrawFillRoundRectangle(120, 200, 20, 20, 5, ILI9341_GREEN);
   	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
-  	  	  EEPROM_LightStateRestore(); // Restore state of lights to state before power off, from EEPROM memory
+
 			  initWait(100);
 			  LastTime = HAL_GetTick();
 
@@ -401,6 +404,15 @@ void showWSLedPanel()
 {
 	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	EF_SetFont(&arialBlack_20ptFontInfo);
+
+//	// TODO:
+//
+//	uint8_t TemporarySateTable[4];
+//	TemporarySateTable[0] = EEPROM_LightStateRead(1);
+//	TemporarySateTable[1] = EEPROM_LightStateRead(2);
+//	TemporarySateTable[2] = EEPROM_LightStateRead(3);
+//	TemporarySateTable[3] = EEPROM_LightStateRead(4);
+
 
 	// Display Header
 	sprintf((char*)Msg, "-=WS2812b=-");

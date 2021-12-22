@@ -223,4 +223,9 @@ void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState);
 uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber);
 void EEPROM_RelayStateRestore(void);
 
+void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState);
+uint8_t EEPROM_LightStateRead(uint8_t LightNumber);
+void EEPROM_LightStateRestore(void);
+
+
 #endif /* INC_EEPROM_H_ */

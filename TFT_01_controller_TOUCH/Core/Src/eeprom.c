@@ -46,29 +46,6 @@ void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
 	else if(RelayNumber == 3) eeprom_write(EEPROM_ADR_RELAY_3_STATE, &State, sizeof(State));
 	else if(RelayNumber == 4) eeprom_write(EEPROM_ADR_RELAY_4_STATE, &State, sizeof(State));
 }
-uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
-{
-	uint8_t AktualnyStan = 0;
-	if(RelayNumber == 1) eeprom_read(EEPROM_ADR_RELAY_1_STATE, &AktualnyStan, sizeof(AktualnyStan));
-	else if(RelayNumber == 2) eeprom_read(EEPROM_ADR_RELAY_2_STATE, &AktualnyStan, sizeof(AktualnyStan));
-	else if(RelayNumber == 3) eeprom_read(EEPROM_ADR_RELAY_3_STATE, &AktualnyStan, sizeof(AktualnyStan));
-	else if(RelayNumber == 4) eeprom_read(EEPROM_ADR_RELAY_4_STATE, &AktualnyStan, sizeof(AktualnyStan));
-
-	return AktualnyStan;
-}
-
-void EEPROM_RelayStateRestore(void)
-{
-	if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
-	else SendComand(UCMD_RELAY_1_OFF);
-	if(EEPROM_RelayStateRead(2)) SendComand(UCMD_RELAY_2_ON);
-	else SendComand(UCMD_RELAY_2_OFF);
-	if(EEPROM_RelayStateRead(3)) SendComand(UCMD_RELAY_3_ON);
-	else SendComand(UCMD_RELAY_3_OFF);
-	if(EEPROM_RelayStateRead(4)) SendComand(UCMD_RELAY_4_ON);
-	else SendComand(UCMD_RELAY_4_OFF);
-}
-
 
 void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState)
 {
@@ -77,6 +54,17 @@ void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState)
 	else if(LightNumber == 2) eeprom_write(EEPROM_ADR_LIGHT_2_STATE, &State, sizeof(State));
 	else if(LightNumber == 3) eeprom_write(EEPROM_ADR_LIGHT_3_STATE, &State, sizeof(State));
 	else if(LightNumber == 4) eeprom_write(EEPROM_ADR_LIGHT_4_STATE, &State, sizeof(State));
+}
+
+uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
+{
+	uint8_t RelayStan = 0;
+	if(RelayNumber == 1) eeprom_read(EEPROM_ADR_RELAY_1_STATE, &RelayStan, sizeof(RelayStan));
+	else if(RelayNumber == 2) eeprom_read(EEPROM_ADR_RELAY_2_STATE, &RelayStan, sizeof(RelayStan));
+	else if(RelayNumber == 3) eeprom_read(EEPROM_ADR_RELAY_3_STATE, &RelayStan, sizeof(RelayStan));
+	else if(RelayNumber == 4) eeprom_read(EEPROM_ADR_RELAY_4_STATE, &RelayStan, sizeof(RelayStan));
+
+	return RelayStan;
 }
 
 uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
@@ -90,7 +78,7 @@ uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
 	return AktualnyStan;
 }
 
-void EEPROM_LightStateRestore(void)
+void EEPROM_RelayStateRestore(void)
 {
 	if(EEPROM_LightStateRead(1)) SendComand(UCMD_LIGHT_1_ON);
 	else SendComand(UCMD_LIGHT_1_OFF);
@@ -100,4 +88,24 @@ void EEPROM_LightStateRestore(void)
 	else SendComand(UCMD_LIGHT_3_OFF);
 	if(EEPROM_LightStateRead(4)) SendComand(UCMD_LIGHT_4_ON);
 	else SendComand(UCMD_LIGHT_4_OFF);
+
+	if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
+	else SendComand(UCMD_RELAY_1_OFF);
+	if(EEPROM_RelayStateRead(2)) SendComand(UCMD_RELAY_2_ON);
+	else SendComand(UCMD_RELAY_2_OFF);
+	if(EEPROM_RelayStateRead(3)) SendComand(UCMD_RELAY_3_ON);
+	else SendComand(UCMD_RELAY_3_OFF);
+	if(EEPROM_RelayStateRead(4)) SendComand(UCMD_RELAY_4_ON);
+	else SendComand(UCMD_RELAY_4_OFF);
+
+}
+
+
+
+
+
+
+void EEPROM_LightStateRestore(void)
+{
+
 }
