@@ -209,6 +209,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[0] = 0;
+						EEPROM_RelayStateUpdate(1, 0);
 					}
 					else // if is OFF
 					{
@@ -217,6 +218,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_1_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[0] = 1;
+						EEPROM_RelayStateUpdate(1, 1);
 					}
 
 				}
@@ -231,6 +233,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[1] = 0;
+						EEPROM_RelayStateUpdate(2, 0);
 					}
 					else // if is OFF
 					{
@@ -239,6 +242,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[1] = 1;
+						EEPROM_RelayStateUpdate(2, 1);
 					}
 				}
 				//
@@ -252,6 +256,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[2] = 0;
+						EEPROM_RelayStateUpdate(3, 0);
 					}
 					else // if is OFF
 					{
@@ -260,6 +265,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[2] = 1;
+						EEPROM_RelayStateUpdate(3, 1);
 					}
 				}
 				//
@@ -273,6 +279,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "OFF");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 						SwitchesButtonState[3] = 0;
+						EEPROM_RelayStateUpdate(4, 0);
 					}
 					else // if is OFF
 					{
@@ -281,6 +288,7 @@ void TouchSwitchActivity(void)
 						sprintf((char*)Msg, "ON");
 						EF_PutString(Msg, (SWITCH_BUTTON_X+STRING_ERRATA_X), (SWITCH_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_ON_BUTTON_COLOR);
 						SwitchesButtonState[3] = 1;
+						EEPROM_RelayStateUpdate(4, 1);
 					}
 				}
 				EF_SetFont(&arialBlack_20ptFontInfo);

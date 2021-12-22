@@ -37,3 +37,12 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size)
     return rc;
 }
 
+void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
+{
+	uint8_t State = NewState;
+	if(RelayNumber == 1) eeprom_write(EEPROM_ADR_RELAY_1_STATE, &State, sizeof(State));
+	else if(RelayNumber == 2) eeprom_write(EEPROM_ADR_RELAY_2_STATE, &State, sizeof(State));
+	else if(RelayNumber == 3) eeprom_write(EEPROM_ADR_RELAY_3_STATE, &State, sizeof(State));
+	else if(RelayNumber == 4) eeprom_write(EEPROM_ADR_RELAY_4_STATE, &State, sizeof(State));
+}
+

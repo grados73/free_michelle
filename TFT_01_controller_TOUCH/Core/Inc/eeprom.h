@@ -34,8 +34,8 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size);
 /*
  *  EEPROM 128B
 * 	1	-	0x01	-	NUMBER OF WS2812b LEDs
-*	2	-	0x02	-	RELAYS
-*	3	-	0x03	-	LIGHTS
+*	2	-	0x02	-
+*	3	-	0x03	-
 *	4	-	0x04	-	WS2812b LEDs
 *	5	-	0x05	-	SHEDULE 1 DAYS IN WEEK
 *	6	-	0x06	-	SHEDULE 1 RELAYS
@@ -78,15 +78,15 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size);
 *	43	-	0x2B	-	SHEDULE 2 WS2812b DAY STATE
 *	44	-	0x2C	-	SHEDULE 2 WS2812b NIGHT STATE
 *	45	-	0x2D	-
-*	46	-	0x2E	-
-*	47	-	0x2F	-
-*	48	-	0x30	-
-*	49	-	0x31	-
+*	46	-	0x2E	-	RELAY 1 STATE
+*	47	-	0x2F	-	RELAY 2 STATE
+*	48	-	0x30	-	RELAY 3 STATE
+*	49	-	0x31	-	RELAY 4 STATE
 *	50	-	0x32	-
-*	51	-	0x33	-
-*	52	-	0x34	-
-*	53	-	0x35	-
-*	54	-	0x36	-
+*	51	-	0x33	-	LIGHT 1 STATE
+*	52	-	0x34	-	LIGHT 2 STATE
+*	53	-	0x35	-	LIGHT 3 STATE
+*	54	-	0x36	-	LIGHT 4 STATE
 *	55	-	0x37	-
 *	56	-	0x38	-
 *	57	-	0x39	-
@@ -165,8 +165,6 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size);
  */
 
 #define EEPROM_ADR_NUMBER_WS_LEDS 0x01
-#define EEPROM_ADR_RELAYS_STATE 0x02
-#define EEPROM_ADR_LIGHTS_STATE 0x03
 #define EEPROM_ADR_WS2812B_STATE 0x04
 
 #define EEPROM_ADR_SHEDULE_1_DAYS 0x05
@@ -207,5 +205,20 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size);
 #define EEPROM_ADR_TEMP_WEW_2H_AGO 0x25
 #define EEPROM_ADR_TEMP_WEW_1H_AGO 0x26
 #define EEPROM_ADR_TEMP_WEW_MED_LAST_12H 0x27
+
+#define EEPROM_ADR_RELAY_1_STATE 0x2E
+#define EEPROM_ADR_RELAY_2_STATE 0x2F
+#define EEPROM_ADR_RELAY_3_STATE 0x30
+#define EEPROM_ADR_RELAY_4_STATE 0x31
+
+#define EEPROM_ADR_LIGHT_1_STATE 0x33
+#define EEPROM_ADR_LIGHT_2_STATE 0x34
+#define EEPROM_ADR_LIGHT_3_STATE 0x35
+#define EEPROM_ADR_LIGHT_4_STATE 0x36
+
+
+//
+// Functions initializations
+void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState);
 
 #endif /* INC_EEPROM_H_ */
