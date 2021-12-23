@@ -101,21 +101,23 @@ void MenuTFT(void)
 		}
 		TouchWSLedActivity();
 		break;
-	case MENUTFT_SHEDULE_1:
+	case MENUTFT_SCHEDULE_1:
 		if(StateChangeFlag == 1) // make only one time
 		{
 			showShedule1Panel();
 			StateChangeFlag = 0;
 		}
+		Schedule1Activity();
 		break;
-	}
-	case MENUTFT_SHEDULE_2:
+	case MENUTFT_SCHEDULE_2:
 		if(StateChangeFlag == 1) // make only one time
 		{
 			showShedule2Panel();
 			StateChangeFlag = 0;
 		}
+		Schedule2Activity();
 		break;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -517,7 +519,7 @@ void TouchClockActivity(void)
 				else if((x >= MEDIUM_BUTTON_CLOCK_X)&&(x <= (MEDIUM_BUTTON_CLOCK_X + MEDIUM_BUTTON_CLOCK_W))&&
 						(y >= MEDIUM_BUTTON_CLOCK_Y)&&(y <= (MEDIUM_BUTTON_CLOCK_Y + MEDIUM_BUTTON_H_CLOCK)))
 				{
-					State = MENUTFT_SHEDULE;
+					State = MENUTFT_SCHEDULE_1;
 					StateChangeFlag = 1;
 				}
 
@@ -857,6 +859,78 @@ void TouchWSLedActivity(void)
 				TimerTouch = HAL_GetTick();
 			}
 		}
+}
+
+void Schedule1Activity()
+{
+	// Check if screen was touched
+	if(XPT2046_IsTouched())
+	{
+		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
+		{
+			uint16_t x, y; // Touch points
+			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+			//
+			// Check if it is button to change screen
+			//
+			// Check if that point is inside the LEFT Button
+			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+			{
+				State = MENUTFT_CLOCK;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the RIGHT Button
+			else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
+			{
+				State = MENUTFT_SCHEDULE_2;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the MEDIUM Button
+			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
+					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
+			{
+				// TODO!
+			}
+			TimerTouch = HAL_GetTick();
+		}
+	}
+}
+
+void Schedule2Activity()
+{
+	// Check if screen was touched
+	if(XPT2046_IsTouched())
+	{
+		if(HAL_GetTick() - TimerTouch >= SWITCH_DEBOUNCING_TIME_MS) // If pass 1000ms from last change State
+		{
+			uint16_t x, y; // Touch points
+			XPT2046_GetTouchPoint(&x, &y); // Get the current couched point
+
+			//
+			// Check if it is button to change screen
+			//
+			// Check if that point is inside the LEFT Button
+			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
+					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
+			{
+				State = MENUTFT_SCHEDULE_1;
+				StateChangeFlag = 1;
+			}
+
+			// Check if that point is inside the MEDIUM Button
+			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
+					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
+			{
+				// TODO!
+			}
+			TimerTouch = HAL_GetTick();
+		}
+	}
 }
 
 
