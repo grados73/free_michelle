@@ -59,7 +59,10 @@
 //BMP280_t Bmp280;
 struct Measurements BMPResults;
 float CTemp, CPressure;
+
 UARTDMA_HandleTypeDef huartdma2;
+UARTDMA_HandleTypeDef huartdma6;
+
 uint8_t BufferReceive[64];
 uint8_t RefreshMeasurementDataCounter = 0;
 
@@ -125,6 +128,7 @@ int main(void)
    HAL_TIM_Base_Start_IT(&htim10);
 
    UARTDMA_Init(&huartdma2, &huart2);
+   UARTDMA_Init(&huartdma6, &huart6);
 
    if (ds18b20_init() != HAL_OK) {
       Error_Handler();
@@ -141,6 +145,8 @@ int main(void)
 //	    ws2812b_SetColor(led, r, g, b);
 //	  }
 //	  ws2812b_update();
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -154,6 +160,11 @@ int main(void)
 	  {
 		  UART_ParseLine(&huartdma2); // Parsing function
 	  }
+
+//	  if(UARTDMA_IsDataReceivedReady(&huartdma6))
+//	  {
+//		  UART_DistanceSensorParseLine(&huartdma6); // Distance Parsing function
+//	  }
 
 	  //
 	  // TRANSMIT

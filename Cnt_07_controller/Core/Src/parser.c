@@ -29,6 +29,7 @@ uint8_t LightState[4]= {0};
 extern struct Measurements BMPResults;
 extern const uint8_t ds1[]; // zew
 extern const uint8_t ds2[]; // wew
+extern uint8_t NumberOfLedsWS2812b;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,6 +83,29 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  	  UART_ParseChangeLightState();
 	  }
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// USART Distance parsing function
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
+{
+	char BufferReceive[BUFFOR_SIZE];
+
+		if(!UARTDMA_GetLineFromReceiveBuffer(huartdma, BufferReceive))
+		{
+			// Header
+			char* ParsePointer = strtok(BufferReceive, "="); // LED\0   1\0
+			// ParsePointer == LED\0
+
+		  if(strcmp(ParsePointer, "0xFF") == 0)
+		  {
+
+		  }
+		}
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -481,6 +505,7 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 	// controling of ws2812b
 	else if(LightNumber == 9)
 	{
+
 		if (Stan == 0) // TURN WS LED OFF
 		{
 			ws2812b_LightTurnOff();
@@ -516,6 +541,10 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 		else if(Stan == 8) // Turn ON - NIGHT LIGHTS
 		{
 			ws2812b_LightNight(WS2812B_BRIGHTNESS_MID_PWR);
+		}
+		else if(Stan > 10)
+		{
+			NumberOfLedsWS2812b = Stan;
 		}
 	}
 

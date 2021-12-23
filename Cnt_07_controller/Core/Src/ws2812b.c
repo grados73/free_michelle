@@ -12,6 +12,7 @@
 
 #define RESET_LEN		50
 #define LED_N			16
+#define LED_N_MAX		100
 
 uint8_t NumberOfLedsWS2812b = LED_N;
 
@@ -33,7 +34,7 @@ const uint8_t gamma8[] = {
   177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255 };
 
-static uint16_t led_buffer[RESET_LEN + 24 * LED_N + 1];
+static uint16_t led_buffer[RESET_LEN + 24 * LED_N_MAX + 1];
 
 static void set_byte(uint32_t pos, uint8_t value)
 {
@@ -55,10 +56,10 @@ void ws2812b_init(void)
   for (i = 0; i < RESET_LEN; i++)
     led_buffer[i] = 0;
 
-  for (i = 0; i < 24 * LED_N; i++)
+  for (i = 0; i < 24 * NumberOfLedsWS2812b; i++)
     led_buffer[RESET_LEN + i] = BIT_0_TIME;
 
-  led_buffer[RESET_LEN + 24 * LED_N] = 100;
+  led_buffer[RESET_LEN + 24 * NumberOfLedsWS2812b] = 100;
 
   HAL_TIM_Base_Start(&htim1);
   ws2812b_update();
@@ -80,7 +81,7 @@ void ws2812b_wait(void)
 
 void ws2812b_SetColor(uint32_t led, uint8_t red, uint8_t green, uint8_t blue)
 {
-	if (led < LED_N)
+	if (led < NumberOfLedsWS2812b)
 	{
 		set_byte(RESET_LEN + 24 * led, gamma8[green % 256]);
 		set_byte(RESET_LEN + 24 * led + 8, gamma8[red % 256]);

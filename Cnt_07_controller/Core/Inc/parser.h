@@ -10,7 +10,7 @@
 #define INC_PARSER_H_
 #include "uartdma.h"
 
-#define BUFFOR_SIZE 65
+#define BUFFOR_SIZE 128
 #define FRAME_SIZE 16
 #define SOURCE_STATE_LENGTH 10
 
@@ -43,6 +43,8 @@ void UART_ParseChangeRelayState();
 void UART_ParseChangeLightState();
 void UART_ParseAnsStateStatus();
 void UART_ParseAnsLightStatus();
+
+void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma);
 
 
 void SwitchMotorRegular();
