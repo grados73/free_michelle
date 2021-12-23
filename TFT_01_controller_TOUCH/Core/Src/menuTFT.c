@@ -27,6 +27,7 @@ extern uint8_t ActivityButtonState[2];
 uint8_t StateChangeFlag = 0; // using to indicate change screen activity
 uint8_t ClockChangeFlag = 0; // using to indicate change screen to Clock Set
 uint8_t WSLedChangeFlag = 0; // using to indicate change screen to WS LEDs Set
+uint8_t DayOfWeek = 1;
 uint8_t Hours = 15;
 uint8_t Minutes = 5;
 uint8_t NrOfLeds = 15;
@@ -100,7 +101,21 @@ void MenuTFT(void)
 		}
 		TouchWSLedActivity();
 		break;
+	case MENUTFT_SHEDULE_1:
+		if(StateChangeFlag == 1) // make only one time
+		{
+			showShedule1Panel();
+			StateChangeFlag = 0;
+		}
+		break;
 	}
+	case MENUTFT_SHEDULE_2:
+		if(StateChangeFlag == 1) // make only one time
+		{
+			showShedule2Panel();
+			StateChangeFlag = 0;
+		}
+		break;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -471,6 +486,7 @@ void TouchClockActivity(void)
 				{
 					Hours = DS3231_GetHour();
 					Minutes = DS3231_GetMinute();
+					DayOfWeek = DS3231_GetDayOfWeek();
 					ClockChangeFlag = 0;
 				}
 
@@ -489,12 +505,22 @@ void TouchClockActivity(void)
 				else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
 						(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
 				{
+					DS3231_SetDayOfWeek(DayOfWeek);
 					DS3231_SetHour(Hours);
 					DS3231_SetMinute(Minutes);
 					DS3231_SetSecond(50);
 					sprintf((char*)Msg, "-Time Changed-");
 					EF_PutString(Msg, CLOCK_STRING_POZ_X, CLOCK_STRING_POZ_Y, ILI9341_GREEN, BG_COLOR, ILI9341_LIGHTGREY);
 				}
+
+				// Check if that point is inside the Medium Button - change screen to Schedule  screen
+				else if((x >= MEDIUM_BUTTON_CLOCK_X)&&(x <= (MEDIUM_BUTTON_CLOCK_X + MEDIUM_BUTTON_CLOCK_W))&&
+						(y >= MEDIUM_BUTTON_CLOCK_Y)&&(y <= (MEDIUM_BUTTON_CLOCK_Y + MEDIUM_BUTTON_H_CLOCK)))
+				{
+					State = MENUTFT_SHEDULE;
+					StateChangeFlag = 1;
+				}
+
 
 				//
 				// Check if it is button to increase by an ONE (1) HOUR / MINUT - first ROW
@@ -528,6 +554,19 @@ void TouchClockActivity(void)
 						}
 						sprintf((char*)Msg, " %d  ", Minutes);
 						EF_PutString(Msg, STRING_H_M_NUMBER_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+					}
+					else if((y >= CLOCK_B_3_POZ_Y)&&(y <= (CLOCK_B_3_POZ_Y + CLOCK_BUTTON_H))) // Add 1 Day
+					{
+						if(DayOfWeek < 7)
+						{
+							DayOfWeek++;
+						}
+						else
+						{
+							DayOfWeek = 1;
+						}
+						sprintf((char*)Msg, "DZIEŃ TYG:   %d ", DayOfWeek);
+						EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_DAY_OF_WEEK_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 					}
 
 				}

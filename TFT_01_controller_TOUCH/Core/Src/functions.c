@@ -321,6 +321,7 @@ void showClockSetPanel()
 
 	uint8_t CHour = DS3231_GetHour();
 	uint8_t CMinute = DS3231_GetMinute();
+	uint8_t CDayOfWeek = DS3231_GetDayOfWeek();
 
 	//
 	// Display HEADER string
@@ -334,6 +335,9 @@ void showClockSetPanel()
 
 	sprintf((char*)Msg, "MINUTA:   %d", CMinute);
 	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_MINUTE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	sprintf((char*)Msg, "DZIEŃ TYG:   %d", CDayOfWeek);
+	EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_DAY_OF_WEEK_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	// Display string on button
 	EF_SetFont(&arial_11ptFontInfo);
@@ -354,12 +358,21 @@ void showClockSetPanel()
 	sprintf((char*)Msg, "+10");
 	EF_PutString(Msg, (CLOCK_BUTTON2_X+STRING_ERRATA_X), (CLOCK_B_2_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
 
+	GFX_DrawFillRoundRectangle(CLOCK_BUTTON_X, CLOCK_B_3_POZ_Y, CLOCK_BUTTON_W, CLOCK_BUTTON_H, CLOCK_BUTTON_R, SWITCH_CLOCK_BUTTON_COLOR);
+	sprintf((char*)Msg, "+1D");
+	EF_PutString(Msg, (CLOCK_BUTTON_X+STRING_ERRATA_X), (CLOCK_B_3_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_CLOCK_BUTTON_COLOR);
+
 	//
 	// Display button to change screen
 	EF_SetFont(&arial_11ptFontInfo);
 	GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
 	sprintf((char*)Msg, "CONFIRM");
 	EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	// Medium button
+	GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_CLOCK_X, MEDIUM_BUTTON_CLOCK_Y, MEDIUM_BUTTON_CLOCK_W, MEDIUM_BUTTON_H_CLOCK, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	sprintf((char*)Msg, "HARMONOGRAMY");
+	EF_PutString(Msg, (MEDIUM_BUTTON_CLOCK_X + 6), (MEDIUM_BUTTON_CLOCK_Y + 3), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 
 	GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
 	sprintf((char*)Msg, "<=BACK");
@@ -436,18 +449,11 @@ void showPreparedActivitiesPanel()
 // Display screen to controlling WS2812b LEDs
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void showWSLedPanel()
 {
 	ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	EF_SetFont(&arialBlack_20ptFontInfo);
-
-//	// TODO:
-//
-//	uint8_t TemporarySateTable[4];
-//	TemporarySateTable[0] = EEPROM_LightStateRead(1);
-//	TemporarySateTable[1] = EEPROM_LightStateRead(2);
-//	TemporarySateTable[2] = EEPROM_LightStateRead(3);
-//	TemporarySateTable[3] = EEPROM_LightStateRead(4);
 
 
 	// Display Header
@@ -543,6 +549,64 @@ void showWSLedPanel()
 
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Display screen to setting Schedule Panel
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void drawShedulePanel()
+{
+
+}
+
+void showShedule1Panel()
+{
+	  // Display Header
+	  sprintf((char*)Msg, "HARMONOGRAM 1");
+	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	  //
+	  // Display button to change screen
+	  EF_SetFont(&arial_11ptFontInfo);
+	  GFX_DrawFillRoundRectangle(RIGHT_BUTTON_X, RIGHT_BUTTON_Y, RIGHT_BUTTON_W, RIGHT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "HARM. 2=>");
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  // Medium button
+	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	  sprintf((char*)Msg, ">POTWIERDŹ<");
+	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "<= CLOCK");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+}
+
+void showShedule2Panel()
+{
+	  // Display Header
+	  sprintf((char*)Msg, "HARMONOGRAM 2");
+	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
+	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
+
+	  //
+	  // Display button to change screen
+	  EF_SetFont(&arial_11ptFontInfo);
+
+	  // Medium button
+	  GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	  sprintf((char*)Msg, ">POTWIERDŹ<");
+	  EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+
+	  GFX_DrawFillRoundRectangle(LEFT_BUTTON_X, LEFT_BUTTON_Y, LEFT_BUTTON_W, LEFT_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+	  sprintf((char*)Msg, "<= HARM. 1");
+	  EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

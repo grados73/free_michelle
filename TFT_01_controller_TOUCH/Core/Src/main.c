@@ -9,7 +9,6 @@
   * @todo			: Use confirmation of make orders
   * 				: Read water LVL
   * 				: Read PH
-  * 				: Control WS2812b LEDs (82szt)
   * 				: Schedule of activity (need EEPROM memory)
   * 				: Online access by ESP with push messages
   * 				: UPS

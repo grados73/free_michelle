@@ -67,12 +67,19 @@
 //define position and size of button to change current time
 #define CLOCK_BUTTON_X 240
 #define CLOCK_BUTTON2_X (CLOCK_BUTTON_X+CLOCK_BUTTON_W+10)
+
 #define CLOCK_BUTTON_W 30
 #define CLOCK_BUTTON_H 21
 #define CLOCK_BUTTON_R 5
 
+#define MEDIUM_BUTTON_CLOCK_X 110
+#define MEDIUM_BUTTON_CLOCK_Y 190
+#define MEDIUM_BUTTON_CLOCK_W 110
+#define MEDIUM_BUTTON_H_CLOCK 22
+
 #define CLOCK_B_1_POZ_Y (STRING_HOUR_POZ_Y+5)
 #define CLOCK_B_2_POZ_Y (STRING_MINUTE_POZ_Y+5)
+#define CLOCK_B_3_POZ_Y (STRING_DAY_OF_WEEK_POZ_Y+5)
 
 //define position and size of button to change activity state
 #define ACTIVITY_BUTTON_X 100
@@ -133,7 +140,9 @@ typedef enum
 	MENUTFT_CLOCK,			// Set current Hour and Minute
 	MENUTFT_ACTIVITIES,		// Show possible Activities connected with pre-prepared actions
 	MENUTFT_LIGHTS, 		// Show current lights state, and possibility to change them
-	MENUTFT_WS_LED			// Show panel to control WS2812b LEDs
+	MENUTFT_WS_LED,			// Show panel to control WS2812b LEDs
+	MENUTFT_SHEDULE_1,		// Show panel to set shedule 1
+	MENUTFT_SHEDULE_2		// Show panel to set shedule 2
 } MenuTFTState;
 
 //
@@ -145,5 +154,8 @@ void TouchLightsActivity(void);
 void TouchClockActivity(void);
 void TouchPredefinedActivityActivity();
 void TouchWSLedActivity(void);
+void showShedule1Panel();
+void showShedule2Panel();
+void drawShedulePanel();
 
 #endif /* INC_MENUTFT_H_ */
