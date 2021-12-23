@@ -567,7 +567,7 @@ void TouchClockActivity(void)
 						{
 							DayOfWeek = 1;
 						}
-						sprintf((char*)Msg, "DZIEŃ TYG:   %d ", DayOfWeek);
+						sprintf((char*)Msg, "DZIEŃ TYG:  %d ", DayOfWeek);
 						EF_PutString(Msg, STRING_HOUR_MINUTE_POZ_X, STRING_DAY_OF_WEEK_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 					}
 

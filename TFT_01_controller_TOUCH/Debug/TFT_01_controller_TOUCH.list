@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00012954  080001a0  080001a0  000101a0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00013db8  08012af8  08012af8  00022af8  2**3
+  2 .rodata       00013da8  08012af8  08012af8  00022af8  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  080268b0  080268b0  00040214  2**0
+  3 .ARM.extab    00000000  080268a0  080268a0  00040214  2**0
                   CONTENTS
-  4 .ARM          00000008  080268b0  080268b0  000368b0  2**2
+  4 .ARM          00000008  080268a0  080268a0  000368a0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  080268b8  080268b8  00040214  2**0
+  5 .preinit_array 00000000  080268a8  080268a8  00040214  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080268b8  080268b8  000368b8  2**2
+  6 .init_array   00000004  080268a8  080268a8  000368a8  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  080268bc  080268bc  000368bc  2**2
+  7 .fini_array   00000004  080268ac  080268ac  000368ac  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000214  20000000  080268c0  00040000  2**3
+  8 .data         00000214  20000000  080268b0  00040000  2**3
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000006a8  20000214  08026ad4  00040214  2**2
+  9 .bss          000006a8  20000214  08026ac4  00040214  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  200008bc  08026ad4  000408bc  2**0
+ 10 ._user_heap_stack 00000604  200008bc  08026ac4  000408bc  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00040214  2**0
                   CONTENTS, READONLY
@@ -3878,7 +3878,7 @@ void ILI9341_Init(SPI_HandleTypeDef *hspi)
  800204c:	bd80      	pop	{r7, pc}
  800204e:	bf00      	nop
  8002050:	20000290 	.word	0x20000290
- 8002054:	08015c8c 	.word	0x08015c8c
+ 8002054:	08015c80 	.word	0x08015c80
  8002058:	40020400 	.word	0x40020400
 
 0800205c <XPT2046_GetRawData>:
@@ -6103,12 +6103,12 @@ uint8_t system_init(){
  8002eda:	46bd      	mov	sp, r7
  8002edc:	bd80      	pop	{r7, pc}
  8002ede:	bf00      	nop
- 8002ee0:	08015cfc 	.word	0x08015cfc
- 8002ee4:	08015c80 	.word	0x08015c80
+ 8002ee0:	08015cf0 	.word	0x08015cf0
+ 8002ee4:	08015c74 	.word	0x08015c74
  8002ee8:	08012af8 	.word	0x08012af8
  8002eec:	200002c8 	.word	0x200002c8
  8002ef0:	20000250 	.word	0x20000250
- 8002ef4:	08013d08 	.word	0x08013d08
+ 8002ef4:	08013cfc 	.word	0x08013cfc
  8002ef8:	20000033 	.word	0x20000033
  8002efc:	20000450 	.word	0x20000450
  8002f00:	08012b0c 	.word	0x08012b0c
@@ -6410,7 +6410,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  800314e:	46bd      	mov	sp, r7
  8003150:	bd80      	pop	{r7, pc}
  8003152:	bf00      	nop
- 8003154:	08015c80 	.word	0x08015c80
+ 8003154:	08015c74 	.word	0x08015c74
  8003158:	08012b68 	.word	0x08012b68
  800315c:	200002c8 	.word	0x200002c8
  8003160:	08012b78 	.word	0x08012b78
@@ -6425,7 +6425,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
  8003184:	08012be0 	.word	0x08012be0
  8003188:	20000268 	.word	0x20000268
  800318c:	08012bf0 	.word	0x08012bf0
- 8003190:	08013d08 	.word	0x08013d08
+ 8003190:	08013cfc 	.word	0x08013cfc
  8003194:	08012c08 	.word	0x08012c08
  8003198:	08012c14 	.word	0x08012c14
  800319c:	08012c20 	.word	0x08012c20
@@ -6634,14 +6634,14 @@ void showControlPanel()
  8003322:	46bd      	mov	sp, r7
  8003324:	bd80      	pop	{r7, pc}
  8003326:	bf00      	nop
- 8003328:	08015c80 	.word	0x08015c80
+ 8003328:	08015c74 	.word	0x08015c74
  800332c:	08012c28 	.word	0x08012c28
  8003330:	200002c8 	.word	0x200002c8
  8003334:	08012c3c 	.word	0x08012c3c
  8003338:	08012c50 	.word	0x08012c50
  800333c:	08012c64 	.word	0x08012c64
  8003340:	08012c78 	.word	0x08012c78
- 8003344:	08013d08 	.word	0x08013d08
+ 8003344:	08013cfc 	.word	0x08013cfc
  8003348:	08012c8c 	.word	0x08012c8c
  800334c:	08012c98 	.word	0x08012c98
  8003350:	08012ca0 	.word	0x08012ca0
@@ -6847,14 +6847,14 @@ void showLightsControlPanel()
  80034d2:	46bd      	mov	sp, r7
  80034d4:	bd80      	pop	{r7, pc}
  80034d6:	bf00      	nop
- 80034d8:	08015c80 	.word	0x08015c80
+ 80034d8:	08015c74 	.word	0x08015c74
  80034dc:	08012cac 	.word	0x08012cac
  80034e0:	200002c8 	.word	0x200002c8
  80034e4:	08012cbc 	.word	0x08012cbc
  80034e8:	08012ccc 	.word	0x08012ccc
  80034ec:	08012cdc 	.word	0x08012cdc
  80034f0:	08012cec 	.word	0x08012cec
- 80034f4:	08013d08 	.word	0x08013d08
+ 80034f4:	08013cfc 	.word	0x08013cfc
  80034f8:	08012cfc 	.word	0x08012cfc
  80034fc:	08012d04 	.word	0x08012d04
  8003500:	08012d10 	.word	0x08012d10
@@ -6956,7 +6956,7 @@ void showClockSetPanel()
  80035b6:	487b      	ldr	r0, [pc, #492]	; (80037a4 <showClockSetPanel+0x2a0>)
  80035b8:	f7fe fab4 	bl	8001b24 <EF_PutString>
 
-	sprintf((char*)Msg, "DZIEŃ TYG:   %d", CDayOfWeek);
+	sprintf((char*)Msg, "DZIEŃ TYG:  %d", CDayOfWeek);
  80035bc:	797b      	ldrb	r3, [r7, #5]
  80035be:	461a      	mov	r2, r3
  80035c0:	497b      	ldr	r1, [pc, #492]	; (80037b0 <showClockSetPanel+0x2ac>)
@@ -7134,28 +7134,28 @@ void showClockSetPanel()
  8003726:	f7fe f9fd 	bl	8001b24 <EF_PutString>
 
 	// Medium button
-	GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_CLOCK_X, MEDIUM_BUTTON_CLOCK_Y, MEDIUM_BUTTON_CLOCK_W, MEDIUM_BUTTON_H_CLOCK, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
+	GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_CLOCK_X-30, MEDIUM_BUTTON_CLOCK_Y, MEDIUM_BUTTON_CLOCK_W+60, MEDIUM_BUTTON_H_CLOCK, RIGHT_LEFT_BUTTON_R,  ILI9341_ORANGE);
  800372a:	f64f 5320 	movw	r3, #64800	; 0xfd20
  800372e:	9301      	str	r3, [sp, #4]
  8003730:	2305      	movs	r3, #5
  8003732:	9300      	str	r3, [sp, #0]
  8003734:	2316      	movs	r3, #22
- 8003736:	226e      	movs	r2, #110	; 0x6e
+ 8003736:	22aa      	movs	r2, #170	; 0xaa
  8003738:	21be      	movs	r1, #190	; 0xbe
- 800373a:	206e      	movs	r0, #110	; 0x6e
+ 800373a:	2050      	movs	r0, #80	; 0x50
  800373c:	f7fd ff87 	bl	800164e <GFX_DrawFillRoundRectangle>
 	sprintf((char*)Msg, "HARMONOGRAMY");
  8003740:	4922      	ldr	r1, [pc, #136]	; (80037cc <showClockSetPanel+0x2c8>)
  8003742:	4818      	ldr	r0, [pc, #96]	; (80037a4 <showClockSetPanel+0x2a0>)
  8003744:	f00b fbb4 	bl	800eeb0 <siprintf>
-	EF_PutString(Msg, (MEDIUM_BUTTON_CLOCK_X + 6), (MEDIUM_BUTTON_CLOCK_Y + 3), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	EF_PutString(Msg, (MEDIUM_BUTTON_CLOCK_X -10), (MEDIUM_BUTTON_CLOCK_Y + 3), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
  8003748:	f44f 63fc 	mov.w	r3, #2016	; 0x7e0
  800374c:	9301      	str	r3, [sp, #4]
  800374e:	2300      	movs	r3, #0
  8003750:	9300      	str	r3, [sp, #0]
  8003752:	2300      	movs	r3, #0
  8003754:	22c1      	movs	r2, #193	; 0xc1
- 8003756:	2174      	movs	r1, #116	; 0x74
+ 8003756:	2164      	movs	r1, #100	; 0x64
  8003758:	4812      	ldr	r0, [pc, #72]	; (80037a4 <showClockSetPanel+0x2a0>)
  800375a:	f7fe f9e3 	bl	8001b24 <EF_PutString>
 
@@ -7189,20 +7189,20 @@ void showClockSetPanel()
  8003796:	46bd      	mov	sp, r7
  8003798:	bd80      	pop	{r7, pc}
  800379a:	bf00      	nop
- 800379c:	08015c80 	.word	0x08015c80
+ 800379c:	08015c74 	.word	0x08015c74
  80037a0:	08012d1c 	.word	0x08012d1c
  80037a4:	200002c8 	.word	0x200002c8
  80037a8:	08012d2c 	.word	0x08012d2c
  80037ac:	08012d38 	.word	0x08012d38
  80037b0:	08012d48 	.word	0x08012d48
- 80037b4:	08013d08 	.word	0x08013d08
- 80037b8:	08012d5c 	.word	0x08012d5c
- 80037bc:	08012d60 	.word	0x08012d60
- 80037c0:	08012d64 	.word	0x08012d64
- 80037c4:	08012d68 	.word	0x08012d68
- 80037c8:	08012d6c 	.word	0x08012d6c
- 80037cc:	08012d74 	.word	0x08012d74
- 80037d0:	08012d84 	.word	0x08012d84
+ 80037b4:	08013cfc 	.word	0x08013cfc
+ 80037b8:	08012d58 	.word	0x08012d58
+ 80037bc:	08012d5c 	.word	0x08012d5c
+ 80037c0:	08012d60 	.word	0x08012d60
+ 80037c4:	08012d64 	.word	0x08012d64
+ 80037c8:	08012d68 	.word	0x08012d68
+ 80037cc:	08012d70 	.word	0x08012d70
+ 80037d0:	08012d80 	.word	0x08012d80
 
 080037d4 <showPreparedActivitiesPanel>:
 //
@@ -7471,16 +7471,16 @@ void showPreparedActivitiesPanel()
  80039c6:	46bd      	mov	sp, r7
  80039c8:	bd80      	pop	{r7, pc}
  80039ca:	bf00      	nop
- 80039cc:	08015c80 	.word	0x08015c80
- 80039d0:	08012d8c 	.word	0x08012d8c
+ 80039cc:	08015c74 	.word	0x08015c74
+ 80039d0:	08012d88 	.word	0x08012d88
  80039d4:	200002c8 	.word	0x200002c8
- 80039d8:	08013d08 	.word	0x08013d08
- 80039dc:	08012d84 	.word	0x08012d84
+ 80039d8:	08013cfc 	.word	0x08013cfc
+ 80039dc:	08012d80 	.word	0x08012d80
  80039e0:	2000027c 	.word	0x2000027c
- 80039e4:	08012d9c 	.word	0x08012d9c
- 80039e8:	08012da8 	.word	0x08012da8
- 80039ec:	08012dac 	.word	0x08012dac
- 80039f0:	08012db0 	.word	0x08012db0
+ 80039e4:	08012d98 	.word	0x08012d98
+ 80039e8:	08012da4 	.word	0x08012da4
+ 80039ec:	08012da8 	.word	0x08012da8
+ 80039f0:	08012dac 	.word	0x08012dac
 
 080039f4 <showWSLedPanel>:
 // Display screen to controlling WS2812b LEDs
@@ -7891,23 +7891,23 @@ void showWSLedPanel()
  8003d1a:	21e9      	movs	r1, #233	; 0xe9
  8003d1c:	e022      	b.n	8003d64 <showWSLedPanel+0x370>
  8003d1e:	bf00      	nop
- 8003d20:	08015c80 	.word	0x08015c80
- 8003d24:	08012dbc 	.word	0x08012dbc
+ 8003d20:	08015c74 	.word	0x08015c74
+ 8003d24:	08012db8 	.word	0x08012db8
  8003d28:	200002c8 	.word	0x200002c8
  8003d2c:	20000033 	.word	0x20000033
- 8003d30:	08012dc8 	.word	0x08012dc8
- 8003d34:	08012dd8 	.word	0x08012dd8
- 8003d38:	08012de0 	.word	0x08012de0
- 8003d3c:	08013d08 	.word	0x08013d08
- 8003d40:	08012d5c 	.word	0x08012d5c
- 8003d44:	08012d64 	.word	0x08012d64
- 8003d48:	08012de8 	.word	0x08012de8
- 8003d4c:	08012dec 	.word	0x08012dec
- 8003d50:	08012df0 	.word	0x08012df0
- 8003d54:	08012df4 	.word	0x08012df4
- 8003d58:	08012df8 	.word	0x08012df8
- 8003d5c:	08012dac 	.word	0x08012dac
- 8003d60:	08012e00 	.word	0x08012e00
+ 8003d30:	08012dc4 	.word	0x08012dc4
+ 8003d34:	08012dd4 	.word	0x08012dd4
+ 8003d38:	08012ddc 	.word	0x08012ddc
+ 8003d3c:	08013cfc 	.word	0x08013cfc
+ 8003d40:	08012d58 	.word	0x08012d58
+ 8003d44:	08012d60 	.word	0x08012d60
+ 8003d48:	08012de4 	.word	0x08012de4
+ 8003d4c:	08012de8 	.word	0x08012de8
+ 8003d50:	08012dec 	.word	0x08012dec
+ 8003d54:	08012df0 	.word	0x08012df0
+ 8003d58:	08012df4 	.word	0x08012df4
+ 8003d5c:	08012da8 	.word	0x08012da8
+ 8003d60:	08012dfc 	.word	0x08012dfc
  8003d64:	482b      	ldr	r0, [pc, #172]	; (8003e14 <showWSLedPanel+0x420>)
  8003d66:	f7fd fedd 	bl	8001b24 <EF_PutString>
 
@@ -8001,10 +8001,10 @@ void showWSLedPanel()
  8003e10:	bd80      	pop	{r7, pc}
  8003e12:	bf00      	nop
  8003e14:	200002c8 	.word	0x200002c8
- 8003e18:	08012e08 	.word	0x08012e08
- 8003e1c:	08012e10 	.word	0x08012e10
- 8003e20:	08013d08 	.word	0x08013d08
- 8003e24:	08012d84 	.word	0x08012d84
+ 8003e18:	08012e04 	.word	0x08012e04
+ 8003e1c:	08012e0c 	.word	0x08012e0c
+ 8003e20:	08013cfc 	.word	0x08013cfc
+ 8003e24:	08012d80 	.word	0x08012d80
 
 08003e28 <drawShedulePanel>:
 //
@@ -8096,10 +8096,10 @@ void drawShedulePanel()
  8003ece:	4943      	ldr	r1, [pc, #268]	; (8003fdc <drawShedulePanel+0x1b4>)
  8003ed0:	4843      	ldr	r0, [pc, #268]	; (8003fe0 <drawShedulePanel+0x1b8>)
  8003ed2:	f00a ffed 	bl	800eeb0 <siprintf>
-	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_COLOR, ILI9341_GREEN);
  8003ed6:	f44f 63fc 	mov.w	r3, #2016	; 0x7e0
  8003eda:	9301      	str	r3, [sp, #4]
- 8003edc:	2300      	movs	r3, #0
+ 8003edc:	2301      	movs	r3, #1
  8003ede:	9300      	str	r3, [sp, #0]
  8003ee0:	2300      	movs	r3, #0
  8003ee2:	22da      	movs	r2, #218	; 0xda
@@ -8115,7 +8115,7 @@ void drawShedulePanel()
  8003ef4:	9300      	str	r3, [sp, #0]
  8003ef6:	2314      	movs	r3, #20
  8003ef8:	2214      	movs	r2, #20
- 8003efa:	21d2      	movs	r1, #210	; 0xd2
+ 8003efa:	21c8      	movs	r1, #200	; 0xc8
  8003efc:	2014      	movs	r0, #20
  8003efe:	f7fd fb29 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_2_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8125,7 +8125,7 @@ void drawShedulePanel()
  8003f0a:	9300      	str	r3, [sp, #0]
  8003f0c:	2314      	movs	r3, #20
  8003f0e:	2214      	movs	r2, #20
- 8003f10:	21d2      	movs	r1, #210	; 0xd2
+ 8003f10:	21c8      	movs	r1, #200	; 0xc8
  8003f12:	202d      	movs	r0, #45	; 0x2d
  8003f14:	f7fd fb1e 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_3_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8135,7 +8135,7 @@ void drawShedulePanel()
  8003f20:	9300      	str	r3, [sp, #0]
  8003f22:	2314      	movs	r3, #20
  8003f24:	2214      	movs	r2, #20
- 8003f26:	21d2      	movs	r1, #210	; 0xd2
+ 8003f26:	21c8      	movs	r1, #200	; 0xc8
  8003f28:	202d      	movs	r0, #45	; 0x2d
  8003f2a:	f7fd fb13 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_4_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8145,7 +8145,7 @@ void drawShedulePanel()
  8003f36:	9300      	str	r3, [sp, #0]
  8003f38:	2314      	movs	r3, #20
  8003f3a:	2214      	movs	r2, #20
- 8003f3c:	21d2      	movs	r1, #210	; 0xd2
+ 8003f3c:	21c8      	movs	r1, #200	; 0xc8
  8003f3e:	202d      	movs	r0, #45	; 0x2d
  8003f40:	f7fd fb08 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_5_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8155,7 +8155,7 @@ void drawShedulePanel()
  8003f4c:	9300      	str	r3, [sp, #0]
  8003f4e:	2314      	movs	r3, #20
  8003f50:	2214      	movs	r2, #20
- 8003f52:	21d2      	movs	r1, #210	; 0xd2
+ 8003f52:	21c8      	movs	r1, #200	; 0xc8
  8003f54:	202d      	movs	r0, #45	; 0x2d
  8003f56:	f7fd fafd 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_6_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8165,7 +8165,7 @@ void drawShedulePanel()
  8003f62:	9300      	str	r3, [sp, #0]
  8003f64:	2314      	movs	r3, #20
  8003f66:	2214      	movs	r2, #20
- 8003f68:	21d2      	movs	r1, #210	; 0xd2
+ 8003f68:	21c8      	movs	r1, #200	; 0xc8
  8003f6a:	202d      	movs	r0, #45	; 0x2d
  8003f6c:	f7fd faf2 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_7_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8175,7 +8175,7 @@ void drawShedulePanel()
  8003f78:	9300      	str	r3, [sp, #0]
  8003f7a:	2314      	movs	r3, #20
  8003f7c:	2214      	movs	r2, #20
- 8003f7e:	21d2      	movs	r1, #210	; 0xd2
+ 8003f7e:	21c8      	movs	r1, #200	; 0xc8
  8003f80:	202d      	movs	r0, #45	; 0x2d
  8003f82:	f7fd fae7 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_8_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8185,7 +8185,7 @@ void drawShedulePanel()
  8003f8e:	9300      	str	r3, [sp, #0]
  8003f90:	2314      	movs	r3, #20
  8003f92:	2214      	movs	r2, #20
- 8003f94:	21d2      	movs	r1, #210	; 0xd2
+ 8003f94:	21c8      	movs	r1, #200	; 0xc8
  8003f96:	202d      	movs	r0, #45	; 0x2d
  8003f98:	f7fd fadc 	bl	8001554 <GFX_DrawRoundRectangle>
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_9_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -8195,7 +8195,7 @@ void drawShedulePanel()
  8003fa4:	9300      	str	r3, [sp, #0]
  8003fa6:	2314      	movs	r3, #20
  8003fa8:	2214      	movs	r2, #20
- 8003faa:	21d2      	movs	r1, #210	; 0xd2
+ 8003faa:	21c8      	movs	r1, #200	; 0xc8
  8003fac:	202d      	movs	r0, #45	; 0x2d
  8003fae:	f7fd fad1 	bl	8001554 <GFX_DrawRoundRectangle>
 
@@ -8203,10 +8203,10 @@ void drawShedulePanel()
  8003fb2:	490c      	ldr	r1, [pc, #48]	; (8003fe4 <drawShedulePanel+0x1bc>)
  8003fb4:	480a      	ldr	r0, [pc, #40]	; (8003fe0 <drawShedulePanel+0x1b8>)
  8003fb6:	f00a ff7b 	bl	800eeb0 <siprintf>
-	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+	  EF_PutString(Msg, (RIGHT_BUTTON_X + 10), (RIGHT_BUTTON_Y + 2), ILI9341_BLACK, BG_COLOR, ILI9341_GREEN);
  8003fba:	f44f 63fc 	mov.w	r3, #2016	; 0x7e0
  8003fbe:	9301      	str	r3, [sp, #4]
- 8003fc0:	2300      	movs	r3, #0
+ 8003fc0:	2301      	movs	r3, #1
  8003fc2:	9300      	str	r3, [sp, #0]
  8003fc4:	2300      	movs	r3, #0
  8003fc6:	22da      	movs	r2, #218	; 0xda
@@ -8219,10 +8219,10 @@ void drawShedulePanel()
  8003fd2:	46bd      	mov	sp, r7
  8003fd4:	bd80      	pop	{r7, pc}
  8003fd6:	bf00      	nop
- 8003fd8:	08013d08 	.word	0x08013d08
- 8003fdc:	08012e18 	.word	0x08012e18
+ 8003fd8:	08013cfc 	.word	0x08013cfc
+ 8003fdc:	08012e14 	.word	0x08012e14
  8003fe0:	200002c8 	.word	0x200002c8
- 8003fe4:	08012e38 	.word	0x08012e38
+ 8003fe4:	08012e34 	.word	0x08012e34
 
 08003fe8 <showShedule1Panel>:
 
@@ -8239,14 +8239,14 @@ void showShedule1Panel()
  8003ff6:	493d      	ldr	r1, [pc, #244]	; (80040ec <showShedule1Panel+0x104>)
  8003ff8:	483d      	ldr	r0, [pc, #244]	; (80040f0 <showShedule1Panel+0x108>)
  8003ffa:	f00a ff59 	bl	800eeb0 <siprintf>
-	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, CLOCK_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  8003ffe:	f24c 6318 	movw	r3, #50712	; 0xc618
  8004002:	9301      	str	r3, [sp, #4]
  8004004:	2300      	movs	r3, #0
  8004006:	9300      	str	r3, [sp, #0]
  8004008:	f64f 5320 	movw	r3, #64800	; 0xfd20
  800400c:	220a      	movs	r2, #10
- 800400e:	2146      	movs	r1, #70	; 0x46
+ 800400e:	212f      	movs	r1, #47	; 0x2f
  8004010:	4837      	ldr	r0, [pc, #220]	; (80040f0 <showShedule1Panel+0x108>)
  8004012:	f7fd fd87 	bl	8001b24 <EF_PutString>
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
@@ -8309,7 +8309,7 @@ void showShedule1Panel()
  800408a:	21d8      	movs	r1, #216	; 0xd8
  800408c:	2078      	movs	r0, #120	; 0x78
  800408e:	f7fd fade 	bl	800164e <GFX_DrawFillRoundRectangle>
-	  sprintf((char*)Msg, ">POTWIERDŹ<");
+	  sprintf((char*)Msg, " >POTW<");
  8004092:	491a      	ldr	r1, [pc, #104]	; (80040fc <showShedule1Panel+0x114>)
  8004094:	4816      	ldr	r0, [pc, #88]	; (80040f0 <showShedule1Panel+0x108>)
  8004096:	f00a ff0b 	bl	800eeb0 <siprintf>
@@ -8353,12 +8353,12 @@ void showShedule1Panel()
  80040e6:	46bd      	mov	sp, r7
  80040e8:	bd80      	pop	{r7, pc}
  80040ea:	bf00      	nop
- 80040ec:	08012e54 	.word	0x08012e54
+ 80040ec:	08012e50 	.word	0x08012e50
  80040f0:	200002c8 	.word	0x200002c8
- 80040f4:	08013d08 	.word	0x08013d08
- 80040f8:	08012e64 	.word	0x08012e64
- 80040fc:	08012e70 	.word	0x08012e70
- 8004100:	08012e80 	.word	0x08012e80
+ 80040f4:	08013cfc 	.word	0x08013cfc
+ 80040f8:	08012e60 	.word	0x08012e60
+ 80040fc:	08012e6c 	.word	0x08012e6c
+ 8004100:	08012e74 	.word	0x08012e74
 
 08004104 <showShedule2Panel>:
 
@@ -8375,14 +8375,14 @@ void showShedule2Panel()
  8004112:	4930      	ldr	r1, [pc, #192]	; (80041d4 <showShedule2Panel+0xd0>)
  8004114:	4830      	ldr	r0, [pc, #192]	; (80041d8 <showShedule2Panel+0xd4>)
  8004116:	f00a fecb 	bl	800eeb0 <siprintf>
-	  EF_PutString(Msg, SWIATLA_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
+	  EF_PutString(Msg, CLOCK_STRING_POZ_X, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_TRANSPARENT, ILI9341_LIGHTGREY);
  800411a:	f24c 6318 	movw	r3, #50712	; 0xc618
  800411e:	9301      	str	r3, [sp, #4]
  8004120:	2300      	movs	r3, #0
  8004122:	9300      	str	r3, [sp, #0]
  8004124:	f64f 5320 	movw	r3, #64800	; 0xfd20
  8004128:	220a      	movs	r2, #10
- 800412a:	2146      	movs	r1, #70	; 0x46
+ 800412a:	212f      	movs	r1, #47	; 0x2f
  800412c:	482a      	ldr	r0, [pc, #168]	; (80041d8 <showShedule2Panel+0xd4>)
  800412e:	f7fd fcf9 	bl	8001b24 <EF_PutString>
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
@@ -8420,7 +8420,7 @@ void showShedule2Panel()
  8004172:	21d8      	movs	r1, #216	; 0xd8
  8004174:	2078      	movs	r0, #120	; 0x78
  8004176:	f7fd fa6a 	bl	800164e <GFX_DrawFillRoundRectangle>
-	  sprintf((char*)Msg, ">POTWIERDŹ<");
+	  sprintf((char*)Msg, " >POTW<");
  800417a:	4919      	ldr	r1, [pc, #100]	; (80041e0 <showShedule2Panel+0xdc>)
  800417c:	4816      	ldr	r0, [pc, #88]	; (80041d8 <showShedule2Panel+0xd4>)
  800417e:	f00a fe97 	bl	800eeb0 <siprintf>
@@ -8464,11 +8464,11 @@ void showShedule2Panel()
  80041ce:	46bd      	mov	sp, r7
  80041d0:	bd80      	pop	{r7, pc}
  80041d2:	bf00      	nop
- 80041d4:	08012e8c 	.word	0x08012e8c
+ 80041d4:	08012e80 	.word	0x08012e80
  80041d8:	200002c8 	.word	0x200002c8
- 80041dc:	08013d08 	.word	0x08013d08
- 80041e0:	08012e70 	.word	0x08012e70
- 80041e4:	08012e9c 	.word	0x08012e9c
+ 80041dc:	08013cfc 	.word	0x08013cfc
+ 80041e0:	08012e6c 	.word	0x08012e6c
+ 80041e4:	08012e90 	.word	0x08012e90
 
 080041e8 <ChangeHourOnScreen>:
 //
@@ -8605,15 +8605,15 @@ void ChangeHourOnScreen()
  80042a2:	3708      	adds	r7, #8
  80042a4:	46bd      	mov	sp, r7
  80042a6:	bd80      	pop	{r7, pc}
- 80042a8:	08015c80 	.word	0x08015c80
+ 80042a8:	08015c74 	.word	0x08015c74
  80042ac:	2000024c 	.word	0x2000024c
  80042b0:	2000025c 	.word	0x2000025c
- 80042b4:	08012ea8 	.word	0x08012ea8
+ 80042b4:	08012e9c 	.word	0x08012e9c
  80042b8:	200002c8 	.word	0x200002c8
- 80042bc:	08012eb0 	.word	0x08012eb0
+ 80042bc:	08012ea4 	.word	0x08012ea4
  80042c0:	2000024d 	.word	0x2000024d
- 80042c4:	08012eb4 	.word	0x08012eb4
- 80042c8:	08012ebc 	.word	0x08012ebc
+ 80042c4:	08012ea8 	.word	0x08012ea8
+ 80042c8:	08012eb0 	.word	0x08012eb0
 
 080042cc <predefinedActivityCzyszczenie>:
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -8743,10 +8743,10 @@ void predefinedActivityKarmienie(uint8_t State)
  8004382:	46bd      	mov	sp, r7
  8004384:	bd80      	pop	{r7, pc}
  8004386:	bf00      	nop
- 8004388:	08013d08 	.word	0x08013d08
- 800438c:	08012d9c 	.word	0x08012d9c
+ 8004388:	08013cfc 	.word	0x08013cfc
+ 800438c:	08012d98 	.word	0x08012d98
  8004390:	200002c8 	.word	0x200002c8
- 8004394:	08012dac 	.word	0x08012dac
+ 8004394:	08012da8 	.word	0x08012da8
  8004398:	20000714 	.word	0x20000714
 
 0800439c <drawCurrentStateOfSwitches>:
@@ -9017,11 +9017,11 @@ void drawCurrentStateOfSwitches()
  8004592:	46bd      	mov	sp, r7
  8004594:	bd80      	pop	{r7, pc}
  8004596:	bf00      	nop
- 8004598:	08013d08 	.word	0x08013d08
+ 8004598:	08013cfc 	.word	0x08013cfc
  800459c:	20000274 	.word	0x20000274
- 80045a0:	08012da8 	.word	0x08012da8
+ 80045a0:	08012da4 	.word	0x08012da4
  80045a4:	200002c8 	.word	0x200002c8
- 80045a8:	08012dac 	.word	0x08012dac
+ 80045a8:	08012da8 	.word	0x08012da8
 
 080045ac <drawCurrentStateOfLights>:
 //
@@ -9291,11 +9291,11 @@ void drawCurrentStateOfLights()
  8004782:	46bd      	mov	sp, r7
  8004784:	bd80      	pop	{r7, pc}
  8004786:	bf00      	nop
- 8004788:	08013d08 	.word	0x08013d08
+ 8004788:	08013cfc 	.word	0x08013cfc
  800478c:	20000278 	.word	0x20000278
- 8004790:	08012da8 	.word	0x08012da8
+ 8004790:	08012da4 	.word	0x08012da4
  8004794:	200002c8 	.word	0x200002c8
- 8004798:	08012dac 	.word	0x08012dac
+ 8004798:	08012da8 	.word	0x08012da8
 
 0800479c <initWait>:
 
@@ -11189,11 +11189,11 @@ void TouchSwitchActivity(void)
  8005324:	20000258 	.word	0x20000258
  8005328:	2000025c 	.word	0x2000025c
  800532c:	20000255 	.word	0x20000255
- 8005330:	08013d08 	.word	0x08013d08
+ 8005330:	08013cfc 	.word	0x08013cfc
  8005334:	20000274 	.word	0x20000274
- 8005338:	08012ec4 	.word	0x08012ec4
+ 8005338:	08012eb8 	.word	0x08012eb8
  800533c:	200002c8 	.word	0x200002c8
- 8005340:	08012ec8 	.word	0x08012ec8
+ 8005340:	08012ebc 	.word	0x08012ebc
 					}
 				}
 				//
@@ -11306,10 +11306,10 @@ void TouchSwitchActivity(void)
  8005408:	bd80      	pop	{r7, pc}
  800540a:	bf00      	nop
  800540c:	20000274 	.word	0x20000274
- 8005410:	08012ec4 	.word	0x08012ec4
+ 8005410:	08012eb8 	.word	0x08012eb8
  8005414:	200002c8 	.word	0x200002c8
- 8005418:	08012ec8 	.word	0x08012ec8
- 800541c:	08015c80 	.word	0x08015c80
+ 8005418:	08012ebc 	.word	0x08012ebc
+ 800541c:	08015c74 	.word	0x08015c74
  8005420:	20000258 	.word	0x20000258
 
 08005424 <TouchLightsActivity>:
@@ -11738,11 +11738,11 @@ void TouchLightsActivity(void)
  80056d8:	20000258 	.word	0x20000258
  80056dc:	2000025c 	.word	0x2000025c
  80056e0:	20000255 	.word	0x20000255
- 80056e4:	08013d08 	.word	0x08013d08
+ 80056e4:	08013cfc 	.word	0x08013cfc
  80056e8:	20000278 	.word	0x20000278
- 80056ec:	08012ec4 	.word	0x08012ec4
+ 80056ec:	08012eb8 	.word	0x08012eb8
  80056f0:	200002c8 	.word	0x200002c8
- 80056f4:	08012ec8 	.word	0x08012ec8
+ 80056f4:	08012ebc 	.word	0x08012ebc
 					}
 				}
 
@@ -11857,10 +11857,10 @@ void TouchLightsActivity(void)
  80057b4:	bd80      	pop	{r7, pc}
  80057b6:	bf00      	nop
  80057b8:	20000278 	.word	0x20000278
- 80057bc:	08012ec4 	.word	0x08012ec4
+ 80057bc:	08012eb8 	.word	0x08012eb8
  80057c0:	200002c8 	.word	0x200002c8
- 80057c4:	08012ec8 	.word	0x08012ec8
- 80057c8:	08015c80 	.word	0x08015c80
+ 80057c4:	08012ebc 	.word	0x08012ebc
+ 80057c8:	08015c74 	.word	0x08015c74
  80057cc:	20000258 	.word	0x20000258
 
 080057d0 <TouchClockActivity>:
@@ -12185,7 +12185,7 @@ void TouchClockActivity(void)
  80059b8:	2201      	movs	r2, #1
  80059ba:	701a      	strb	r2, [r3, #0]
 						}
-						sprintf((char*)Msg, "DZIEŃ TYG:   %d ", DayOfWeek);
+						sprintf((char*)Msg, "DZIEŃ TYG:  %d ", DayOfWeek);
  80059bc:	4b2e      	ldr	r3, [pc, #184]	; (8005a78 <TouchClockActivity+0x2a8>)
  80059be:	781b      	ldrb	r3, [r3, #0]
  80059c0:	461a      	mov	r2, r3
@@ -12291,7 +12291,7 @@ void TouchClockActivity(void)
  8005a5e:	4b05      	ldr	r3, [pc, #20]	; (8005a74 <TouchClockActivity+0x2a4>)
  8005a60:	701a      	strb	r2, [r3, #0]
  8005a62:	e02a      	b.n	8005aba <TouchClockActivity+0x2ea>
- 8005a64:	08015c80 	.word	0x08015c80
+ 8005a64:	08015c74 	.word	0x08015c74
  8005a68:	20000258 	.word	0x20000258
  8005a6c:	20000256 	.word	0x20000256
  8005a70:	20000031 	.word	0x20000031
@@ -12299,10 +12299,10 @@ void TouchClockActivity(void)
  8005a78:	20000030 	.word	0x20000030
  8005a7c:	2000025c 	.word	0x2000025c
  8005a80:	20000255 	.word	0x20000255
- 8005a84:	08012ecc 	.word	0x08012ecc
+ 8005a84:	08012ec0 	.word	0x08012ec0
  8005a88:	200002c8 	.word	0x200002c8
- 8005a8c:	08012edc 	.word	0x08012edc
- 8005a90:	08012ee4 	.word	0x08012ee4
+ 8005a8c:	08012ed0 	.word	0x08012ed0
+ 8005a90:	08012ed8 	.word	0x08012ed8
 						}
 						else
 						{
@@ -12366,9 +12366,9 @@ void TouchClockActivity(void)
  8005afa:	bf00      	nop
  8005afc:	20000032 	.word	0x20000032
  8005b00:	88888889 	.word	0x88888889
- 8005b04:	08012edc 	.word	0x08012edc
+ 8005b04:	08012ed0 	.word	0x08012ed0
  8005b08:	200002c8 	.word	0x200002c8
- 8005b0c:	08015c80 	.word	0x08015c80
+ 8005b0c:	08015c74 	.word	0x08015c74
  8005b10:	20000258 	.word	0x20000258
 
 08005b14 <TouchPredefinedActivityActivity>:
@@ -12691,15 +12691,15 @@ void TouchPredefinedActivityActivity()
  8005d38:	bd80      	pop	{r7, pc}
  8005d3a:	bf00      	nop
  8005d3c:	20000258 	.word	0x20000258
- 8005d40:	08013d08 	.word	0x08013d08
+ 8005d40:	08013cfc 	.word	0x08013cfc
  8005d44:	2000025c 	.word	0x2000025c
  8005d48:	20000255 	.word	0x20000255
  8005d4c:	2000027c 	.word	0x2000027c
- 8005d50:	08012ef8 	.word	0x08012ef8
+ 8005d50:	08012eec 	.word	0x08012eec
  8005d54:	200002c8 	.word	0x200002c8
- 8005d58:	08012ec4 	.word	0x08012ec4
- 8005d5c:	08012ec8 	.word	0x08012ec8
- 8005d60:	08012f04 	.word	0x08012f04
+ 8005d58:	08012eb8 	.word	0x08012eb8
+ 8005d5c:	08012ebc 	.word	0x08012ebc
+ 8005d60:	08012ef8 	.word	0x08012ef8
 
 08005d64 <TouchWSLedActivity>:
 //
@@ -13149,19 +13149,19 @@ void TouchWSLedActivity(void)
 					if((x >= WS_PREDEFINED_BUTTON_1_X)&&(x <= (WS_PREDEFINED_BUTTON_1_X + WS_PREDEFINED_BUTTON_W))) // MAX
  800602c:	e03a      	b.n	80060a4 <TouchWSLedActivity+0x340>
  800602e:	e039      	b.n	80060a4 <TouchWSLedActivity+0x340>
- 8006030:	08015c80 	.word	0x08015c80
+ 8006030:	08015c74 	.word	0x08015c74
  8006034:	20000258 	.word	0x20000258
  8006038:	20000256 	.word	0x20000256
  800603c:	20000033 	.word	0x20000033
  8006040:	20000257 	.word	0x20000257
  8006044:	2000025c 	.word	0x2000025c
  8006048:	20000255 	.word	0x20000255
- 800604c:	08012f10 	.word	0x08012f10
+ 800604c:	08012f04 	.word	0x08012f04
  8006050:	200002c8 	.word	0x200002c8
- 8006054:	08012f18 	.word	0x08012f18
+ 8006054:	08012f0c 	.word	0x08012f0c
  8006058:	a57eb503 	.word	0xa57eb503
- 800605c:	08013d08 	.word	0x08013d08
- 8006060:	08012f1c 	.word	0x08012f1c
+ 800605c:	08013cfc 	.word	0x08013cfc
+ 8006060:	08012f10 	.word	0x08012f10
 				}
 
 				//
@@ -13575,15 +13575,15 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
  80062b6:	46bd      	mov	sp, r7
  80062b8:	bd80      	pop	{r7, pc}
  80062ba:	bf00      	nop
- 80062bc:	08012f20 	.word	0x08012f20
- 80062c0:	08012f24 	.word	0x08012f24
- 80062c4:	08012f28 	.word	0x08012f28
- 80062c8:	08012f30 	.word	0x08012f30
- 80062cc:	08012f38 	.word	0x08012f38
- 80062d0:	08012f40 	.word	0x08012f40
- 80062d4:	08012f4c 	.word	0x08012f4c
- 80062d8:	08012f58 	.word	0x08012f58
- 80062dc:	08012f64 	.word	0x08012f64
+ 80062bc:	08012f14 	.word	0x08012f14
+ 80062c0:	08012f18 	.word	0x08012f18
+ 80062c4:	08012f1c 	.word	0x08012f1c
+ 80062c8:	08012f24 	.word	0x08012f24
+ 80062cc:	08012f2c 	.word	0x08012f2c
+ 80062d0:	08012f34 	.word	0x08012f34
+ 80062d4:	08012f40 	.word	0x08012f40
+ 80062d8:	08012f4c 	.word	0x08012f4c
+ 80062dc:	08012f58 	.word	0x08012f58
 
 080062e0 <UART_ParseLED>:
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -13680,12 +13680,12 @@ void UART_ParseLED()
  800635e:	46bd      	mov	sp, r7
  8006360:	bd80      	pop	{r7, pc}
  8006362:	bf00      	nop
- 8006364:	08012f70 	.word	0x08012f70
- 8006368:	08012f74 	.word	0x08012f74
+ 8006364:	08012f64 	.word	0x08012f64
+ 8006368:	08012f68 	.word	0x08012f68
  800636c:	20000450 	.word	0x20000450
  8006370:	40020800 	.word	0x40020800
- 8006374:	08012f84 	.word	0x08012f84
- 8006378:	08012f90 	.word	0x08012f90
+ 8006374:	08012f78 	.word	0x08012f78
+ 8006378:	08012f84 	.word	0x08012f84
 
 0800637c <UART_ParseAnswStatus>:
 
@@ -13870,14 +13870,14 @@ void UART_ParseAnswTemp()
  80064ae:	3710      	adds	r7, #16
  80064b0:	46bd      	mov	sp, r7
  80064b2:	bd80      	pop	{r7, pc}
- 80064b4:	08012f70 	.word	0x08012f70
+ 80064b4:	08012f64 	.word	0x08012f64
  80064b8:	20000260 	.word	0x20000260
  80064bc:	2000025c 	.word	0x2000025c
- 80064c0:	08015c80 	.word	0x08015c80
- 80064c4:	08012f9c 	.word	0x08012f9c
+ 80064c0:	08015c74 	.word	0x08015c74
+ 80064c4:	08012f90 	.word	0x08012f90
  80064c8:	200002c8 	.word	0x200002c8
  80064cc:	20000264 	.word	0x20000264
- 80064d0:	08012fb0 	.word	0x08012fb0
+ 80064d0:	08012fa4 	.word	0x08012fa4
 
 080064d4 <UART_ParseAnswPres>:
 
@@ -13950,11 +13950,11 @@ void UART_ParseAnswPres()
  8006542:	46bd      	mov	sp, r7
  8006544:	bd80      	pop	{r7, pc}
  8006546:	bf00      	nop
- 8006548:	08012f70 	.word	0x08012f70
+ 8006548:	08012f64 	.word	0x08012f64
  800654c:	20000268 	.word	0x20000268
  8006550:	2000025c 	.word	0x2000025c
- 8006554:	08015c80 	.word	0x08015c80
- 8006558:	08012fc4 	.word	0x08012fc4
+ 8006554:	08015c74 	.word	0x08015c74
+ 8006558:	08012fb8 	.word	0x08012fb8
  800655c:	200002c8 	.word	0x200002c8
 
 08006560 <UART_ParseAnswChangeRelayState>:
@@ -14103,12 +14103,12 @@ void UART_ParseAnswRelayStateStatus()
  8006626:	46bd      	mov	sp, r7
  8006628:	bd80      	pop	{r7, pc}
  800662a:	bf00      	nop
- 800662c:	08012f70 	.word	0x08012f70
- 8006630:	08012fdc 	.word	0x08012fdc
+ 800662c:	08012f64 	.word	0x08012f64
+ 8006630:	08012fd0 	.word	0x08012fd0
  8006634:	20000620 	.word	0x20000620
  8006638:	20000450 	.word	0x20000450
  800663c:	20000274 	.word	0x20000274
- 8006640:	08012ff0 	.word	0x08012ff0
+ 8006640:	08012fe4 	.word	0x08012fe4
  8006644:	2000025c 	.word	0x2000025c
 
 08006648 <UART_ParseAnswLightsStateStatus>:
@@ -14230,12 +14230,12 @@ void UART_ParseAnswLightsStateStatus()
  80066f2:	46bd      	mov	sp, r7
  80066f4:	bd80      	pop	{r7, pc}
  80066f6:	bf00      	nop
- 80066f8:	08012f70 	.word	0x08012f70
- 80066fc:	08012fdc 	.word	0x08012fdc
+ 80066f8:	08012f64 	.word	0x08012f64
+ 80066fc:	08012fd0 	.word	0x08012fd0
  8006700:	20000620 	.word	0x20000620
  8006704:	20000450 	.word	0x20000450
  8006708:	20000278 	.word	0x20000278
- 800670c:	08012ff0 	.word	0x08012ff0
+ 800670c:	08012fe4 	.word	0x08012fe4
  8006710:	2000025c 	.word	0x2000025c
 
 08006714 <SendComand>:
@@ -14608,49 +14608,49 @@ uint8_t SendComand(uint8_t Command)
  8006982:	46bd      	mov	sp, r7
  8006984:	bd80      	pop	{r7, pc}
  8006986:	bf00      	nop
- 8006988:	0801300c 	.word	0x0801300c
+ 8006988:	08013000 	.word	0x08013000
  800698c:	20000450 	.word	0x20000450
- 8006990:	08013014 	.word	0x08013014
- 8006994:	0801301c 	.word	0x0801301c
- 8006998:	08013028 	.word	0x08013028
- 800699c:	08013030 	.word	0x08013030
- 80069a0:	08013038 	.word	0x08013038
- 80069a4:	08013040 	.word	0x08013040
- 80069a8:	08013050 	.word	0x08013050
- 80069ac:	08013060 	.word	0x08013060
- 80069b0:	08013070 	.word	0x08013070
- 80069b4:	08013080 	.word	0x08013080
- 80069b8:	08013090 	.word	0x08013090
- 80069bc:	080130a0 	.word	0x080130a0
- 80069c0:	080130b0 	.word	0x080130b0
- 80069c4:	080130c0 	.word	0x080130c0
- 80069c8:	080130d0 	.word	0x080130d0
- 80069cc:	080130e0 	.word	0x080130e0
- 80069d0:	080130f0 	.word	0x080130f0
- 80069d4:	08013100 	.word	0x08013100
- 80069d8:	08013110 	.word	0x08013110
- 80069dc:	08013120 	.word	0x08013120
- 80069e0:	08013130 	.word	0x08013130
- 80069e4:	08013140 	.word	0x08013140
- 80069e8:	08013150 	.word	0x08013150
- 80069ec:	08013160 	.word	0x08013160
- 80069f0:	08013170 	.word	0x08013170
- 80069f4:	08013180 	.word	0x08013180
- 80069f8:	08013190 	.word	0x08013190
- 80069fc:	080131a0 	.word	0x080131a0
- 8006a00:	080131b0 	.word	0x080131b0
- 8006a04:	080131c0 	.word	0x080131c0
- 8006a08:	080131d0 	.word	0x080131d0
- 8006a0c:	080131e0 	.word	0x080131e0
- 8006a10:	080131f0 	.word	0x080131f0
- 8006a14:	08013200 	.word	0x08013200
- 8006a18:	08013210 	.word	0x08013210
- 8006a1c:	08013220 	.word	0x08013220
+ 8006990:	08013008 	.word	0x08013008
+ 8006994:	08013010 	.word	0x08013010
+ 8006998:	0801301c 	.word	0x0801301c
+ 800699c:	08013024 	.word	0x08013024
+ 80069a0:	0801302c 	.word	0x0801302c
+ 80069a4:	08013034 	.word	0x08013034
+ 80069a8:	08013044 	.word	0x08013044
+ 80069ac:	08013054 	.word	0x08013054
+ 80069b0:	08013064 	.word	0x08013064
+ 80069b4:	08013074 	.word	0x08013074
+ 80069b8:	08013084 	.word	0x08013084
+ 80069bc:	08013094 	.word	0x08013094
+ 80069c0:	080130a4 	.word	0x080130a4
+ 80069c4:	080130b4 	.word	0x080130b4
+ 80069c8:	080130c4 	.word	0x080130c4
+ 80069cc:	080130d4 	.word	0x080130d4
+ 80069d0:	080130e4 	.word	0x080130e4
+ 80069d4:	080130f4 	.word	0x080130f4
+ 80069d8:	08013104 	.word	0x08013104
+ 80069dc:	08013114 	.word	0x08013114
+ 80069e0:	08013124 	.word	0x08013124
+ 80069e4:	08013134 	.word	0x08013134
+ 80069e8:	08013144 	.word	0x08013144
+ 80069ec:	08013154 	.word	0x08013154
+ 80069f0:	08013164 	.word	0x08013164
+ 80069f4:	08013174 	.word	0x08013174
+ 80069f8:	08013184 	.word	0x08013184
+ 80069fc:	08013194 	.word	0x08013194
+ 8006a00:	080131a4 	.word	0x080131a4
+ 8006a04:	080131b4 	.word	0x080131b4
+ 8006a08:	080131c4 	.word	0x080131c4
+ 8006a0c:	080131d4 	.word	0x080131d4
+ 8006a10:	080131e4 	.word	0x080131e4
+ 8006a14:	080131f4 	.word	0x080131f4
+ 8006a18:	08013204 	.word	0x08013204
+ 8006a1c:	08013214 	.word	0x08013214
  8006a20:	20000033 	.word	0x20000033
- 8006a24:	08013230 	.word	0x08013230
+ 8006a24:	08013224 	.word	0x08013224
  8006a28:	20000620 	.word	0x20000620
- 8006a2c:	08013240 	.word	0x08013240
- 8006a30:	08013250 	.word	0x08013250
+ 8006a2c:	08013234 	.word	0x08013234
+ 8006a30:	08013244 	.word	0x08013244
 
 08006a34 <RB_Read>:
   **/
@@ -17047,7 +17047,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8007640:	20000214 	.word	0x20000214
   ldr r2, =_sidata
- 8007644:	080268c0 	.word	0x080268c0
+ 8007644:	080268b0 	.word	0x080268b0
   ldr r2, =_sbss
  8007648:	20000214 	.word	0x20000214
   ldr r4, =_ebss
@@ -19273,7 +19273,7 @@ static uint32_t DMA_CalcBaseAndBitshift(DMA_HandleTypeDef *hdma)
  80081dc:	4770      	bx	lr
  80081de:	bf00      	nop
  80081e0:	aaaaaaab 	.word	0xaaaaaaab
- 80081e4:	08026394 	.word	0x08026394
+ 80081e4:	08026388 	.word	0x08026388
 
 080081e8 <DMA_CheckFifoParam>:
   * @param  hdma       pointer to a DMA_HandleTypeDef structure that contains
@@ -30011,7 +30011,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  800bf5e:	bf00      	nop
  800bf60:	40023c00 	.word	0x40023c00
  800bf64:	40023800 	.word	0x40023800
- 800bf68:	0802637c 	.word	0x0802637c
+ 800bf68:	08026370 	.word	0x08026370
  800bf6c:	20000034 	.word	0x20000034
  800bf70:	20000038 	.word	0x20000038
 
@@ -30252,7 +30252,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  800c114:	4618      	mov	r0, r3
  800c116:	bd80      	pop	{r7, pc}
  800c118:	40023800 	.word	0x40023800
- 800c11c:	0802638c 	.word	0x0802638c
+ 800c11c:	08026380 	.word	0x08026380
 
 0800c120 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -30278,7 +30278,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  800c13c:	4618      	mov	r0, r3
  800c13e:	bd80      	pop	{r7, pc}
  800c140:	40023800 	.word	0x40023800
- 800c144:	0802638c 	.word	0x0802638c
+ 800c144:	08026380 	.word	0x08026380
 
 0800c148 <HAL_SPI_Init>:
   * @param  hspi pointer to a SPI_HandleTypeDef structure that contains
@@ -35742,10 +35742,10 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800e18a:	4798      	blx	r3
  800e18c:	3601      	adds	r6, #1
  800e18e:	e7f2      	b.n	800e176 <__libc_init_array+0x1e>
- 800e190:	080268b8 	.word	0x080268b8
- 800e194:	080268b8 	.word	0x080268b8
- 800e198:	080268b8 	.word	0x080268b8
- 800e19c:	080268bc 	.word	0x080268bc
+ 800e190:	080268a8 	.word	0x080268a8
+ 800e194:	080268a8 	.word	0x080268a8
+ 800e198:	080268a8 	.word	0x080268a8
+ 800e19c:	080268ac 	.word	0x080268ac
 
 0800e1a0 <memset>:
  800e1a0:	4402      	add	r2, r0
@@ -36183,11 +36183,11 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800e5c8:	e7ee      	b.n	800e5a8 <_printf_float+0x2b8>
  800e5ca:	bf00      	nop
  800e5cc:	7fefffff 	.word	0x7fefffff
- 800e5d0:	080263a0 	.word	0x080263a0
- 800e5d4:	080263a4 	.word	0x080263a4
- 800e5d8:	080263ac 	.word	0x080263ac
- 800e5dc:	080263a8 	.word	0x080263a8
- 800e5e0:	080263b0 	.word	0x080263b0
+ 800e5d0:	08026394 	.word	0x08026394
+ 800e5d4:	08026398 	.word	0x08026398
+ 800e5d8:	080263a0 	.word	0x080263a0
+ 800e5dc:	0802639c 	.word	0x0802639c
+ 800e5e0:	080263a4 	.word	0x080263a4
  800e5e4:	9a0a      	ldr	r2, [sp, #40]	; 0x28
  800e5e6:	6da3      	ldr	r3, [r4, #88]	; 0x58
  800e5e8:	429a      	cmp	r2, r3
@@ -36678,8 +36678,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800ea74:	f104 0619 	add.w	r6, r4, #25
  800ea78:	e7f5      	b.n	800ea66 <_printf_i+0x22e>
  800ea7a:	bf00      	nop
- 800ea7c:	080263b2 	.word	0x080263b2
- 800ea80:	080263c3 	.word	0x080263c3
+ 800ea7c:	080263a6 	.word	0x080263a6
+ 800ea80:	080263b7 	.word	0x080263b7
 
 0800ea84 <_scanf_float>:
  800ea84:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -37073,8 +37073,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800ee96:	2500      	movs	r5, #0
  800ee98:	e635      	b.n	800eb06 <_scanf_float+0x82>
  800ee9a:	bf00      	nop
- 800ee9c:	080263d4 	.word	0x080263d4
- 800eea0:	080264e3 	.word	0x080264e3
+ 800ee9c:	080263c8 	.word	0x080263c8
+ 800eea0:	080264d3 	.word	0x080264d3
 
 0800eea4 <nanf>:
  800eea4:	ed9f 0a01 	vldr	s0, [pc, #4]	; 800eeac <nanf+0x8>
@@ -37410,8 +37410,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800f1c0:	e785      	b.n	800f0ce <_strtod_l+0x1a6>
  800f1c2:	f04f 0c01 	mov.w	ip, #1
  800f1c6:	e7f6      	b.n	800f1b6 <_strtod_l+0x28e>
- 800f1c8:	080266cc 	.word	0x080266cc
- 800f1cc:	080263dc 	.word	0x080263dc
+ 800f1c8:	080266bc 	.word	0x080266bc
+ 800f1cc:	080263d0 	.word	0x080263d0
  800f1d0:	7ff00000 	.word	0x7ff00000
  800f1d4:	9b1d      	ldr	r3, [sp, #116]	; 0x74
  800f1d6:	1c59      	adds	r1, r3, #1
@@ -37696,13 +37696,13 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800f4b0:	f04f 0b00 	mov.w	fp, #0
  800f4b4:	6023      	str	r3, [r4, #0]
  800f4b6:	e789      	b.n	800f3cc <_strtod_l+0x4a4>
- 800f4b8:	080263ad 	.word	0x080263ad
- 800f4bc:	080263f0 	.word	0x080263f0
- 800f4c0:	080263a5 	.word	0x080263a5
- 800f4c4:	080265e8 	.word	0x080265e8
- 800f4c8:	080264e3 	.word	0x080264e3
- 800f4cc:	08026768 	.word	0x08026768
- 800f4d0:	08026740 	.word	0x08026740
+ 800f4b8:	080263a1 	.word	0x080263a1
+ 800f4bc:	080263e4 	.word	0x080263e4
+ 800f4c0:	08026399 	.word	0x08026399
+ 800f4c4:	080265d8 	.word	0x080265d8
+ 800f4c8:	080264d3 	.word	0x080264d3
+ 800f4cc:	08026758 	.word	0x08026758
+ 800f4d0:	08026730 	.word	0x08026730
  800f4d4:	7ff00000 	.word	0x7ff00000
  800f4d8:	7ca00000 	.word	0x7ca00000
  800f4dc:	7fefffff 	.word	0x7fefffff
@@ -38073,7 +38073,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800f894:	39500000 	.word	0x39500000
  800f898:	000fffff 	.word	0x000fffff
  800f89c:	7fefffff 	.word	0x7fefffff
- 800f8a0:	08026408 	.word	0x08026408
+ 800f8a0:	080263f8 	.word	0x080263f8
  800f8a4:	4631      	mov	r1, r6
  800f8a6:	4628      	mov	r0, r5
  800f8a8:	f002 f8d0 	bl	8011a4c <__ratio>
@@ -38362,8 +38362,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800fbb4:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
  800fbb8:	f000 b806 	b.w	800fbc8 <__strtok_r>
  800fbbc:	20000040 	.word	0x20000040
- 800fbc0:	08026430 	.word	0x08026430
- 800fbc4:	08026447 	.word	0x08026447
+ 800fbc0:	08026420 	.word	0x08026420
+ 800fbc4:	08026437 	.word	0x08026437
 
 0800fbc8 <__strtok_r>:
  800fbc8:	b5f0      	push	{r4, r5, r6, r7, lr}
@@ -38507,7 +38507,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800fd16:	230a      	movs	r3, #10
  800fd18:	e7ad      	b.n	800fc76 <_strtol_l.isra.0+0x5e>
  800fd1a:	bf00      	nop
- 800fd1c:	080264e5 	.word	0x080264e5
+ 800fd1c:	080264d5 	.word	0x080264d5
 
 0800fd20 <_strtol_r>:
  800fd20:	f7ff bf7a 	b.w	800fc18 <_strtol_l.isra.0>
@@ -38543,9 +38543,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  800fd60:	e7f3      	b.n	800fd4a <__assert_func+0x12>
  800fd62:	bf00      	nop
  800fd64:	20000040 	.word	0x20000040
- 800fd68:	080264a8 	.word	0x080264a8
- 800fd6c:	080264b5 	.word	0x080264b5
- 800fd70:	080264e3 	.word	0x080264e3
+ 800fd68:	08026498 	.word	0x08026498
+ 800fd6c:	080264a5 	.word	0x080264a5
+ 800fd70:	080264d3 	.word	0x080264d3
 
 0800fd74 <quorem>:
  800fd74:	e92d 4ff7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -38942,15 +38942,15 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  801017c:	3fc68a28 	.word	0x3fc68a28
  8010180:	509f79fb 	.word	0x509f79fb
  8010184:	3fd34413 	.word	0x3fd34413
- 8010188:	08026430 	.word	0x08026430
- 801018c:	080265f2 	.word	0x080265f2
+ 8010188:	08026420 	.word	0x08026420
+ 801018c:	080265e2 	.word	0x080265e2
  8010190:	7ff00000 	.word	0x7ff00000
- 8010194:	080265ee 	.word	0x080265ee
- 8010198:	080265e5 	.word	0x080265e5
- 801019c:	080263b1 	.word	0x080263b1
+ 8010194:	080265de 	.word	0x080265de
+ 8010198:	080265d5 	.word	0x080265d5
+ 801019c:	080263a5 	.word	0x080263a5
  80101a0:	3ff80000 	.word	0x3ff80000
- 80101a4:	08026768 	.word	0x08026768
- 80101a8:	08026651 	.word	0x08026651
+ 80101a4:	08026758 	.word	0x08026758
+ 80101a8:	08026641 	.word	0x08026641
  80101ac:	6a63      	ldr	r3, [r4, #36]	; 0x24
  80101ae:	9a00      	ldr	r2, [sp, #0]
  80101b0:	601a      	str	r2, [r3, #0]
@@ -39240,8 +39240,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80104cc:	f8dd a01c 	ldr.w	sl, [sp, #28]
  80104d0:	e04a      	b.n	8010568 <_dtoa_r+0x6d8>
  80104d2:	bf00      	nop
- 80104d4:	08026768 	.word	0x08026768
- 80104d8:	08026740 	.word	0x08026740
+ 80104d4:	08026758 	.word	0x08026758
+ 80104d8:	08026730 	.word	0x08026730
  80104dc:	3ff00000 	.word	0x3ff00000
  80104e0:	40240000 	.word	0x40240000
  80104e4:	401c0000 	.word	0x401c0000
@@ -39827,9 +39827,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8010a54:	f000 fc18 	bl	8011288 <__multadd>
  8010a58:	4683      	mov	fp, r0
  8010a5a:	e7eb      	b.n	8010a34 <_dtoa_r+0xba4>
- 8010a5c:	08026651 	.word	0x08026651
- 8010a60:	080263b0 	.word	0x080263b0
- 8010a64:	080265e5 	.word	0x080265e5
+ 8010a5c:	08026641 	.word	0x08026641
+ 8010a60:	080263a4 	.word	0x080263a4
+ 8010a64:	080265d5 	.word	0x080265d5
 
 08010a68 <fiprintf>:
  8010a68:	b40e      	push	{r1, r2, r3}
@@ -40241,9 +40241,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8010e5a:	2750      	movs	r7, #80	; 0x50
  8010e5c:	e713      	b.n	8010c86 <__gethex+0x12a>
  8010e5e:	bf00      	nop
- 8010e60:	080266cc 	.word	0x080266cc
- 8010e64:	08026651 	.word	0x08026651
- 8010e68:	08026662 	.word	0x08026662
+ 8010e60:	080266bc 	.word	0x080266bc
+ 8010e64:	08026641 	.word	0x08026641
+ 8010e68:	08026652 	.word	0x08026652
  8010e6c:	9b15      	ldr	r3, [sp, #84]	; 0x54
  8010e6e:	2b00      	cmp	r3, #0
  8010e70:	d1eb      	bne.n	8010e4a <__gethex+0x2ee>
@@ -40387,7 +40387,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8010fde:	42b0      	cmp	r0, r6
  8010fe0:	dbe7      	blt.n	8010fb2 <__gethex+0x456>
  8010fe2:	e7f0      	b.n	8010fc6 <__gethex+0x46a>
- 8010fe4:	08026651 	.word	0x08026651
+ 8010fe4:	08026641 	.word	0x08026641
 
 08010fe8 <L_shift>:
  8010fe8:	f1c2 0208 	rsb	r2, r2, #8
@@ -40651,8 +40651,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8011234:	e9c0 3303 	strd	r3, r3, [r0, #12]
  8011238:	e7f7      	b.n	801122a <_Balloc+0x66>
  801123a:	bf00      	nop
- 801123c:	08026430 	.word	0x08026430
- 8011240:	080266e0 	.word	0x080266e0
+ 801123c:	08026420 	.word	0x08026420
+ 8011240:	080266d0 	.word	0x080266d0
 
 08011244 <_Bfree>:
  8011244:	b570      	push	{r4, r5, r6, lr}
@@ -40680,8 +40680,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8011278:	6021      	str	r1, [r4, #0]
  801127a:	f843 4022 	str.w	r4, [r3, r2, lsl #2]
  801127e:	bd70      	pop	{r4, r5, r6, pc}
- 8011280:	08026430 	.word	0x08026430
- 8011284:	080266e0 	.word	0x080266e0
+ 8011280:	08026420 	.word	0x08026420
+ 8011284:	080266d0 	.word	0x080266d0
 
 08011288 <__multadd>:
  8011288:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
@@ -40737,8 +40737,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  801130c:	4620      	mov	r0, r4
  801130e:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
  8011312:	bf00      	nop
- 8011314:	08026651 	.word	0x08026651
- 8011318:	080266e0 	.word	0x080266e0
+ 8011314:	08026641 	.word	0x08026641
+ 8011318:	080266d0 	.word	0x080266d0
 
 0801131c <__s2b>:
  801131c:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -40799,8 +40799,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80113a0:	f7ff ff72 	bl	8011288 <__multadd>
  80113a4:	e7ee      	b.n	8011384 <__s2b+0x68>
  80113a6:	bf00      	nop
- 80113a8:	08026651 	.word	0x08026651
- 80113ac:	080266e0 	.word	0x080266e0
+ 80113a8:	08026641 	.word	0x08026641
+ 80113ac:	080266d0 	.word	0x080266d0
 
 080113b0 <__hi0bits>:
  80113b0:	0c03      	lsrs	r3, r0, #16
@@ -40894,8 +40894,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  801146e:	6103      	str	r3, [r0, #16]
  8011470:	bd10      	pop	{r4, pc}
  8011472:	bf00      	nop
- 8011474:	08026651 	.word	0x08026651
- 8011478:	080266e0 	.word	0x080266e0
+ 8011474:	08026641 	.word	0x08026641
+ 8011478:	080266d0 	.word	0x080266d0
 
 0801147c <__multiply>:
  801147c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -41015,8 +41015,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80115ba:	3f01      	subs	r7, #1
  80115bc:	e7a1      	b.n	8011502 <__multiply+0x86>
  80115be:	bf00      	nop
- 80115c0:	08026651 	.word	0x08026651
- 80115c4:	080266e0 	.word	0x080266e0
+ 80115c0:	08026641 	.word	0x08026641
+ 80115c4:	080266d0 	.word	0x080266d0
 
 080115c8 <__pow5mult>:
  80115c8:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -41084,9 +41084,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8011668:	4638      	mov	r0, r7
  801166a:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
  801166e:	bf00      	nop
- 8011670:	08026830 	.word	0x08026830
- 8011674:	08026430 	.word	0x08026430
- 8011678:	080266e0 	.word	0x080266e0
+ 8011670:	08026820 	.word	0x08026820
+ 8011674:	08026420 	.word	0x08026420
+ 8011678:	080266d0 	.word	0x080266d0
 
 0801167c <__lshift>:
  801167c:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -41165,8 +41165,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8011746:	d8f9      	bhi.n	801173c <__lshift+0xc0>
  8011748:	e7ea      	b.n	8011720 <__lshift+0xa4>
  801174a:	bf00      	nop
- 801174c:	08026651 	.word	0x08026651
- 8011750:	080266e0 	.word	0x080266e0
+ 801174c:	08026641 	.word	0x08026641
+ 8011750:	080266d0 	.word	0x080266d0
 
 08011754 <__mcmp>:
  8011754:	b530      	push	{r4, r5, lr}
@@ -41291,8 +41291,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  801188e:	e7e0      	b.n	8011852 <__mdiff+0xc6>
  8011890:	3e01      	subs	r6, #1
  8011892:	e7ea      	b.n	801186a <__mdiff+0xde>
- 8011894:	08026651 	.word	0x08026651
- 8011898:	080266e0 	.word	0x080266e0
+ 8011894:	08026641 	.word	0x08026641
+ 8011898:	080266d0 	.word	0x080266d0
 
 0801189c <__ulp>:
  801189c:	b082      	sub	sp, #8
@@ -41448,8 +41448,8 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8011a3a:	f7ff fcb9 	bl	80113b0 <__hi0bits>
  8011a3e:	ebc0 1042 	rsb	r0, r0, r2, lsl #5
  8011a42:	e7df      	b.n	8011a04 <__d2b+0x70>
- 8011a44:	08026651 	.word	0x08026651
- 8011a48:	080266e0 	.word	0x080266e0
+ 8011a44:	08026641 	.word	0x08026641
+ 8011a48:	080266d0 	.word	0x080266d0
 
 08011a4c <__ratio>:
  8011a4c:	e92d 4ff7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -41995,11 +41995,11 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  8011f48:	f7fc fc76 	bl	800e838 <_printf_i>
  8011f4c:	e7eb      	b.n	8011f26 <_svfiprintf_r+0x1c2>
  8011f4e:	bf00      	nop
- 8011f50:	0802683c 	.word	0x0802683c
- 8011f54:	08026846 	.word	0x08026846
+ 8011f50:	0802682c 	.word	0x0802682c
+ 8011f54:	08026836 	.word	0x08026836
  8011f58:	0800e2f1 	.word	0x0800e2f1
  8011f5c:	08011cad 	.word	0x08011cad
- 8011f60:	08026842 	.word	0x08026842
+ 8011f60:	08026832 	.word	0x08026832
 
 08011f64 <__sfputc_r>:
  8011f64:	6893      	ldr	r3, [r2, #8]
@@ -42282,14 +42282,14 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80121f0:	f7fc fb22 	bl	800e838 <_printf_i>
  80121f4:	e7e4      	b.n	80121c0 <_vfiprintf_r+0x208>
  80121f6:	bf00      	nop
- 80121f8:	08026870 	.word	0x08026870
- 80121fc:	08026890 	.word	0x08026890
- 8012200:	08026850 	.word	0x08026850
- 8012204:	0802683c 	.word	0x0802683c
- 8012208:	08026846 	.word	0x08026846
+ 80121f8:	08026860 	.word	0x08026860
+ 80121fc:	08026880 	.word	0x08026880
+ 8012200:	08026840 	.word	0x08026840
+ 8012204:	0802682c 	.word	0x0802682c
+ 8012208:	08026836 	.word	0x08026836
  801220c:	0800e2f1 	.word	0x0800e2f1
  8012210:	08011f93 	.word	0x08011f93
- 8012214:	08026842 	.word	0x08026842
+ 8012214:	08026832 	.word	0x08026832
 
 08012218 <nan>:
  8012218:	ed9f 0b01 	vldr	d0, [pc, #4]	; 8012220 <nan+0x8>
@@ -42404,9 +42404,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80122fc:	f04f 37ff 	mov.w	r7, #4294967295
  8012300:	e7ea      	b.n	80122d8 <__swbuf_r+0x6c>
  8012302:	bf00      	nop
- 8012304:	08026870 	.word	0x08026870
- 8012308:	08026890 	.word	0x08026890
- 801230c:	08026850 	.word	0x08026850
+ 8012304:	08026860 	.word	0x08026860
+ 8012308:	08026880 	.word	0x08026880
+ 801230c:	08026840 	.word	0x08026840
 
 08012310 <__ascii_wctomb>:
  8012310:	b149      	cbz	r1, 8012326 <__ascii_wctomb+0x16>
@@ -42513,9 +42513,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80123f4:	e7f7      	b.n	80123e6 <__swsetup_r+0xba>
  80123f6:	bf00      	nop
  80123f8:	20000040 	.word	0x20000040
- 80123fc:	08026870 	.word	0x08026870
- 8012400:	08026890 	.word	0x08026890
- 8012404:	08026850 	.word	0x08026850
+ 80123fc:	08026860 	.word	0x08026860
+ 8012400:	08026880 	.word	0x08026880
+ 8012404:	08026840 	.word	0x08026840
 
 08012408 <abort>:
  8012408:	b508      	push	{r3, lr}
@@ -42699,9 +42699,9 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  801258a:	bf08      	it	eq
  801258c:	68ec      	ldreq	r4, [r5, #12]
  801258e:	e7da      	b.n	8012546 <_fflush_r+0x22>
- 8012590:	08026870 	.word	0x08026870
- 8012594:	08026890 	.word	0x08026890
- 8012598:	08026850 	.word	0x08026850
+ 8012590:	08026860 	.word	0x08026860
+ 8012594:	08026880 	.word	0x08026880
+ 8012598:	08026840 	.word	0x08026840
 
 0801259c <std>:
  801259c:	2300      	movs	r3, #0
@@ -42826,7 +42826,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  80126ae:	61a3      	str	r3, [r4, #24]
  80126b0:	e7d2      	b.n	8012658 <__sinit+0xc>
  80126b2:	bf00      	nop
- 80126b4:	0802639c 	.word	0x0802639c
+ 80126b4:	08026390 	.word	0x08026390
  80126b8:	080125e5 	.word	0x080125e5
 
 080126bc <__sfp>:
@@ -42881,7 +42881,7 @@ static void UART_SetConfig(UART_HandleTypeDef *huart)
  801273a:	603b      	str	r3, [r7, #0]
  801273c:	e7ee      	b.n	801271c <__sfp+0x60>
  801273e:	bf00      	nop
- 8012740:	0802639c 	.word	0x0802639c
+ 8012740:	08026390 	.word	0x08026390
  8012744:	ffff0001 	.word	0xffff0001
 
 08012748 <_fwalk_reent>:
