@@ -161,10 +161,10 @@ int main(void)
 		  UART_ParseLine(&huartdma2); // Parsing function
 	  }
 
-//	  if(UARTDMA_IsDataReceivedReady(&huartdma6))
-//	  {
-//		  UART_DistanceSensorParseLine(&huartdma6); // Distance Parsing function
-//	  }
+	  if(UARTDMA_IsDataReceivedReady(&huartdma6))
+	  {
+		  UART_DistanceSensorParseLine(&huartdma6); // Distance Parsing function
+	  }
 
 	  //
 	  // TRANSMIT

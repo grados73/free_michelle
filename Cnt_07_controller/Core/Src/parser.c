@@ -96,14 +96,37 @@ void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
 
 		if(!UARTDMA_GetLineFromReceiveBuffer(huartdma, BufferReceive))
 		{
-			// Header
-			char* ParsePointer = strtok(BufferReceive, "="); // LED\0   1\0
-			// ParsePointer == LED\0
+			uint8_t i,j; // Iterators
+			uint8_t LightParameters[2]; // Numer Przekaznika, Stan
 
-		  if(strcmp(ParsePointer, "0xFF") == 0)
-		  {
+			for(i = 0; i<2; i++) // 2 parametry sa oczekiwane - numer przekaznika i stan
+			{
+							char* ParsePointer = strtok(NULL, "x"); // Look for next token or end of string
 
-		  }
+							if(strlen(ParsePointer) > 0) // If string exists
+							{
+								for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
+								{
+									if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
+									{
+										sprintf(Message, CHANGE_LIGHT_STATE_FORMAT_ERROR); // If not, Error message
+										UARTDMA_Print(&huartdma2, Message); // Print message
+										return;	// And exit parsing
+									}
+
+									LightParameters[i] = atoi(ParsePointer); // If there are no chars, change string to integer // before atof
+								}
+							}
+							else
+							{
+								sprintf(Message, CHANGE_LIGHT_STATE_FORMAT_ERROR); // If not, Error message
+								UARTDMA_Print(&huartdma2, Message); // Print message
+								return;	// And exit parsing
+							}
+						}
+
+
+
 		}
 
 }
