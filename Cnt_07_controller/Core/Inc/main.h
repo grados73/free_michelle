@@ -70,7 +70,7 @@ void Error_Handler(void);
 #define RELAY_1_GPIO_Port GPIOB
 #define TIM1_CH2_ws2812b_Pin GPIO_PIN_9
 #define TIM1_CH2_ws2812b_GPIO_Port GPIOA
-#define USER_LED_Pin GPIO_PIN_11
+#define USER_LED_Pin GPIO_PIN_10
 #define USER_LED_GPIO_Port GPIOA
 #define USART_1_WIRE_DS_Pin GPIO_PIN_15
 #define USART_1_WIRE_DS_GPIO_Port GPIOA
