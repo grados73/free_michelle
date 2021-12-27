@@ -21,6 +21,7 @@
 
 
 extern UARTDMA_HandleTypeDef huartdma2;
+extern UARTDMA_HandleTypeDef huartdma6;
 char Message[BUFFOR_SIZE]; // Transmit buffer
 char MyName[32] = {"SLAVE1"}; // Name string
 uint8_t ChangingStateFlag;
@@ -94,41 +95,29 @@ void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
 {
 	char BufferReceive[BUFFOR_SIZE];
 
+
 		if(!UARTDMA_GetLineFromReceiveBuffer(huartdma, BufferReceive))
 		{
-			uint8_t i,j; // Iterators
-			uint8_t LightParameters[2]; // Numer Przekaznika, Stan
-
-			for(i = 0; i<2; i++) // 2 parametry sa oczekiwane - numer przekaznika i stan
-			{
-							char* ParsePointer = strtok(NULL, "x"); // Look for next token or end of string
-
-							if(strlen(ParsePointer) > 0) // If string exists
-							{
-								for(j=0; ParsePointer[j] != 0; j++) // Loop over all chars in current strong-block
-								{
-									if((ParsePointer[j] < '0' || ParsePointer[j] > '9') && ParsePointer[j] != '.' ) // Check if there are only numbers or dot sign
-									{
-										sprintf(Message, CHANGE_LIGHT_STATE_FORMAT_ERROR); // If not, Error message
-										UARTDMA_Print(&huartdma2, Message); // Print message
-										return;	// And exit parsing
-									}
-
-									LightParameters[i] = atoi(ParsePointer); // If there are no chars, change string to integer // before atof
-								}
-							}
-							else
-							{
-								sprintf(Message, CHANGE_LIGHT_STATE_FORMAT_ERROR); // If not, Error message
-								UARTDMA_Print(&huartdma2, Message); // Print message
-								return;	// And exit parsing
-							}
-						}
-
-
-
+		    char* ParsePointer = strtok(BufferReceive, "0xFF");
+		    UART_DistanceParse();
 		}
 
+}
+
+void UART_DistanceParse()
+{
+	uint32_t RelayParameters[5];
+    uint8_t i; // Iterators
+
+	for(i = 0; i<5; i++) // 4 parametry sa oczekiwane - numer przekaznika i stan
+	{
+		char* ParsePointer = strtok(NULL, "0x"); // Look for next token or end of string
+
+		if(strlen(ParsePointer) > 0) // If string exists
+		{
+			RelayParameters[i] = atoi(ParsePointer); // If there are no chars, change string to integer // before atof
+		}
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

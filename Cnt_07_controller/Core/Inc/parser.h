@@ -45,6 +45,7 @@ void UART_ParseAnsStateStatus();
 void UART_ParseAnsLightStatus();
 
 void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma);
+void UART_DistanceParse();
 
 
 void SwitchMotorRegular();
