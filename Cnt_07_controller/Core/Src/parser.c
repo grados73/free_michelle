@@ -107,8 +107,51 @@ void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
 
 		}
 
+		UART_CountDistance(Tab);
+}
 
+void UART_CountDistance(uint8_t * Tab)
+{
+	uint32_t Amount = 0;
+	uint32_t Average = 0;
+	uint8_t Counter = 0;
 
+	for(uint8_t i = 0; i < 128 ; i++)
+	{
+		if(Tab[i] == 0xff)
+		{
+			uint8_t DATA_H = Tab[i+1];
+			uint8_t DATA_L = Tab[i+2];
+			uint8_t SUM = Tab[i+3];
+			if(1 == CheckSum(DATA_H, DATA_L, SUM))
+			{
+				Amount = Amount + RecalculateDistance(DATA_H, DATA_L, SUM);
+				Counter++;
+				i=i+2;
+			}
+		}
+	}
+
+	Average = Amount / Counter;
+	sprintf(Message, "DIST=%d\n", Average); // If not, Error message
+	UARTDMA_Print(&huartdma2, Message); // Print message
+}
+
+uint8_t CheckSum(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM)
+{
+	uint32_t CountSum = 0;
+	CountSum = (0xff+DATA_H+DATA_L)&0x00ff;
+
+	if(CountSum == SUM) return 1;
+	else return 0;
+}
+uint32_t RecalculateDistance(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM)
+{
+	uint32_t Distance = 0;
+
+	Distance = DATA_H * 256 + DATA_L;
+
+	return Distance;
 }
 
 void UART_DistanceParse()

@@ -55,6 +55,9 @@ void PodajTemperatureRoutine(uint8_t NrCzujnika);
 void PodajCisnienieRoutine(uint8_t NrCzujnika);
 void ZmienStanPrzekRoutine(uint8_t NrPrzekaznika, uint8_t Stan);
 void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan);
+void UART_CountDistance(uint8_t * Tab);
+uint8_t CheckSum(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM);
+uint32_t RecalculateDistance(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM);
 
 
 
