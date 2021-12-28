@@ -31,6 +31,7 @@ extern struct Measurements BMPResults;
 extern const uint8_t ds1[]; // zew
 extern const uint8_t ds2[]; // wew
 extern uint8_t NumberOfLedsWS2812b;
+uint32_t Liczba[5];
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,11 +114,33 @@ void UART_DistanceParse()
 	{
 		char* ParsePointer = strtok(NULL, "0x"); // Look for next token or end of string
 
-		if(strlen(ParsePointer) > 0) // If string exists
-		{
-			RelayParameters[i] = atoi(ParsePointer); // If there are no chars, change string to integer // before atof
-		}
-    }
+				if(strlen(ParsePointer) > 0) // If string exists
+				{
+
+		            for(j=0; j<2; j++) // Loop over all chars in current strong-block
+						{
+
+		                        if(ParsePointer[j] == 'A') PomocniczyPP[j] = 10;
+		                        else if(ParsePointer[j] == 'B') PomocniczyPP[j] = 11;
+		                        else if(ParsePointer[j] == 'C') PomocniczyPP[j] = 12;
+		                        else if(ParsePointer[j] == 'D') PomocniczyPP[j] = 13;
+		                        else if(ParsePointer[j] == 'E') PomocniczyPP[j] = 14;
+		                        else if(ParsePointer[j] == 'F') PomocniczyPP[j] = 15;
+		                        else if(ParsePointer[j] == '1') PomocniczyPP[j] = 1;
+		                        else if(ParsePointer[j] == '2') PomocniczyPP[j] = 2;
+		                        else if(ParsePointer[j] == '3') PomocniczyPP[j] = 3;
+		                        else if(ParsePointer[j] == '4') PomocniczyPP[j] = 4;
+		                        else if(ParsePointer[j] == '5') PomocniczyPP[j] = 5;
+		                        else if(ParsePointer[j] == '6') PomocniczyPP[j] = 6;
+		                        else if(ParsePointer[j] == '7') PomocniczyPP[j] = 7;
+		                        else if(ParsePointer[j] == '8') PomocniczyPP[j] = 8;
+		                        else if(ParsePointer[j] == '9') PomocniczyPP[j] = 9;
+		                        else if(ParsePointer[j] == '0') PomocniczyPP[j] = 0;
+		                        else PomocniczyPP[j] = 0;
+		                }
+		                Liczba[i] = PomocniczyPP[0]*16+PomocniczyPP[1];
+				}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
