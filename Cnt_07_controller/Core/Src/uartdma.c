@@ -62,7 +62,7 @@ void UARTDMA_DmaReceiveIrqHandler(UARTDMA_HandleTypeDef *huartdma)
 		{
 			RB_Write(&huartdma->UART_RX_Buffer, DmaBufferPointer[i]);
 
-			if(DmaBufferPointer[i] == '\n')
+			if((DmaBufferPointer[i] == '\n'))
 			{
 				huartdma->UartRxBufferLines++;
 			}

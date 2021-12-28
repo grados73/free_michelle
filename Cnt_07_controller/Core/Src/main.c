@@ -1,19 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
   ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * @file           : main.c
+  * @project		: free_michelle
+  * @author			: grados73 - https://github.com/grados73
+  * @purpose		: main file of GPIO controller
+  * @TODO			: delete global variables , mappery, consty in functions arguments
+  ******************************************************************************
   ******************************************************************************
   */
 /* USER CODE END Header */
@@ -161,11 +155,6 @@ int main(void)
 		  UART_ParseLine(&huartdma2); // Parsing function
 	  }
 
-	  if(UARTDMA_IsDataReceivedReady(&huartdma6))
-	  {
-		  UART_DistanceSensorParseLine(&huartdma6); // Distance Parsing function
-	  }
-
 	  //
 	  // TRANSMIT
 	  //
@@ -246,6 +235,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		if (RefreshMeasurementDataCounter == (DATA_RELEASE_TIME - 1)) // one second before sending current parameters
 		{
 			ds18b20_start_measure(ds1);
+			UART_DistanceSensorParseLine(&huartdma6); // Distance Parsing function
 		}
 		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME)
 		{

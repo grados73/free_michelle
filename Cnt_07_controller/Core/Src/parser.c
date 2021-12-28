@@ -94,21 +94,27 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
 {
-	char BufferReceive[BUFFOR_SIZE];
+		char BufferReceive[BUFFOR_SIZE];
 
+		uint8_t Tab[128] = {0};
+		for(uint8_t i = 0 ; i < 127 ; i++)
+		{
+			Tab[i] = huartdma6.DMA_RX_Buffer[i];
+		}
 
 		if(!UARTDMA_GetLineFromReceiveBuffer(huartdma, BufferReceive))
 		{
-		    char* ParsePointer = strtok(BufferReceive, "0xFF");
-		    UART_DistanceParse();
+
 		}
+
+
 
 }
 
 void UART_DistanceParse()
 {
-	uint32_t RelayParameters[5];
-    uint8_t i; // Iterators
+	uint32_t PomocniczyPP[5] = {0};
+    uint8_t i,j; // Iterators
 
 	for(i = 0; i<5; i++) // 4 parametry sa oczekiwane - numer przekaznika i stan
 	{
@@ -120,12 +126,12 @@ void UART_DistanceParse()
 		            for(j=0; j<2; j++) // Loop over all chars in current strong-block
 						{
 
-		                        if(ParsePointer[j] == 'A') PomocniczyPP[j] = 10;
-		                        else if(ParsePointer[j] == 'B') PomocniczyPP[j] = 11;
-		                        else if(ParsePointer[j] == 'C') PomocniczyPP[j] = 12;
-		                        else if(ParsePointer[j] == 'D') PomocniczyPP[j] = 13;
-		                        else if(ParsePointer[j] == 'E') PomocniczyPP[j] = 14;
-		                        else if(ParsePointer[j] == 'F') PomocniczyPP[j] = 15;
+		                        if(ParsePointer[j] == 'a') PomocniczyPP[j] = 10;
+		                        else if(ParsePointer[j] == 'b') PomocniczyPP[j] = 11;
+		                        else if(ParsePointer[j] == 'c') PomocniczyPP[j] = 12;
+		                        else if(ParsePointer[j] == 'd') PomocniczyPP[j] = 13;
+		                        else if(ParsePointer[j] == 'e') PomocniczyPP[j] = 14;
+		                        else if(ParsePointer[j] == 'f') PomocniczyPP[j] = 15;
 		                        else if(ParsePointer[j] == '1') PomocniczyPP[j] = 1;
 		                        else if(ParsePointer[j] == '2') PomocniczyPP[j] = 2;
 		                        else if(ParsePointer[j] == '3') PomocniczyPP[j] = 3;
