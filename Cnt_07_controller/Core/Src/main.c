@@ -6,7 +6,7 @@
   * @project		: free_michelle
   * @author			: grados73 - https://github.com/grados73
   * @purpose		: main file of GPIO controller
-  * @TODO			: delete global variables , mappery, consty in functions arguments
+  * @TODO			: delete global variables , mappery, consty in functions arguments, typedefy
   ******************************************************************************
   ******************************************************************************
   */
