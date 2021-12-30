@@ -6,7 +6,8 @@
   * @project		: free_michelle
   * @author			: grados73 - https://github.com/grados73
   * @purpose		: main file of GPIO controller
-  * @TODO			: delete global variables , mappery, consty in functions arguments, typedefy
+  * @TODO			: delete global variables , mappery, consty in functions arguments, typedefy, makra ifdef
+  * 				: watchdog with define to disable watchdog during debug
   ******************************************************************************
   ******************************************************************************
   */
@@ -61,7 +62,7 @@ uint8_t BufferReceive[64];
 uint8_t RefreshMeasurementDataCounter = 0;
 
 // PHYSICAL ADRESS OF DS18B20 SENSORS
-const uint8_t ds1[] = { 0x28, 0x5b, 0x9d, 0x96, 0x3a, 0x19, 0x1, 0xcf }; // zew
+const uint8_t ds1[] = { 0x28, 0x5b, 0x9d, 0x96, 0x3a, 0x19, 0x1, 0xcf }; // zew on wire
 const uint8_t ds2[] = { 0x28, 0xff, 0x8e, 0xfc, 0x71, 0x15, 0x3, 0xf7 }; // wew
 
 /* USER CODE END PV */
@@ -117,29 +118,20 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-   bmp280_init();
+   bmp280_init(); // Pressure and Temperature Bosh sensor Initialization
 
-   HAL_TIM_Base_Start_IT(&htim10);
+   HAL_TIM_Base_Start_IT(&htim10); // Start TIMER 10 to
 
-   UARTDMA_Init(&huartdma2, &huart2);
-   UARTDMA_Init(&huartdma6, &huart6);
+   // Initialization of UART in DMA mode
+   UARTDMA_Init(&huartdma2, &huart2); // init UART to connect with second uC
+   UARTDMA_Init(&huartdma6, &huart6); // init UART to connect with distance sensor to measure water LVL
 
-   if (ds18b20_init() != HAL_OK) {
-      Error_Handler();
-    }
+   // Initialization of DS18B20 Temperature sensor
+   if (ds18b20_init() != HAL_OK)  Error_Handler();
 
+   // Initialization of WS2812B led by default mode
    ws2812b_init();
    ws2812b_LightDaily(WS2812B_BRIGHTNESS_MIN_PWR);
-
-//	  uint8_t r = 0;
-//	  uint8_t g = 150;
-//	  uint8_t b = 250;
-//
-//	  for (int led = 0; led < 16; led++) {
-//	    ws2812b_SetColor(led, r, g, b);
-//	  }
-//	  ws2812b_update();
-
 
   /* USER CODE END 2 */
 
@@ -227,14 +219,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM10)
 	{
 
-		BMPResults = temp_pressure_measurement();
+		BMPResults = temp_pressure_measurement(); // Read Temperature and Pressure from sensor
 		CTemp = BMPResults.Temp;
 		CPressure = BMPResults.Pressure;
-		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Podlaczyc diode sygnalizujaca pomiary - to musi zostac!
+		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Connect! It have to stay.
 
 		if (RefreshMeasurementDataCounter == (DATA_RELEASE_TIME - 1)) // one second before sending current parameters
 		{
-			ds18b20_start_measure(ds1);
+			ds18b20_start_measure(ds1); // Start measure of temperature in outside sensor
 			UART_DistanceSensorParseLine(&huartdma6); // Distance Parsing function
 		}
 		if(RefreshMeasurementDataCounter >= DATA_RELEASE_TIME)

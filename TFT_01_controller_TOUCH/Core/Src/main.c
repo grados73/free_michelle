@@ -12,7 +12,10 @@
   * 				: Schedule of activity (need EEPROM memory)
   * 				: Online access by ESP with push messages
   * 				: UPS
-  *
+  * 				: Watchdog
+  * 				: Add on screen: printf("Compiled on %s, %s\n" __DATE__, __TIME__); uC gosu l 5.7
+  *					: and printf("Error in file: %s, Function: %s, Line: %d\n", __FILE__, __func__, __LINE__);
+  *					: pragma once or HeaderGuards in every .h file
   ******************************************************************************
   **/
 /* USER CODE END Header */
