@@ -18,10 +18,12 @@
 
 ## Technologies
 C,
-HAL for STM32F4
-Low-Layer drivers
+HAL for STM32F4,
 
 STM32CubeIDE,
+The Dot Factory v.0.1.4,
+InkScape v.0.92.4
+Image2Lcd v3.2
 
 
 ## Code Examples
