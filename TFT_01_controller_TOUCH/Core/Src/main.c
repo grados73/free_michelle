@@ -298,7 +298,16 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+
+	ILI9341_ClearDisplay(ILI9341_RED);
+	EF_SetFont(&arial_11ptFontInfo);
+//	sprintf((char*)Msg, "Error in Function: %s\n", __FILE__);
+//	EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_RED);
+//	sprintf((char*)Msg, "Function: %s, Line: %d\n",__func__, (int)__LINE__);
+//	EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_RED);
+
   __disable_irq();
+
   while (1)
   {
   }

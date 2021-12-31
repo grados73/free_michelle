@@ -109,12 +109,7 @@ void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
 
 		UART_CountDistance(Tab);
 
-		//opcje naprawy pojedynczego odbioru:
-		// 1:
-		//HAL_UART_Receive_DMA(huartdma6.huart, huartdma6.DMA_RX_Buffer, DMA_RX_BUFFER_SIZE);
-		//
-		// 2:
-		//UARTDMA_DmaReceiveIrqHandler(&huartdma6);
+		HAL_UART_Receive_DMA(huartdma6.huart, huartdma6.DMA_RX_Buffer, DMA_RX_BUFFER_SIZE);
 
 }
 
@@ -141,7 +136,7 @@ void UART_CountDistance(uint8_t * Tab)
 	}
 
 	Average = Amount / Counter;
-	sprintf(Message, "DIST=%d\n", Average); // If not, Error message
+	sprintf(Message, "DIST=%lu\n", Average); // If not, Error message
 	UARTDMA_Print(&huartdma2, Message); // Print message
 }
 
