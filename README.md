@@ -17,9 +17,10 @@ Aquarium hobby has been one of my hobbies for over 10 years, along with cars, sp
 
 
 ## Technologies
+Project is created with:
 * C,
 * HAL for STM32F4,
-
+*
 * STM32CubeIDE,
 * The Dot Factory v.0.1.4,
 * InkScape v.0.92.4,
@@ -30,8 +31,15 @@ Aquarium hobby has been one of my hobbies for over 10 years, along with cars, sp
 
 
 ## Features
-* UART in DMA mode,
-* State machine.
+* Menu on TFT Display - DONE
+* Touch Interface - DONE
+* Relay Control - DONE
+* WS2812b LEDs Control  - DONE
+* Predefined Activities like feeding or cleaning - DONE
+* Display Pressure and Temperature inside and outside the aquarium  - DONE
+* Display current day of week, hour and minute and possibility to change them in RTC - DONE
+* Shedules - TODO
+* Measuring the water level in the aquarium - TODO
 
 ## To-do list
 
