@@ -86,6 +86,14 @@
 #define STRING_WS_LED_WHITE_POZ_Y 90
 #define STRING_WS_LED_BLUE_POZ_Y 120
 
+//
+// Define position string in showShedulePanel function
+//
+#define STRING_ON_OFF_X 20
+#define STRING_ON_Y 100
+#define STRING_OFF_Y 135
+#define STRING_ON_OFF_HOUR_X 80
+#define STRING_ON_OFF_MINUTE_X 110
 
 //
 // Define errata begin of string in connection to begin of button
@@ -103,7 +111,7 @@
 
 
 
-uint8_t Msg[32];
+uint8_t Msg[64];
 
 
 //
@@ -124,5 +132,6 @@ void predefinedActivityCzyszczenie(uint8_t State);
 
 void drawCurrentStateOfLights();
 void drawCurrentStateOfSwitches();
+void drawShedulePanel(uint8_t NrOfShedule);
 
 #endif /* INC_FUNCTIONS_H_ */
