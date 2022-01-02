@@ -27,7 +27,7 @@ float CTemp = 0.0;
 float LCTemp = 0.0;
 float CPres = 0.0;
 float CTempWew = 0.0;
-uint8_t CWaterLvl = 0;
+uint32_t CDist2water = 0;
 uint8_t Time[3] = {0,0,0};
 uint8_t SwitchesButtonState[4] = {0,0,0,0};
 uint8_t LightsButtonState[4] = {0,0,0,0};
@@ -58,6 +58,8 @@ extern uint8_t NrOfLeds;
  *  25  =>	CHLIGHT=0,1\n		// Zmien stan wszystkich swiatel na wlaczony
  *  26  =>	CHLIGHT=0,0\n		// Zmien stan wszystkich swiatel na wylaczony
  * 	22	=>	LIGHTSSTATUS=?\n	// Podaj stan wszytskich swiatel
+ *
+ * 		DIST=%lu\n				// Current distance to water
  *
  */
 
@@ -102,6 +104,10 @@ void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma)
 	  else if (strcmp(ParsePointer, "ALSTATUS") == 0) // Answear about current Switch Status
 	  {
 		  UART_ParseAnswLightsStateStatus();
+	  }
+	  else if (strcmp(ParsePointer, "DIST") == 0) // Answear about current Switch Status
+	  {
+		  UART_ParseAnswDist();
 	  }
 	  //TODO: DODAC OBSLUGE PARSOWANIA BLEDOW
 	}
@@ -208,8 +214,8 @@ void UART_ParseAnswTemp()
 
 
 //
-// Parsing information about current presure
-//"APRES=1014.200\n"
+// Parsing information about current pressure
+// "APRES=1014.200\n"
 void UART_ParseAnswPres()
 {
 	char* ParsePointer = strtok(NULL, ",");
@@ -223,6 +229,28 @@ void UART_ParseAnswPres()
 			EF_SetFont(&arialBlack_20ptFontInfo);
 			sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
 			EF_PutString(Msg, CISN_POZ_X, CISN_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		}
+		//UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
+	}
+}
+
+//
+// Parsing information about current distance between sensor and water - water lvl
+// "DIST=320\n"
+void UART_ParseAnswDist()
+{
+	char* ParsePointer = strtok(NULL, ",");
+	if(strlen(ParsePointer) > 0) // If string exists
+	{
+		CDist2water = atoi(ParsePointer); // If there are no chars, change string to integer
+		// TODO: CHECK IF WATER LVL IS CORRECT
+
+		//Only if on the screen are Parameters, update current Pressure
+		if(State == MENUTFT_PARAMETERS)
+		{
+			EF_SetFont(&arialBlack_20ptFontInfo);
+			sprintf((char*)Msg, "-%ldmm  ", CDist2water);
+			EF_PutString(Msg, POZ_WODY_POZ_X+153, POZ_WODY_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 		}
 		//UARTDMA_Print(&huartdma2, "PRESUPSUC\n");
 	}

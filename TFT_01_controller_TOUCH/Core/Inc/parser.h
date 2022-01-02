@@ -57,14 +57,15 @@ void ConnectionErrorRoutine(uint8_t * AqaParameters);
 //
 // Declaration of function to parse USART
 void UART_ParseLine(UARTDMA_HandleTypeDef *huartdma);
-void UART_ParseLED();
-void UART_ParseAnswStatus();
-void UART_ParseAnswTemp();
-void UART_ParseAnswPres();
-void UART_ParseAnswChangeRelayState();
-void UART_ParseAnswChangeLightState();
-void UART_ParseAnswRelayStateStatus();
-void UART_ParseAnswLightsStateStatus();
+void UART_ParseLED(void);
+void UART_ParseAnswStatus(void);
+void UART_ParseAnswTemp(void);
+void UART_ParseAnswPres(void);
+void UART_ParseAnswDist(void);
+void UART_ParseAnswChangeRelayState(void);
+void UART_ParseAnswChangeLightState(void);
+void UART_ParseAnswRelayStateStatus(void);
+void UART_ParseAnswLightsStateStatus(void);
 
 void PodajStatusRoutine();
 void PodajTemperatureRoutine(uint8_t NrCzujnika);

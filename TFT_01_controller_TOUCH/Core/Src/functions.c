@@ -22,7 +22,7 @@
 extern float CTemp;
 extern float CPres;
 extern float CTempWew;
-extern uint8_t CWaterLvl ;
+extern uint32_t CDist2water ;
 extern uint8_t Time[3];
 extern uint8_t SwitchesButtonState[4];
 extern uint8_t LightsButtonState[4];
@@ -185,7 +185,7 @@ void showCurrentParameters(float temp_zew, float temp_wew, uint8_t * TimeTab, ui
 	  sprintf((char*)Msg, "Temp. wewn: %.2f`C", CTempWew);
 	  EF_PutString(Msg, TEMP_WEW_POZ_X, TEMP_WEW_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
-	  sprintf((char*)Msg, "Poz. wody: %d", CWaterLvl);
+	  sprintf((char*)Msg, "Poz. wody: -%ldmm", CDist2water);
 	  EF_PutString(Msg, POZ_WODY_POZ_X, POZ_WODY_POZ_Y, ILI9341_BLACK, BG_TRANSPARENT, ILI9341_LIGHTGREY);
 
 	  sprintf((char*)Msg, "Ciśnienie: %.1fhPa ", CPres);
