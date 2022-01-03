@@ -89,11 +89,11 @@
 //
 // Define position string in showShedulePanel function
 //
-#define STRING_ON_OFF_X 20
+#define STRING_ON_OFF_X 10
 #define STRING_ON_Y 100
 #define STRING_OFF_Y 135
-#define STRING_ON_OFF_HOUR_X 80
-#define STRING_ON_OFF_MINUTE_X 110
+#define STRING_ON_OFF_HOUR_X 83
+#define STRING_ON_OFF_MINUTE_X 138
 
 //
 // Define errata begin of string in connection to begin of button
@@ -125,6 +125,8 @@ void showControlPanel();
 void showLightsControlPanel();
 void showClockSetPanel();
 void showWSLedPanel();
+void showSchedule1Panel();
+void showSchedule2Panel();
 
 void ChangeHourOnScreen();
 void predefinedActivityKarmienie(uint8_t State);
@@ -132,9 +134,12 @@ void predefinedActivityCzyszczenie(uint8_t State);
 
 void drawCurrentStateOfLights();
 void drawCurrentStateOfSwitches();
-void drawShedulePanel(uint8_t NrOfShedule);
+void drawSchedulePanel(uint8_t NrOfShedule);
 
-void updateTFTSheduleDayOfWeek(uint8_t * scheduleDayInWeekTab);
-void updateTFTSheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab);
+void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab);
+void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab);
+
+void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState);
+
 
 #endif /* INC_FUNCTIONS_H_ */

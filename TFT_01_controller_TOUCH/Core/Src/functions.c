@@ -640,17 +640,22 @@ void drawShedulePanel(uint8_t NrOfShedule)
 		  EEPROM_ScheduleHourOffRead(1, &hourOffShedule1);
 		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffShedule1);
 		  // Read day of week and relay / lights in current schedule
-		  EEPROM_ScheduleDayInWeekRead(1, &schedule1DayInWeekTab);
-		  EEPROM_ScheduleRelayAndSwitchTabRead(1, &schedule1RelayAndSwitchTab);
+		  EEPROM_ScheduleDayInWeekRead(1, schedule1DayInWeekTab);
+		  EEPROM_ScheduleRelayAndSwitchTabRead(1, schedule1RelayAndSwitchTab);
 
 		  //Update day and relay on screen
-		  updateTFTSheduleDayOfWeek(&schedule1DayInWeekTab);
-		  updateTFTSheduleRelayLights(&schedule1RelayAndSwitchTab);
+		  updateTFTScheduleDayOfWeek(schedule1DayInWeekTab);
+		  updateTFTScheduleRelayLights(schedule1RelayAndSwitchTab);
 
-		  sprintf((char*)Msg, "ON :    %d : %d", hourOnShedule1, minuteOnShedule1);
+		  if(hourOnShedule1 > 23) hourOnShedule1 = 23;
+		  if(minuteOnShedule1 > 59) minuteOnShedule1 = 59;
+		  if(hourOffShedule1 > 23) hourOffShedule1 = 23;
+		  if(minuteOffShedule1 > 59) minuteOffShedule1 = 59;
+
+		  sprintf((char*)Msg, "ON:    %d : %d", hourOnShedule1, minuteOnShedule1);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
-		  sprintf((char*)Msg, "OFF :  %d : %d", hourOffShedule1, minuteOffShedule1);
+		  sprintf((char*)Msg, "OFF:  %d : %d", hourOffShedule1, minuteOffShedule1);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	  }
 	  else
@@ -661,24 +666,29 @@ void drawShedulePanel(uint8_t NrOfShedule)
 		  EEPROM_ScheduleHourOffRead(2, &hourOffShedule2);
 		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffShedule2);
 		  // Read day of week and relay / lights in current schedule
-		  EEPROM_ScheduleDayInWeekRead(2, &schedule2DayInWeekTab);
-		  EEPROM_ScheduleRelayAndSwitchTabRead(2, &schedule2RelayAndSwitchTab);
+		  EEPROM_ScheduleDayInWeekRead(2, schedule2DayInWeekTab);
+		  EEPROM_ScheduleRelayAndSwitchTabRead(2, schedule2RelayAndSwitchTab);
 
 		  //Update day and relay on screen
-		  updateTFTSheduleDayOfWeek(&schedule2DayInWeekTab);
-		  updateTFTSheduleRelayLights(&schedule2RelayAndSwitchTab);
+		  updateTFTScheduleDayOfWeek(schedule2DayInWeekTab);
+		  updateTFTScheduleRelayLights(schedule2RelayAndSwitchTab);
 
-		  sprintf((char*)Msg, "ON :    %d : %d", hourOnShedule2, minuteOnShedule2);
+		  if(hourOnShedule2 > 23) hourOnShedule2 = 23;
+		  if(minuteOnShedule2 > 59) minuteOnShedule2 = 59;
+		  if(hourOffShedule2 > 23) hourOffShedule2 = 23;
+		  if(minuteOffShedule2 > 59) minuteOffShedule2 = 59;
+
+		  sprintf((char*)Msg, "ON:    %d : %d", hourOnShedule2, minuteOnShedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
-		  sprintf((char*)Msg, "OFF :  %d : %d", hourOffShedule2, minuteOffShedule2);
+		  sprintf((char*)Msg, "OFF:  %d : %d", hourOffShedule2, minuteOffShedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	  }
 
 
 }
 
-void showShedule1Panel()
+void showSchedule1Panel()
 {
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
@@ -707,7 +717,7 @@ void showShedule1Panel()
 	  EF_PutString(Msg, (LEFT_BUTTON_X + 3), (LEFT_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
 }
 
-void showShedule2Panel()
+void showSchedule2Panel()
 {
 	  ILI9341_ClearDisplay(ILI9341_LIGHTGREY);
 	  EF_SetFont(&arialBlack_20ptFontInfo);
@@ -976,16 +986,20 @@ void drawCurrentStateOfLights()
 	  }
 }
 
-void updateTFTSheduleDayOfWeek(uint8_t * scheduleDayInWeekTab)
+void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab)
 {
 
 }
 
-void updateTFTSheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
+void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
 {
 
 }
 
+void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState)
+{
+
+}
 
 //
 // Function to wait but only if it is necessary

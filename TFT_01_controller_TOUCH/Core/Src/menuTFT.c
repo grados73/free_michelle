@@ -37,14 +37,14 @@ uint8_t schedule1DayInWeekTab[7] = {0};
 uint8_t schedule1RelayAndSwitchTab[9] = {0};
 uint8_t schedule2DayInWeekTab[7] = {0};
 uint8_t schedule2RelayAndSwitchTab[9] = {0};
-uint8_t hourOnShedule1 = 0;
-uint8_t hourOffShedule1 = 0;
-uint8_t minuteOnShedule1 = 0;
-uint8_t minuteOffShedule1 = 0;
-uint8_t hourOnShedule2 = 0;
-uint8_t hourOffShedule2 = 0;
-uint8_t minuteOnShedule2 = 0;
-uint8_t minuteOffShedule2 = 0;
+uint8_t hourOnSchedule1 = 0;
+uint8_t hourOffSchedule1 = 0;
+uint8_t minuteOnSchedule1 = 0;
+uint8_t minuteOffSchedule1 = 0;
+uint8_t hourOnSchedule2 = 0;
+uint8_t hourOffSchedule2 = 0;
+uint8_t minuteOnSchedule2 = 0;
+uint8_t minuteOffSchedule2 = 0;
 
 
 
@@ -120,7 +120,7 @@ void MenuTFT(void)
 	case MENUTFT_SCHEDULE_1:
 		if(StateChangeFlag == 1) // make only one time
 		{
-			showShedule1Panel();
+			showSchedule1Panel();
 			ScheduleChangeFlag = 1;
 			StateChangeFlag = 0;
 		}
@@ -129,7 +129,7 @@ void MenuTFT(void)
 	case MENUTFT_SCHEDULE_2:
 		if(StateChangeFlag == 1) // make only one time
 		{
-			showShedule2Panel();
+			showSchedule2Panel();
 			ScheduleChangeFlag = 1;
 			StateChangeFlag = 0;
 		}
@@ -883,10 +883,12 @@ void Schedule1Activity()
 {
 	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
 	{
-		  EEPROM_ScheduleHourOnRead(1, &hourOnShedule1);
-		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnShedule1);
-		  EEPROM_ScheduleHourOffRead(1, &hourOffShedule1);
-		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffShedule1);
+		  EEPROM_ScheduleHourOnRead(1, &hourOnSchedule1);
+		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnSchedule1);
+		  EEPROM_ScheduleHourOffRead(1, &hourOffSchedule1);
+		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffSchedule1);
+		  EEPROM_ScheduleDayInWeekRead(1, schedule1DayInWeekTab);
+		  EEPROM_ScheduleRelayAndSwitchTabRead(1, schedule1RelayAndSwitchTab);
 
 		  ScheduleChangeFlag = 0;
 	}
@@ -911,14 +913,27 @@ void Schedule1Activity()
 			}
 
 			// Check if that point is inside the RIGHT Button
-			else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X+RIGHT_BUTTON_W))&&
+			else if((x >= RIGHT_BUTTON_X)&&(x <= (RIGHT_BUTTON_X + RIGHT_BUTTON_W))&&
 					(y >= RIGHT_BUTTON_Y)&&(y <= (RIGHT_BUTTON_Y + RIGHT_BUTTON_H)))
 			{
 				State = MENUTFT_SCHEDULE_2;
 				StateChangeFlag = 1;
 			}
 
-			// Check if that point is inside the MEDIUM Button
+			//Check if touch is inside row with day of week
+			else if((y >= DAY_CHECK_BUTTON_Y)&&(y <= (DAY_CHECK_BUTTON_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule1ActivityDayOfWeekRow(x,y);
+			}
+
+			// Check if touch is in row Add hour/minute to ON time
+			if((y >= HOUR_MINUTE_ON_ADD_SHEDULE_Y)&&(y <= (HOUR_MINUTE_ON_ADD_SHEDULE_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule1ActivityHourMinuteONAdd(x,y);
+			}
+
+
+			// Check if that point is inside the MEDIUM Button - CONFIRM
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
 					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
 			{
@@ -934,10 +949,10 @@ void Schedule2Activity()
 
 	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
 	{
-		  EEPROM_ScheduleHourOnRead(2, &hourOnShedule2);
-		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnShedule2);
-		  EEPROM_ScheduleHourOffRead(2, &hourOffShedule2);
-		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffShedule2);
+		  EEPROM_ScheduleHourOnRead(2, &hourOnSchedule2);
+		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnSchedule2);
+		  EEPROM_ScheduleHourOffRead(2, &hourOffSchedule2);
+		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffSchedule2);
 		  ScheduleChangeFlag = 0;
 	}
 
@@ -968,6 +983,113 @@ void Schedule2Activity()
 			}
 			TimerTouch = HAL_GetTick();
 		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Functions to Support for accurate touch case
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Functions to handle touch in Schedule1Activity()
+//
+void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y)
+{
+	//Monday - PN
+	if((x >= DAY_CHECK_BUTTON_1_X)&&(x <= (DAY_CHECK_BUTTON_1_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[0]) changeTFTScheduleDayOfWeek(1, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(1, 1);//if is OFF
+	}
+	//Tuesday - WT
+	else if((x >= DAY_CHECK_BUTTON_2_X)&&(x <= (DAY_CHECK_BUTTON_2_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[1]) changeTFTScheduleDayOfWeek(2, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(2, 1);//if is OFF
+	}
+	//Wednesday - SR
+	else if((x >= DAY_CHECK_BUTTON_3_X)&&(x <= (DAY_CHECK_BUTTON_3_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[2]) changeTFTScheduleDayOfWeek(3, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(3, 1);//if is OFF
+	}
+	//Thursday - CZ
+	else if((x >= DAY_CHECK_BUTTON_4_X)&&(x <= (DAY_CHECK_BUTTON_4_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[3]) changeTFTScheduleDayOfWeek(4, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(4, 1);//if is OFF
+	}
+	//Friday - PT
+	else if((x >= DAY_CHECK_BUTTON_5_X)&&(x <= (DAY_CHECK_BUTTON_5_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[4]) changeTFTScheduleDayOfWeek(5, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(5, 1);//if is OFF
+	}
+	//Saturday - SB
+	else if((x >= DAY_CHECK_BUTTON_6_X)&&(x <= (DAY_CHECK_BUTTON_6_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[5]) changeTFTScheduleDayOfWeek(6, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(6, 1);//if is OFF
+	}
+	//Sunday - ND
+	else if((x >= DAY_CHECK_BUTTON_7_X)&&(x <= (DAY_CHECK_BUTTON_7_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1DayInWeekTab[6]) changeTFTScheduleDayOfWeek(7, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(7, 1);//if is OFF
+	}
+}
+
+void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
+{
+	EF_SetFont(&arialBlack_20ptFontInfo);
+	// Check if it is Hour to add +1H
+	if((x >= ONE_HOUR_ADD_SHEDULE_X)&&(x <= (ONE_HOUR_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(hourOnSchedule1 < 24)
+		{
+			hourOnSchedule1++;
+		}
+		else
+		{
+			hourOnSchedule1 = 1;
+		}
+		if(hourOnSchedule1 >= 10) sprintf((char*)Msg, " %d ", hourOnSchedule1);
+		else sprintf((char*)Msg, " 0%d ", hourOnSchedule1);
+		EF_PutString(Msg, STRING_ON_OFF_HOUR_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	}
+
+	// Check if it is Hour to add +1M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOnSchedule1 < 59)
+		{
+			minuteOnSchedule1++;
+		}
+		else
+		{
+			minuteOnSchedule1 = 0;
+		}
+		if(minuteOnSchedule1 >= 10) sprintf((char*)Msg, " %d ", minuteOnSchedule1);
+		else sprintf((char*)Msg, " 0%d ", minuteOnSchedule1);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+
+	// Check if it is Hour to add +10M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOnSchedule1 < 49)
+		{
+			minuteOnSchedule1 = minuteOnSchedule1 + 10;
+		}
+		else
+		{
+			minuteOnSchedule1 = (minuteOnSchedule1 + 10) % 60;
+		}
+		if(minuteOnSchedule1 >= 10) sprintf((char*)Msg, " %d ", minuteOnSchedule1);
+		else sprintf((char*)Msg, " 0%d ", minuteOnSchedule1);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	}
 }
 

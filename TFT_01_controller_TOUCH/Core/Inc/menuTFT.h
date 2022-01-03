@@ -159,7 +159,7 @@
 #define HOOUR_MINUTE_BUTTON_W 34
 #define HOUR_MINUTE_ON_ADD_SHEDULE_Y (STRING_ON_Y+1)
 #define HOUR_MINUTE_OFF_ADD_SHEDULE_Y (STRING_OFF_Y+1)
-#define ONE_HOUR_ADD_SHEDULE_X  180
+#define ONE_HOUR_ADD_SHEDULE_X  185
 #define ONE_MINUTE_ADD_SHEDULE_X (ONE_HOUR_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W + DAY_CHECK_RELAY_BUTTON_SPACE)
 #define TEN_MINUTE_ADD_SHEDULE_X (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W + DAY_CHECK_RELAY_BUTTON_SPACE)
 
@@ -189,11 +189,13 @@ void TouchLightsActivity(void);
 void TouchClockActivity(void);
 void TouchPredefinedActivityActivity();
 void TouchWSLedActivity(void);
-void showShedule1Panel();
-void showShedule2Panel();
+void showSchedule1Panel();
+void showSchedule2Panel();
 void Schedule1Activity();
 void Schedule2Activity();
 
+void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y);
+void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
 
 
 #endif /* INC_MENUTFT_H_ */

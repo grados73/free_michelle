@@ -105,6 +105,38 @@ void EEPROM_LightStateRestore(void)
 
 void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab)
 {
+	uint8_t TempDayInWeek = 0;
+
+	if(1 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_1_DAYS, &TempDayInWeek, sizeof(TempDayInWeek));
+	}
+	else if(2 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_2_DAYS, &TempDayInWeek, sizeof(TempDayInWeek));
+	}
+
+	//PON-1
+	if(TempDayInWeek & 0x01)  scheduleDayInWeekTab[0] = 1;
+	else  scheduleDayInWeekTab[0] = 0;
+	//WT-2
+	if(TempDayInWeek & 0x02)  scheduleDayInWeekTab[1] = 1;
+	else  scheduleDayInWeekTab[1] = 0;
+	//SR-3
+	if(TempDayInWeek & 0x04)  scheduleDayInWeekTab[2] = 1;
+	else  scheduleDayInWeekTab[2] = 0;
+	//CZW-4
+	if(TempDayInWeek & 0x08)  scheduleDayInWeekTab[3] = 1;
+	else scheduleDayInWeekTab[3] = 0;
+	//PT-5
+	if(TempDayInWeek & 0x10)  scheduleDayInWeekTab[4] = 1;
+	else  scheduleDayInWeekTab[4] = 0;
+	//SB-6
+	if(TempDayInWeek & 0x20)  scheduleDayInWeekTab[5] = 1;
+	else  scheduleDayInWeekTab[5] = 0;
+	//ND-7
+	if(TempDayInWeek & 0x40)  scheduleDayInWeekTab[6] = 1;
+	else  scheduleDayInWeekTab[6] = 0;
 
 }
 void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
