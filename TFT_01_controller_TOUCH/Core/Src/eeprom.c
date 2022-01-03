@@ -114,17 +114,63 @@ void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * schedu
 
 void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
 {
+	uint8_t TempHour = 0;
+
+	if(1 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_1_HOUR_ON, &TempHour, sizeof(TempHour));
+	}
+	else if (2 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_2_HOUR_ON, &TempHour, sizeof(TempHour));
+	}
+
+	*hourOn = TempHour;
 
 }
 void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
 {
+	uint8_t TempMinute = 0;
+
+	if(1 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_1_MINUTE_ON, &TempMinute, sizeof(TempMinute));
+	}
+	else if (2 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_2_MINUTE_ON, &TempMinute, sizeof(TempMinute));
+	}
+	*minuteOn = TempMinute;
 
 }
 void EEPROM_ScheduleHourOffRead(uint8_t NrOfSchedule, uint8_t * hourOff)
 {
+	uint8_t TempHour = 0;
+
+	if(1 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_1_HOUR_OFF, &TempHour, sizeof(TempHour));
+	}
+	else if (2 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_2_HOUR_OFF, &TempHour, sizeof(TempHour));
+	}
+
+	*hourOff = TempHour;
 
 }
 void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
 {
+	uint8_t TempMinute = 0;
+
+	if(1 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_1_MINUTE_OFF, &TempMinute, sizeof(TempMinute));
+	}
+	else if (2 == NrOfSchedule)
+	{
+		eeprom_read(EEPROM_ADR_SHEDULE_2_MINUTE_OFF, &TempMinute, sizeof(TempMinute));
+	}
+	*minuteOff = TempMinute;
 
 }
