@@ -92,8 +92,8 @@
 #define STRING_ON_OFF_X 10
 #define STRING_ON_Y 100
 #define STRING_OFF_Y 135
-#define STRING_ON_OFF_HOUR_X 83
-#define STRING_ON_OFF_MINUTE_X 138
+#define STRING_ON_OFF_HOUR_X 81
+#define STRING_ON_OFF_MINUTE_X 137
 
 //
 // Define errata begin of string in connection to begin of button

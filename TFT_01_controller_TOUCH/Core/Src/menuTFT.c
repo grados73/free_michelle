@@ -878,7 +878,11 @@ void TouchWSLedActivity(void)
 			}
 		}
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Schedule 1 (ONE) screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Schedule1Activity()
 {
 	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
@@ -927,11 +931,16 @@ void Schedule1Activity()
 			}
 
 			// Check if touch is in row Add hour/minute to ON time
-			if((y >= HOUR_MINUTE_ON_ADD_SHEDULE_Y)&&(y <= (HOUR_MINUTE_ON_ADD_SHEDULE_Y + DAY_CHECK_BUTTON_H)))
+			else if((y >= HOUR_MINUTE_ON_ADD_SHEDULE_Y)&&(y <= (HOUR_MINUTE_ON_ADD_SHEDULE_Y + DAY_CHECK_BUTTON_H)))
 			{
 				MenuTFTSchedule1ActivityHourMinuteONAdd(x,y);
 			}
 
+			// Check if touch is in row Add hour/minute to OFF time
+			else if((y >= HOUR_MINUTE_OFF_ADD_SHEDULE_Y)&&(y <= (HOUR_MINUTE_OFF_ADD_SHEDULE_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule1ActivityHourMinuteOFFAdd(x,y);
+			}
 
 			// Check if that point is inside the MEDIUM Button - CONFIRM
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
@@ -944,6 +953,11 @@ void Schedule1Activity()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to handling touch on Schedule 2 (TWO) screen
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Schedule2Activity()
 {
 
@@ -975,7 +989,25 @@ void Schedule2Activity()
 				StateChangeFlag = 1;
 			}
 
-			// Check if that point is inside the MEDIUM Button
+			//Check if touch is inside row with day of week
+			else if((y >= DAY_CHECK_BUTTON_Y)&&(y <= (DAY_CHECK_BUTTON_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule2ActivityDayOfWeekRow(x,y);
+			}
+
+			// Check if touch is in row Add hour/minute to ON time
+			else if((y >= HOUR_MINUTE_ON_ADD_SHEDULE_Y)&&(y <= (HOUR_MINUTE_ON_ADD_SHEDULE_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule2ActivityHourMinuteONAdd(x,y);
+			}
+
+			// Check if touch is in row Add hour/minute to OFF time
+			else if((y >= HOUR_MINUTE_OFF_ADD_SHEDULE_Y)&&(y <= (HOUR_MINUTE_OFF_ADD_SHEDULE_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule2ActivityHourMinuteOFFAdd(x,y);
+			}
+
+			// Check if that point is inside the MEDIUM Button - CONFIRM
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
 					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
 			{
@@ -994,6 +1026,7 @@ void Schedule2Activity()
 //
 // Functions to handle touch in Schedule1Activity()
 //
+// Functions to handle touch in change day section
 void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y)
 {
 	//Monday - PN
@@ -1040,6 +1073,8 @@ void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y)
 	}
 }
 
+//
+// Handle touch in Hour And Minute ON section
 void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
 {
 	EF_SetFont(&arialBlack_20ptFontInfo);
@@ -1090,6 +1125,221 @@ void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
 		if(minuteOnSchedule1 >= 10) sprintf((char*)Msg, " %d ", minuteOnSchedule1);
 		else sprintf((char*)Msg, " 0%d ", minuteOnSchedule1);
 		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+}
+
+//
+// Handle touch in Hour And Minute ON section
+void MenuTFTSchedule1ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
+{
+	EF_SetFont(&arialBlack_20ptFontInfo);
+	// Check if it is Hour to add +1H
+	if((x >= ONE_HOUR_ADD_SHEDULE_X)&&(x <= (ONE_HOUR_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(hourOffSchedule1 < 24)
+		{
+			hourOffSchedule1++;
+		}
+		else
+		{
+			hourOffSchedule1 = 1;
+		}
+		if(hourOffSchedule1 >= 10) sprintf((char*)Msg, " %d ", hourOffSchedule1);
+		else sprintf((char*)Msg, " 0%d ", hourOffSchedule1);
+		EF_PutString(Msg, STRING_ON_OFF_HOUR_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	}
+
+	// Check if it is Hour to add +1M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOffSchedule1 < 59)
+		{
+			minuteOffSchedule1++;
+		}
+		else
+		{
+			minuteOffSchedule1 = 0;
+		}
+		if(minuteOffSchedule1 >= 10) sprintf((char*)Msg, " %d ", minuteOffSchedule1);
+		else sprintf((char*)Msg, " 0%d ", minuteOffSchedule1);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+
+	// Check if it is Hour to add +10M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOffSchedule1 < 49)
+		{
+			minuteOffSchedule1 = minuteOffSchedule1 + 10;
+		}
+		else
+		{
+			minuteOffSchedule1 = (minuteOffSchedule1 + 10) % 60;
+		}
+		if(minuteOffSchedule1 >= 10) sprintf((char*)Msg, " %d ", minuteOffSchedule1);
+		else sprintf((char*)Msg, " 0%d ", minuteOffSchedule1);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Functions to handle touch in Schedule2Activity()
+//
+// Functions to handle touch in change day section
+void MenuTFTSchedule2ActivityDayOfWeekRow(uint16_t x, uint16_t y)
+{
+	//Monday - PN
+	if((x >= DAY_CHECK_BUTTON_1_X)&&(x <= (DAY_CHECK_BUTTON_1_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[0]) changeTFTScheduleDayOfWeek(1, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(1, 1);//if is OFF
+	}
+	//Tuesday - WT
+	else if((x >= DAY_CHECK_BUTTON_2_X)&&(x <= (DAY_CHECK_BUTTON_2_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[1]) changeTFTScheduleDayOfWeek(2, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(2, 1);//if is OFF
+	}
+	//Wednesday - SR
+	else if((x >= DAY_CHECK_BUTTON_3_X)&&(x <= (DAY_CHECK_BUTTON_3_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[2]) changeTFTScheduleDayOfWeek(3, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(3, 1);//if is OFF
+	}
+	//Thursday - CZ
+	else if((x >= DAY_CHECK_BUTTON_4_X)&&(x <= (DAY_CHECK_BUTTON_4_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[3]) changeTFTScheduleDayOfWeek(4, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(4, 1);//if is OFF
+	}
+	//Friday - PT
+	else if((x >= DAY_CHECK_BUTTON_5_X)&&(x <= (DAY_CHECK_BUTTON_5_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[4]) changeTFTScheduleDayOfWeek(5, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(5, 1);//if is OFF
+	}
+	//Saturday - SB
+	else if((x >= DAY_CHECK_BUTTON_6_X)&&(x <= (DAY_CHECK_BUTTON_6_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[5]) changeTFTScheduleDayOfWeek(6, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(6, 1);//if is OFF
+	}
+	//Sunday - ND
+	else if((x >= DAY_CHECK_BUTTON_7_X)&&(x <= (DAY_CHECK_BUTTON_7_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2DayInWeekTab[6]) changeTFTScheduleDayOfWeek(7, 0);//if is ON
+		else changeTFTScheduleDayOfWeek(7, 1);//if is OFF
+	}
+}
+
+//
+// Handle touch in Hour And Minute ON section
+void MenuTFTSchedule2ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
+{
+	EF_SetFont(&arialBlack_20ptFontInfo);
+	// Check if it is Hour to add +1H
+	if((x >= ONE_HOUR_ADD_SHEDULE_X)&&(x <= (ONE_HOUR_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(hourOnSchedule2 < 24)
+		{
+			hourOnSchedule2++;
+		}
+		else
+		{
+			hourOnSchedule2 = 1;
+		}
+		if(hourOnSchedule2 >= 10) sprintf((char*)Msg, " %d ", hourOnSchedule2);
+		else sprintf((char*)Msg, " 0%d ", hourOnSchedule2);
+		EF_PutString(Msg, STRING_ON_OFF_HOUR_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	}
+
+	// Check if it is Hour to add +1M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOnSchedule2 < 59)
+		{
+			minuteOnSchedule2++;
+		}
+		else
+		{
+			minuteOnSchedule2 = 0;
+		}
+		if(minuteOnSchedule2 >= 10) sprintf((char*)Msg, " %d ", minuteOnSchedule2);
+		else sprintf((char*)Msg, " 0%d ", minuteOnSchedule2);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+
+	// Check if it is Hour to add +10M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOnSchedule2 < 49)
+		{
+			minuteOnSchedule2 = minuteOnSchedule2 + 10;
+		}
+		else
+		{
+			minuteOnSchedule2 = (minuteOnSchedule2 + 10) % 60;
+		}
+		if(minuteOnSchedule2 >= 10) sprintf((char*)Msg, " %d ", minuteOnSchedule2);
+		else sprintf((char*)Msg, " 0%d ", minuteOnSchedule2);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+}
+
+//
+// Handle touch in Hour And Minute OFF section
+void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
+{
+	EF_SetFont(&arialBlack_20ptFontInfo);
+	// Check if it is Hour to add +1H
+	if((x >= ONE_HOUR_ADD_SHEDULE_X)&&(x <= (ONE_HOUR_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(hourOffSchedule2 < 24)
+		{
+			hourOffSchedule2++;
+		}
+		else
+		{
+			hourOffSchedule2 = 1;
+		}
+		if(hourOffSchedule2 >= 10) sprintf((char*)Msg, " %d ", hourOffSchedule2);
+		else sprintf((char*)Msg, " 0%d ", hourOffSchedule2);
+		EF_PutString(Msg, STRING_ON_OFF_HOUR_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+
+	}
+
+	// Check if it is Hour to add +1M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOffSchedule2 < 59)
+		{
+			minuteOffSchedule2++;
+		}
+		else
+		{
+			minuteOffSchedule2 = 0;
+		}
+		if(minuteOffSchedule2 >= 10) sprintf((char*)Msg, " %d ", minuteOffSchedule2);
+		else sprintf((char*)Msg, " 0%d ", minuteOffSchedule2);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+	}
+
+	// Check if it is Hour to add +10M
+	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	{
+		if(minuteOffSchedule2 < 49)
+		{
+			minuteOffSchedule2 = minuteOffSchedule2 + 10;
+		}
+		else
+		{
+			minuteOffSchedule2 = (minuteOffSchedule2 + 10) % 60;
+		}
+		if(minuteOffSchedule2 >= 10) sprintf((char*)Msg, " %d ", minuteOffSchedule2);
+		else sprintf((char*)Msg, " 0%d ", minuteOffSchedule2);
+		EF_PutString(Msg, STRING_ON_OFF_MINUTE_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	}
 }
 

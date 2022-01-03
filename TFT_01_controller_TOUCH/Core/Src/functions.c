@@ -684,8 +684,6 @@ void drawShedulePanel(uint8_t NrOfShedule)
 		  sprintf((char*)Msg, "OFF:  %d : %d", hourOffShedule2, minuteOffShedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	  }
-
-
 }
 
 void showSchedule1Panel()

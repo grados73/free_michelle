@@ -159,7 +159,7 @@
 #define HOOUR_MINUTE_BUTTON_W 34
 #define HOUR_MINUTE_ON_ADD_SHEDULE_Y (STRING_ON_Y+1)
 #define HOUR_MINUTE_OFF_ADD_SHEDULE_Y (STRING_OFF_Y+1)
-#define ONE_HOUR_ADD_SHEDULE_X  185
+#define ONE_HOUR_ADD_SHEDULE_X  187
 #define ONE_MINUTE_ADD_SHEDULE_X (ONE_HOUR_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W + DAY_CHECK_RELAY_BUTTON_SPACE)
 #define TEN_MINUTE_ADD_SHEDULE_X (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W + DAY_CHECK_RELAY_BUTTON_SPACE)
 
@@ -196,6 +196,11 @@ void Schedule2Activity();
 
 void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y);
 void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
+void MenuTFTSchedule1ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y);
+
+void MenuTFTSchedule2ActivityDayOfWeekRow(uint16_t x, uint16_t y);
+void MenuTFTSchedule2ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
+void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y);
 
 
 #endif /* INC_MENUTFT_H_ */
