@@ -87,13 +87,13 @@
 #define STRING_WS_LED_BLUE_POZ_Y 120
 
 //
-// Define position string in showShedulePanel function
+// Define position string in showSchedulePanel function
 //
 #define STRING_ON_OFF_X 10
 #define STRING_ON_Y 100
 #define STRING_OFF_Y 135
-#define STRING_ON_OFF_HOUR_X 81
-#define STRING_ON_OFF_MINUTE_X 137
+#define STRING_ON_OFF_HOUR_X 80
+#define STRING_ON_OFF_MINUTE_X 138
 
 //
 // Define errata begin of string in connection to begin of button
@@ -134,7 +134,7 @@ void predefinedActivityCzyszczenie(uint8_t State);
 
 void drawCurrentStateOfLights();
 void drawCurrentStateOfSwitches();
-void drawSchedulePanel(uint8_t NrOfShedule);
+void drawSchedulePanel(uint8_t NrOfSchedule);
 
 void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab);
 void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab);

@@ -946,7 +946,20 @@ void Schedule1Activity()
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
 					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
 			{
-				// TODO!
+				EEPROM_ScheduleHourOnUpdate(1, hourOnSchedule1);
+				EEPROM_ScheduleMinuteOnUpdate(1, minuteOnSchedule1);
+				EEPROM_ScheduleHourOffUpdate(1, hourOffSchedule1);
+				EEPROM_ScheduleMinuteOffUpdate(1, minuteOffSchedule1);
+
+				EF_SetFont(&arialBlack_20ptFontInfo);
+				sprintf((char*)Msg, " H1 ZMIENIONY      ");
+				EF_PutString(Msg, CLOCK_STRING_POZ_X-7, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_COLOR, ILI9341_LIGHTGREY);
+
+				EF_SetFont(&arial_11ptFontInfo);
+				GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+				sprintf((char*)Msg, " >POTW<");
+				EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+				//TODO! Day of week
 			}
 			TimerTouch = HAL_GetTick();
 		}
@@ -1011,7 +1024,20 @@ void Schedule2Activity()
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
 					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
 			{
-				// TODO!
+				EEPROM_ScheduleHourOnUpdate(2, hourOnSchedule2);
+				EEPROM_ScheduleMinuteOnUpdate(2, minuteOnSchedule2);
+				EEPROM_ScheduleHourOffUpdate(2, hourOffSchedule2);
+				EEPROM_ScheduleMinuteOffUpdate(2, minuteOffSchedule2);
+
+				EF_SetFont(&arialBlack_20ptFontInfo);
+				sprintf((char*)Msg, " H2 ZMIENIONY       ");
+				EF_PutString(Msg, CLOCK_STRING_POZ_X-7, SWIATLA_STRING_POZ_Y, ILI9341_ORANGE, BG_COLOR, ILI9341_LIGHTGREY);
+
+				EF_SetFont(&arial_11ptFontInfo);
+				GFX_DrawFillRoundRectangle(MEDIUM_BUTTON_X, MEDIUM_BUTTON_Y, MEDIUM_BUTTON_W, MEDIUM_BUTTON_H, RIGHT_LEFT_BUTTON_R,  ILI9341_GREEN);
+				sprintf((char*)Msg, " >POTW<");
+				EF_PutString(Msg, (MEDIUM_BUTTON_X + 6), (MEDIUM_BUTTON_Y + 2), ILI9341_BLACK, BG_TRANSPARENT, ILI9341_GREEN);
+				// TODO! Add day of week
 			}
 			TimerTouch = HAL_GetTick();
 		}
@@ -1112,7 +1138,7 @@ void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
 	}
 
 	// Check if it is Hour to add +10M
-	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	else if((x >= TEN_MINUTE_ADD_SHEDULE_X)&&(x <= (TEN_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
 	{
 		if(minuteOnSchedule1 < 49)
 		{
@@ -1146,7 +1172,7 @@ void MenuTFTSchedule1ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
 		}
 		if(hourOffSchedule1 >= 10) sprintf((char*)Msg, " %d ", hourOffSchedule1);
 		else sprintf((char*)Msg, " 0%d ", hourOffSchedule1);
-		EF_PutString(Msg, STRING_ON_OFF_HOUR_X , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		EF_PutString(Msg, STRING_ON_OFF_HOUR_X-2 , STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	}
 
@@ -1167,7 +1193,7 @@ void MenuTFTSchedule1ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
 	}
 
 	// Check if it is Hour to add +10M
-	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	else if((x >= TEN_MINUTE_ADD_SHEDULE_X)&&(x <= (TEN_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
 	{
 		if(minuteOffSchedule1 < 49)
 		{
@@ -1251,7 +1277,7 @@ void MenuTFTSchedule2ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
 		}
 		if(hourOnSchedule2 >= 10) sprintf((char*)Msg, " %d ", hourOnSchedule2);
 		else sprintf((char*)Msg, " 0%d ", hourOnSchedule2);
-		EF_PutString(Msg, STRING_ON_OFF_HOUR_X , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		EF_PutString(Msg, STRING_ON_OFF_HOUR_X-2 , STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	}
 
@@ -1272,7 +1298,7 @@ void MenuTFTSchedule2ActivityHourMinuteONAdd(uint16_t x, uint16_t y)
 	}
 
 	// Check if it is Hour to add +10M
-	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	else if((x >= TEN_MINUTE_ADD_SHEDULE_X)&&(x <= (TEN_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
 	{
 		if(minuteOnSchedule2 < 49)
 		{
@@ -1327,7 +1353,7 @@ void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
 	}
 
 	// Check if it is Hour to add +10M
-	else if((x >= ONE_MINUTE_ADD_SHEDULE_X)&&(x <= (ONE_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
+	else if((x >= TEN_MINUTE_ADD_SHEDULE_X)&&(x <= (TEN_MINUTE_ADD_SHEDULE_X + HOOUR_MINUTE_BUTTON_W)))
 	{
 		if(minuteOffSchedule2 < 49)
 		{

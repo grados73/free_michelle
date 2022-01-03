@@ -206,3 +206,30 @@ void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
 	*minuteOff = TempMinute;
 
 }
+
+void EEPROM_ScheduleHourOnUpdate(uint8_t NrOfSchedule, uint8_t hourOn)
+{
+	uint8_t NewHour = hourOn;
+	if(1 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_1_HOUR_ON, &NewHour, sizeof(NewHour));
+	else if(2 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_2_HOUR_ON, &NewHour, sizeof(NewHour));
+}
+void EEPROM_ScheduleMinuteOnUpdate(uint8_t NrOfSchedule, uint8_t minuteOn)
+{
+	uint8_t NewMinute = minuteOn;
+	if(1 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_1_MINUTE_ON, &NewMinute, sizeof(NewMinute));
+	else if(2 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_2_MINUTE_ON, &NewMinute, sizeof(NewMinute));
+}
+void EEPROM_ScheduleHourOffUpdate(uint8_t NrOfSchedule, uint8_t hourOff)
+{
+	uint8_t NewHour = hourOff;
+	if(1 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_1_HOUR_OFF, &NewHour, sizeof(NewHour));
+	else if(2 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_2_HOUR_OFF, &NewHour, sizeof(NewHour));
+
+}
+void EEPROM_ScheduleMinuteOffUpdate(uint8_t NrOfSchedule, uint8_t minuteOff)
+{
+	uint8_t NewMinute = minuteOff;
+	if(1 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_1_MINUTE_OFF, &NewMinute, sizeof(NewMinute));
+	else if(2 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_2_MINUTE_OFF, &NewMinute, sizeof(NewMinute));
+
+}

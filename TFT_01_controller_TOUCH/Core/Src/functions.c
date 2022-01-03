@@ -555,16 +555,16 @@ void showWSLedPanel()
 // Display screen to setting Schedule Panel
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void drawShedulePanel(uint8_t NrOfShedule)
+void drawschedulePanel(uint8_t NrOfschedule)
 {
-	uint8_t hourOnShedule1 = 0;
-	uint8_t hourOffShedule1 = 0;
-	uint8_t minuteOnShedule1 = 0;
-	uint8_t minuteOffShedule1 = 0;
-	uint8_t hourOnShedule2 = 0;
-	uint8_t hourOffShedule2 = 0;
-	uint8_t minuteOnShedule2 = 0;
-	uint8_t minuteOffShedule2 = 0;
+	uint8_t hourOnschedule1 = 0;
+	uint8_t hourOffschedule1 = 0;
+	uint8_t minuteOnschedule1 = 0;
+	uint8_t minuteOffschedule1 = 0;
+	uint8_t hourOnschedule2 = 0;
+	uint8_t hourOffschedule2 = 0;
+	uint8_t minuteOnschedule2 = 0;
+	uint8_t minuteOffschedule2 = 0;
 
 	uint8_t schedule1DayInWeekTab[7] = {0};
 	uint8_t schedule1RelayAndSwitchTab[9] = {0};
@@ -632,13 +632,13 @@ void drawShedulePanel(uint8_t NrOfShedule)
 
 
 	  EF_SetFont(&arialBlack_20ptFontInfo);
-	  if(NrOfShedule == 1)
+	  if(NrOfschedule == 1)
 	  {
 		  // Read hour and minute of ON and OFF
-		  EEPROM_ScheduleHourOnRead(1, &hourOnShedule1);
-		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnShedule1);
-		  EEPROM_ScheduleHourOffRead(1, &hourOffShedule1);
-		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffShedule1);
+		  EEPROM_ScheduleHourOnRead(1, &hourOnschedule1);
+		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnschedule1);
+		  EEPROM_ScheduleHourOffRead(1, &hourOffschedule1);
+		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffschedule1);
 		  // Read day of week and relay / lights in current schedule
 		  EEPROM_ScheduleDayInWeekRead(1, schedule1DayInWeekTab);
 		  EEPROM_ScheduleRelayAndSwitchTabRead(1, schedule1RelayAndSwitchTab);
@@ -647,24 +647,30 @@ void drawShedulePanel(uint8_t NrOfShedule)
 		  updateTFTScheduleDayOfWeek(schedule1DayInWeekTab);
 		  updateTFTScheduleRelayLights(schedule1RelayAndSwitchTab);
 
-		  if(hourOnShedule1 > 23) hourOnShedule1 = 23;
-		  if(minuteOnShedule1 > 59) minuteOnShedule1 = 59;
-		  if(hourOffShedule1 > 23) hourOffShedule1 = 23;
-		  if(minuteOffShedule1 > 59) minuteOffShedule1 = 59;
+		  if(hourOnschedule1 > 23) hourOnschedule1 = 23;
+		  if(minuteOnschedule1 > 59) minuteOnschedule1 = 59;
+		  if(hourOffschedule1 > 23) hourOffschedule1 = 23;
+		  if(minuteOffschedule1 > 59) minuteOffschedule1 = 59;
 
-		  sprintf((char*)Msg, "ON:    %d : %d", hourOnShedule1, minuteOnShedule1);
+		  if((hourOnschedule1 < 10)&&(minuteOnschedule1 < 10))sprintf((char*)Msg, "ON:   0%d  :0%d", hourOnschedule1, minuteOnschedule1);
+		  else if(hourOnschedule1 < 10) sprintf((char*)Msg, "ON:   0%d  : %d", hourOnschedule1, minuteOnschedule1);
+		  else if (minuteOnschedule1 < 10) sprintf((char*)Msg, "ON:    %d  :0%d", hourOnschedule1, minuteOnschedule1);
+		  else sprintf((char*)Msg, "ON:    %d  : %d", hourOnschedule1, minuteOnschedule1);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
-		  sprintf((char*)Msg, "OFF:  %d : %d", hourOffShedule1, minuteOffShedule1);
+		  if((hourOffschedule1 < 10)&&(minuteOffschedule1 < 10))sprintf((char*)Msg, "OFF: 0%d  :0%d", hourOffschedule1, minuteOffschedule1);
+		  else if(hourOffschedule1 < 10) sprintf((char*)Msg, "OFF: 0%d  : %d", hourOffschedule1, minuteOffschedule1);
+		  else if (minuteOffschedule1 < 10) sprintf((char*)Msg, "OFF:  %d  :0%d", hourOffschedule1, minuteOffschedule1);
+		  else sprintf((char*)Msg, "OFF:  %d  : %d", hourOffschedule1, minuteOffschedule1);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	  }
-	  else
+	  else if(NrOfschedule == 2)
 	  {
 		  // Read hour and minute of ON and OFF
-		  EEPROM_ScheduleHourOnRead(2, &hourOnShedule2);
-		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnShedule2);
-		  EEPROM_ScheduleHourOffRead(2, &hourOffShedule2);
-		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffShedule2);
+		  EEPROM_ScheduleHourOnRead(2, &hourOnschedule2);
+		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnschedule2);
+		  EEPROM_ScheduleHourOffRead(2, &hourOffschedule2);
+		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffschedule2);
 		  // Read day of week and relay / lights in current schedule
 		  EEPROM_ScheduleDayInWeekRead(2, schedule2DayInWeekTab);
 		  EEPROM_ScheduleRelayAndSwitchTabRead(2, schedule2RelayAndSwitchTab);
@@ -673,16 +679,22 @@ void drawShedulePanel(uint8_t NrOfShedule)
 		  updateTFTScheduleDayOfWeek(schedule2DayInWeekTab);
 		  updateTFTScheduleRelayLights(schedule2RelayAndSwitchTab);
 
-		  if(hourOnShedule2 > 23) hourOnShedule2 = 23;
-		  if(minuteOnShedule2 > 59) minuteOnShedule2 = 59;
-		  if(hourOffShedule2 > 23) hourOffShedule2 = 23;
-		  if(minuteOffShedule2 > 59) minuteOffShedule2 = 59;
+		  if(hourOnschedule2 > 23) hourOnschedule2 = 23;
+		  if(minuteOnschedule2 > 59) minuteOnschedule2 = 59;
+		  if(hourOffschedule2 > 23) hourOffschedule2 = 23;
+		  if(minuteOffschedule2 > 59) minuteOffschedule2 = 59;
 
-		  sprintf((char*)Msg, "ON:    %d : %d", hourOnShedule2, minuteOnShedule2);
+		  if((hourOnschedule2 < 10)&&(minuteOnschedule2 < 10))sprintf((char*)Msg, "ON:   0%d :0%d", hourOnschedule2, minuteOnschedule2);
+		  else if(hourOnschedule2 < 10) sprintf((char*)Msg, "ON:   0%d : %d", hourOnschedule2, minuteOnschedule2);
+		  else if (minuteOnschedule2 < 10) sprintf((char*)Msg, "ON:    %d :0%d", hourOnschedule2, minuteOnschedule2);
+		  else sprintf((char*)Msg, "ON:    %d : %d", hourOnschedule2, minuteOnschedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
-		  sprintf((char*)Msg, "OFF:  %d : %d", hourOffShedule2, minuteOffShedule2);
-		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
+		  if((hourOffschedule2 < 10)&&(minuteOffschedule2 < 10))sprintf((char*)Msg, "OFF: 0%d :0%d", hourOffschedule2, minuteOffschedule2);
+		  else if(hourOffschedule2 < 10) sprintf((char*)Msg, "OFF: 0%d : %d", hourOffschedule2, minuteOffschedule2);
+		  else if (minuteOffschedule2 < 10) sprintf((char*)Msg, "OFF:  %d :0%d", hourOffschedule2, minuteOffschedule2);
+		  else sprintf((char*)Msg, "OFF:  %d : %d", hourOffschedule2, minuteOffschedule2);
+		  EF_PutString(Msg, STRING_ON_OFF_X+2, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	  }
 }
 
@@ -697,7 +709,7 @@ void showSchedule1Panel()
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
 
-	  drawShedulePanel(1);
+	  drawschedulePanel(1);
 
 	  //
 	  // Display button to change screen
@@ -725,7 +737,7 @@ void showSchedule2Panel()
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y, 320, HEADER_UNDERLINE_POZ_Y, HEADER_UNDERLINE_COLOR);
 	  GFX_DrawLine(0, HEADER_UNDERLINE_POZ_Y+2, 320, HEADER_UNDERLINE_POZ_Y+2, HEADER_UNDERLINE_COLOR);
 
-	  drawShedulePanel(2);
+	  drawschedulePanel(2);
 
 	  //
 	  // Display button to change screen
