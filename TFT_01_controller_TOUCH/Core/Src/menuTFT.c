@@ -27,10 +27,26 @@ extern uint8_t ActivityButtonState[2];
 uint8_t StateChangeFlag = 0; // using to indicate change screen activity
 uint8_t ClockChangeFlag = 0; // using to indicate change screen to Clock Set
 uint8_t WSLedChangeFlag = 0; // using to indicate change screen to WS LEDs Set
+uint8_t ScheduleChangeFlag = 0; // using to indicate change screen to Schedule
 uint8_t DayOfWeek = 1;
 uint8_t Hours = 15;
 uint8_t Minutes = 5;
 uint8_t NrOfLeds = 15;
+
+uint8_t schedule1DayInWeekTab[7] = {0};
+uint8_t schedule1RelayAndSwitchTab[9] = {0};
+uint8_t schedule2DayInWeekTab[7] = {0};
+uint8_t schedule2RelayAndSwitchTab[9] = {0};
+uint8_t hourOnShedule1 = 0;
+uint8_t hourOffShedule1 = 0;
+uint8_t minuteOnShedule1 = 0;
+uint8_t minuteOffShedule1 = 0;
+uint8_t hourOnShedule2 = 0;
+uint8_t hourOffShedule2 = 0;
+uint8_t minuteOnShedule2 = 0;
+uint8_t minuteOffShedule2 = 0;
+
+
 
 uint32_t TimerTouch = 0; // Timer to debouncing function
 
@@ -105,6 +121,7 @@ void MenuTFT(void)
 		if(StateChangeFlag == 1) // make only one time
 		{
 			showShedule1Panel();
+			ScheduleChangeFlag = 1;
 			StateChangeFlag = 0;
 		}
 		Schedule1Activity();
@@ -113,6 +130,7 @@ void MenuTFT(void)
 		if(StateChangeFlag == 1) // make only one time
 		{
 			showShedule2Panel();
+			ScheduleChangeFlag = 1;
 			StateChangeFlag = 0;
 		}
 		Schedule2Activity();
@@ -863,6 +881,16 @@ void TouchWSLedActivity(void)
 
 void Schedule1Activity()
 {
+	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
+	{
+		  EEPROM_ScheduleHourOnRead(1, &hourOnShedule1);
+		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnShedule1);
+		  EEPROM_ScheduleHourOffRead(1, &hourOffShedule1);
+		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffShedule1);
+
+		  ScheduleChangeFlag = 0;
+	}
+
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{
@@ -903,6 +931,16 @@ void Schedule1Activity()
 
 void Schedule2Activity()
 {
+
+	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
+	{
+		  EEPROM_ScheduleHourOnRead(2, &hourOnShedule2);
+		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnShedule2);
+		  EEPROM_ScheduleHourOffRead(2, &hourOffShedule2);
+		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffShedule2);
+		  ScheduleChangeFlag = 0;
+	}
+
 	// Check if screen was touched
 	if(XPT2046_IsTouched())
 	{

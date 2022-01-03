@@ -565,6 +565,11 @@ void drawShedulePanel(uint8_t NrOfShedule)
 	uint8_t hourOffShedule2 = 0;
 	uint8_t minuteOnShedule2 = 0;
 	uint8_t minuteOffShedule2 = 0;
+
+	uint8_t schedule1DayInWeekTab[7] = {0};
+	uint8_t schedule1RelayAndSwitchTab[9] = {0};
+	uint8_t schedule2DayInWeekTab[7] = {0};
+	uint8_t schedule2RelayAndSwitchTab[9] = {0};
 	  //
 	  // Draw Rectangle to indicate day of week
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_1_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -623,9 +628,25 @@ void drawShedulePanel(uint8_t NrOfShedule)
 
 	  //
 	  // Display hour and minute ON and OFF
+
+
+
 	  EF_SetFont(&arialBlack_20ptFontInfo);
 	  if(NrOfShedule == 1)
 	  {
+		  // Read hour and minute of ON and OFF
+		  EEPROM_ScheduleHourOnRead(1, &hourOnShedule1);
+		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnShedule1);
+		  EEPROM_ScheduleHourOffRead(1, &hourOffShedule1);
+		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffShedule1);
+		  // Read day of week and relay / lights in current schedule
+		  EEPROM_ScheduleDayInWeekRead(1, &schedule1DayInWeekTab);
+		  EEPROM_ScheduleRelayAndSwitchTabRead(1, &schedule1RelayAndSwitchTab);
+
+		  //Update day and relay on screen
+		  updateTFTSheduleDayOfWeek(&schedule1DayInWeekTab);
+		  updateTFTSheduleRelayLights(&schedule1RelayAndSwitchTab);
+
 		  sprintf((char*)Msg, "ON :    %d : %d", hourOnShedule1, minuteOnShedule1);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
@@ -634,6 +655,19 @@ void drawShedulePanel(uint8_t NrOfShedule)
 	  }
 	  else
 	  {
+		  // Read hour and minute of ON and OFF
+		  EEPROM_ScheduleHourOnRead(2, &hourOnShedule2);
+		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnShedule2);
+		  EEPROM_ScheduleHourOffRead(2, &hourOffShedule2);
+		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffShedule2);
+		  // Read day of week and relay / lights in current schedule
+		  EEPROM_ScheduleDayInWeekRead(2, &schedule2DayInWeekTab);
+		  EEPROM_ScheduleRelayAndSwitchTabRead(2, &schedule2RelayAndSwitchTab);
+
+		  //Update day and relay on screen
+		  updateTFTSheduleDayOfWeek(&schedule2DayInWeekTab);
+		  updateTFTSheduleRelayLights(&schedule2RelayAndSwitchTab);
+
 		  sprintf((char*)Msg, "ON :    %d : %d", hourOnShedule2, minuteOnShedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
@@ -941,6 +975,17 @@ void drawCurrentStateOfLights()
 		  EF_PutString(Msg, (LIGHTS_BUTTON_X+STRING_ERRATA_X), (LIGHT_B_4_POZ_Y+STRING_ERRATA_Y), ILI9341_BLACK, BG_TRANSPARENT, SWITCH_OFF_BUTTON_COLOR);
 	  }
 }
+
+void updateTFTSheduleDayOfWeek(uint8_t * scheduleDayInWeekTab)
+{
+
+}
+
+void updateTFTSheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
+{
+
+}
+
 
 //
 // Function to wait but only if it is necessary

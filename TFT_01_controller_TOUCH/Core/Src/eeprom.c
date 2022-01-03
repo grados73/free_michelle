@@ -102,3 +102,29 @@ void EEPROM_LightStateRestore(void)
 	if(EEPROM_LightStateRead(4)) SendComand(UCMD_LIGHT_4_ON);
 	else SendComand(UCMD_LIGHT_4_OFF);
 }
+
+void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab)
+{
+
+}
+void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
+{
+
+}
+
+void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
+{
+
+}
+void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
+{
+
+}
+void EEPROM_ScheduleHourOffRead(uint8_t NrOfSchedule, uint8_t * hourOff)
+{
+
+}
+void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
+{
+
+}

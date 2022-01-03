@@ -134,4 +134,7 @@ void drawCurrentStateOfLights();
 void drawCurrentStateOfSwitches();
 void drawShedulePanel(uint8_t NrOfShedule);
 
+void updateTFTSheduleDayOfWeek(uint8_t * scheduleDayInWeekTab);
+void updateTFTSheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab);
+
 #endif /* INC_FUNCTIONS_H_ */

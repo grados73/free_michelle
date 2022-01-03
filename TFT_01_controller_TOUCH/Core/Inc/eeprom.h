@@ -227,5 +227,13 @@ void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState);
 uint8_t EEPROM_LightStateRead(uint8_t LightNumber);
 void EEPROM_LightStateRestore(void);
 
+void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab);
+void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab);
+
+void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn);
+void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn);
+void EEPROM_ScheduleHourOffRead(uint8_t NrOfSchedule, uint8_t * hourOff);
+void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff);
+
 
 #endif /* INC_EEPROM_H_ */
