@@ -14,6 +14,8 @@
 
 static uint32_t last_write;
 
+//
+// Basic function to work with I2C EEPROM
 void eeprom_wait(void)
 {
     while (HAL_GetTick() - last_write <= WRITE_TIMEOUT)
@@ -37,7 +39,11 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size)
 
     return rc;
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to Read, Update and Restore from EEPROM memory last state of Relay and Lights after lack of energy
+//
+// Function to update in EEPROM current state of all Relay
 void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
 {
 	uint8_t State = NewState;
@@ -47,6 +53,8 @@ void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
 	else if(RelayNumber == 4) eeprom_write(EEPROM_ADR_RELAY_4_STATE, &State, sizeof(State));
 }
 
+//
+// Function to update in EEPROM current state of all Lights
 void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState)
 {
 	uint8_t State = NewState;
@@ -56,6 +64,8 @@ void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState)
 	else if(LightNumber == 4) eeprom_write(EEPROM_ADR_LIGHT_4_STATE, &State, sizeof(State));
 }
 
+//
+// Function to read in EEPROM current state of all Relay
 uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
 {
 	uint8_t RelayStan = 0;
@@ -67,6 +77,8 @@ uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
 	return RelayStan;
 }
 
+//
+// Function to read in EEPROM current state of all Lights
 uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
 {
 	uint8_t AktualnyStan = 0;
@@ -78,6 +90,8 @@ uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
 	return AktualnyStan;
 }
 
+//
+// Function to restore from EEPROM memory last state of all Relay
 void EEPROM_RelayStateRestore(void)
 {
 	if(EEPROM_RelayStateRead(1)) SendComand(UCMD_RELAY_1_ON);
@@ -91,6 +105,8 @@ void EEPROM_RelayStateRestore(void)
 
 }
 
+//
+// Function to restore from EEPROM memory last state of all Lights
 void EEPROM_LightStateRestore(void)
 {
 	if(EEPROM_LightStateRead(1)) SendComand(UCMD_LIGHT_1_ON);
@@ -103,6 +119,11 @@ void EEPROM_LightStateRestore(void)
 	else SendComand(UCMD_LIGHT_4_OFF);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to Read, Update and Restore from EEPROM memory day of week which schedule apply
+//
+// Function to read saved day which apply this schedule
 void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab)
 {
 	uint8_t TempDayInWeek = 0;
@@ -137,13 +158,36 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
 	//ND-7
 	if(TempDayInWeek & 0x40)  scheduleDayInWeekTab[6] = 1;
 	else  scheduleDayInWeekTab[6] = 0;
-
 }
-void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
+
+//
+// Function to update from EEPROM saved day which apply this schedule
+void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab)
 {
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to Read, Update and Restore from EEPROM memory Relays and Lights which schedule apply
+//
+// Function to read saved day which apply this schedule
+void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
+{
+
+}
+//
+// Function to update saved day which apply this schedule
+void EEPROM_ScheduleRelayAndSwitchTabUpdate(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Function to Read and Update from EEPROM memory Hours and Minutes ON / OFF which schedule apply
+//
+// ON READ
 void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
 {
 	uint8_t TempHour = 0;
@@ -158,8 +202,8 @@ void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
 	}
 
 	*hourOn = TempHour;
-
 }
+
 void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
 {
 	uint8_t TempMinute = 0;
@@ -173,8 +217,10 @@ void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
 		eeprom_read(EEPROM_ADR_SHEDULE_2_MINUTE_ON, &TempMinute, sizeof(TempMinute));
 	}
 	*minuteOn = TempMinute;
-
 }
+
+//
+// OFF READ
 void EEPROM_ScheduleHourOffRead(uint8_t NrOfSchedule, uint8_t * hourOff)
 {
 	uint8_t TempHour = 0;
@@ -204,9 +250,10 @@ void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
 		eeprom_read(EEPROM_ADR_SHEDULE_2_MINUTE_OFF, &TempMinute, sizeof(TempMinute));
 	}
 	*minuteOff = TempMinute;
-
 }
 
+//
+// ON UPDATE
 void EEPROM_ScheduleHourOnUpdate(uint8_t NrOfSchedule, uint8_t hourOn)
 {
 	uint8_t NewHour = hourOn;
@@ -219,6 +266,9 @@ void EEPROM_ScheduleMinuteOnUpdate(uint8_t NrOfSchedule, uint8_t minuteOn)
 	if(1 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_1_MINUTE_ON, &NewMinute, sizeof(NewMinute));
 	else if(2 == NrOfSchedule) eeprom_write(EEPROM_ADR_SHEDULE_2_MINUTE_ON, &NewMinute, sizeof(NewMinute));
 }
+
+//
+// OFF UPDATE
 void EEPROM_ScheduleHourOffUpdate(uint8_t NrOfSchedule, uint8_t hourOff)
 {
 	uint8_t NewHour = hourOff;
