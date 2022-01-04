@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00040214  2**0
                   CONTENTS, READONLY
- 12 .debug_info   000233af  00000000  00000000  00040244  2**0
+ 12 .debug_info   00023429  00000000  00000000  00040244  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00004ab4  00000000  00000000  000635f3  2**0
+ 13 .debug_abbrev 00004af2  00000000  00000000  0006366d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00001918  00000000  00000000  000680a8  2**3
+ 14 .debug_aranges 00001928  00000000  00000000  00068160  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_macro  000078b6  00000000  00000000  000699c0  2**0
+ 15 .debug_macro  000078b6  00000000  00000000  00069a88  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_line   000254ef  00000000  00000000  00071276  2**0
+ 16 .debug_line   00025516  00000000  00000000  0007133e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    00098bc0  00000000  00000000  00096765  2**0
+ 17 .debug_str    00098c06  00000000  00000000  00096854  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .comment      00000053  00000000  00000000  0012f325  2**0
+ 18 .comment      00000053  00000000  00000000  0012f45a  2**0
                   CONTENTS, READONLY
- 19 .debug_ranges 00001778  00000000  00000000  0012f378  2**3
+ 19 .debug_ranges 00001788  00000000  00000000  0012f4b0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  00007c94  00000000  00000000  00130af0  2**2
+ 20 .debug_frame  00007ce4  00000000  00000000  00130c38  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -5243,10 +5243,10 @@ uint8_t DS3231_EncodeBCD(uint8_t dec) {
  80028cc:	cccccccd 	.word	0xcccccccd
 
 080028d0 <eeprom_wait>:
-#define WRITE_TIMEOUT   6
-
 static uint32_t last_write;
 
+//
+// Basic function to work with I2C EEPROM
 void eeprom_wait(void)
 {
  80028d0:	b580      	push	{r7, lr}
@@ -5350,7 +5350,10 @@ HAL_StatusTypeDef eeprom_write(uint32_t addr, const void* data, uint32_t size)
  8002978:	20000248 	.word	0x20000248
 
 0800297c <EEPROM_RelayStateUpdate>:
-
+//
+// Function to Read, Update and Restore from EEPROM memory last state of Relay and Lights after lack of energy
+//
+// Function to update in EEPROM current state of all Relay
 void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
 {
  800297c:	b580      	push	{r7, lr}
@@ -5417,6 +5420,8 @@ void EEPROM_RelayStateUpdate(uint8_t RelayNumber, uint8_t NewState)
 
 080029ee <EEPROM_LightStateUpdate>:
 
+//
+// Function to update in EEPROM current state of all Lights
 void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState)
 {
  80029ee:	b580      	push	{r7, lr}
@@ -5483,6 +5488,8 @@ void EEPROM_LightStateUpdate(uint8_t LightNumber, uint8_t NewState)
 
 08002a60 <EEPROM_RelayStateRead>:
 
+//
+// Function to read in EEPROM current state of all Relay
 uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
 {
  8002a60:	b580      	push	{r7, lr}
@@ -5543,6 +5550,8 @@ uint8_t EEPROM_RelayStateRead(uint8_t RelayNumber)
 
 08002ace <EEPROM_LightStateRead>:
 
+//
+// Function to read in EEPROM current state of all Lights
 uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
 {
  8002ace:	b580      	push	{r7, lr}
@@ -5603,6 +5612,8 @@ uint8_t EEPROM_LightStateRead(uint8_t LightNumber)
 
 08002b3c <EEPROM_RelayStateRestore>:
 
+//
+// Function to restore from EEPROM memory last state of all Relay
 void EEPROM_RelayStateRestore(void)
 {
  8002b3c:	b580      	push	{r7, lr}
@@ -5664,6 +5675,8 @@ void EEPROM_RelayStateRestore(void)
 
 08002bac <EEPROM_LightStateRestore>:
 
+//
+// Function to restore from EEPROM memory last state of all Lights
 void EEPROM_LightStateRestore(void)
 {
  8002bac:	b580      	push	{r7, lr}
@@ -5723,7 +5736,10 @@ void EEPROM_LightStateRestore(void)
  8002c1a:	bd80      	pop	{r7, pc}
 
 08002c1c <EEPROM_ScheduleDayInWeekRead>:
-
+//
+// Function to Read, Update and Restore from EEPROM memory day of week which schedule apply
+//
+// Function to read saved day which apply this schedule
 void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab)
 {
  8002c1c:	b580      	push	{r7, lr}
@@ -5762,6 +5778,7 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
  8002c52:	f7ff fe4d 	bl	80028f0 <eeprom_read>
 	}
 
+	//TODO! spr czy nie powinno byc if(0x02 == (TempDayInWeek & 0x02)); //konieczne nawiasy!!
 	//PON-1
 	if(TempDayInWeek & 0x01)  scheduleDayInWeekTab[0] = 1;
  8002c56:	7bfb      	ldrb	r3, [r7, #15]
@@ -5867,7 +5884,6 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
  8002d08:	2201      	movs	r2, #1
  8002d0a:	701a      	strb	r2, [r3, #0]
 	else  scheduleDayInWeekTab[6] = 0;
-
 }
  8002d0c:	e003      	b.n	8002d16 <EEPROM_ScheduleDayInWeekRead+0xfa>
 	else  scheduleDayInWeekTab[6] = 0;
@@ -5882,6 +5898,10 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
  8002d1c:	bd80      	pop	{r7, pc}
 
 08002d1e <EEPROM_ScheduleRelayAndSwitchTabRead>:
+//
+// Function to Read, Update and Restore from EEPROM memory Relays and Lights which schedule apply
+//
+// Function to read saved day which apply this schedule
 void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
 {
  8002d1e:	b480      	push	{r7}
@@ -5899,7 +5919,10 @@ void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * schedu
  8002d34:	4770      	bx	lr
 
 08002d36 <EEPROM_ScheduleHourOnRead>:
-
+//
+// Function to Read and Update from EEPROM memory Hours and Minutes ON / OFF which schedule apply
+//
+// ON READ
 void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
 {
  8002d36:	b580      	push	{r7, lr}
@@ -5942,7 +5965,6 @@ void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
  8002d70:	7bfa      	ldrb	r2, [r7, #15]
  8002d72:	683b      	ldr	r3, [r7, #0]
  8002d74:	701a      	strb	r2, [r3, #0]
-
 }
  8002d76:	bf00      	nop
  8002d78:	3710      	adds	r7, #16
@@ -5950,6 +5972,7 @@ void EEPROM_ScheduleHourOnRead(uint8_t NrOfSchedule, uint8_t * hourOn)
  8002d7c:	bd80      	pop	{r7, pc}
 
 08002d7e <EEPROM_ScheduleMinuteOnRead>:
+
 void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
 {
  8002d7e:	b580      	push	{r7, lr}
@@ -5991,7 +6014,6 @@ void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
  8002db8:	7bfa      	ldrb	r2, [r7, #15]
  8002dba:	683b      	ldr	r3, [r7, #0]
  8002dbc:	701a      	strb	r2, [r3, #0]
-
 }
  8002dbe:	bf00      	nop
  8002dc0:	3710      	adds	r7, #16
@@ -5999,6 +6021,9 @@ void EEPROM_ScheduleMinuteOnRead(uint8_t NrOfSchedule, uint8_t * minuteOn)
  8002dc4:	bd80      	pop	{r7, pc}
 
 08002dc6 <EEPROM_ScheduleHourOffRead>:
+
+//
+// OFF READ
 void EEPROM_ScheduleHourOffRead(uint8_t NrOfSchedule, uint8_t * hourOff)
 {
  8002dc6:	b580      	push	{r7, lr}
@@ -6090,7 +6115,6 @@ void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
  8002e48:	7bfa      	ldrb	r2, [r7, #15]
  8002e4a:	683b      	ldr	r3, [r7, #0]
  8002e4c:	701a      	strb	r2, [r3, #0]
-
 }
  8002e4e:	bf00      	nop
  8002e50:	3710      	adds	r7, #16
@@ -6099,6 +6123,8 @@ void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
 
 08002e56 <EEPROM_ScheduleHourOnUpdate>:
 
+//
+// ON UPDATE
 void EEPROM_ScheduleHourOnUpdate(uint8_t NrOfSchedule, uint8_t hourOn)
 {
  8002e56:	b580      	push	{r7, lr}
@@ -6181,6 +6207,9 @@ void EEPROM_ScheduleMinuteOnUpdate(uint8_t NrOfSchedule, uint8_t minuteOn)
  8002ee0:	bd80      	pop	{r7, pc}
 
 08002ee2 <EEPROM_ScheduleHourOffUpdate>:
+
+//
+// OFF UPDATE
 void EEPROM_ScheduleHourOffUpdate(uint8_t NrOfSchedule, uint8_t hourOff)
 {
  8002ee2:	b580      	push	{r7, lr}

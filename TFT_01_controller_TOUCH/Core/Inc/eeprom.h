@@ -231,13 +231,13 @@ void EEPROM_LightStateRestore(void);
 // Read which day of week this schedule apply
 void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab);
 // Update which day of week this schedule apply
-void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab);
+void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * scheduleDayInWeekTab);
 
 //
 // Read which Relay and Lights this schedule apply
 void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab);
 // Update which Relay and Lights this schedule apply
-void EEPROM_ScheduleRelayAndSwitchTabUpdate(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab);
+void EEPROM_ScheduleRelayAndSwitchTabUpdate(uint8_t NrOfSchedule, const uint8_t * scheduleRelayAndSwitchTab);
 
 
 

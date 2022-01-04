@@ -137,6 +137,7 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
 		eeprom_read(EEPROM_ADR_SHEDULE_2_DAYS, &TempDayInWeek, sizeof(TempDayInWeek));
 	}
 
+	//TODO! spr czy nie powinno byc if(0x02 == (TempDayInWeek & 0x02)); //konieczne nawiasy!!
 	//PON-1
 	if(TempDayInWeek & 0x01)  scheduleDayInWeekTab[0] = 1;
 	else  scheduleDayInWeekTab[0] = 0;
@@ -161,8 +162,8 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
 }
 
 //
-// Function to update from EEPROM saved day which apply this schedule
-void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, uint8_t * scheduleDayInWeekTab)
+// Function to update to EEPROM day which apply this schedule
+void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * scheduleDayInWeekTab)
 {
 
 }
@@ -178,7 +179,7 @@ void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * schedu
 }
 //
 // Function to update saved day which apply this schedule
-void EEPROM_ScheduleRelayAndSwitchTabUpdate(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
+void EEPROM_ScheduleRelayAndSwitchTabUpdate(uint8_t NrOfSchedule, const uint8_t * scheduleRelayAndSwitchTab)
 {
 
 }
