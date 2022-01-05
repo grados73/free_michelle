@@ -582,6 +582,7 @@ void drawschedulePanel(uint8_t NrOfschedule)
 
 	  // Restore from EEPROM chosen day for this schedule
 	  restoreTFTScheduleDayOfWeek(NrOfschedule);
+	  restoreTFTScheduleRelayLights(NrOfschedule);
 
 	  EF_SetFont(&arial_11ptFontInfo);
 	  sprintf((char*)Msg, "PN WT ŚR CZ PT SB ND");
@@ -646,10 +647,6 @@ void drawschedulePanel(uint8_t NrOfschedule)
 		  EEPROM_ScheduleDayInWeekRead(1, schedule1DayInWeekTab);
 		  EEPROM_ScheduleRelayAndSwitchTabRead(1, schedule1RelayAndSwitchTab);
 
-		  //Update day and relay on screen
-		  updateTFTScheduleDayOfWeek(schedule1DayInWeekTab);
-		  updateTFTScheduleRelayLights(schedule1RelayAndSwitchTab);
-
 		  if(hourOnschedule1 > 23) hourOnschedule1 = 23;
 		  if(minuteOnschedule1 > 59) minuteOnschedule1 = 59;
 		  if(hourOffschedule1 > 23) hourOffschedule1 = 23;
@@ -677,10 +674,6 @@ void drawschedulePanel(uint8_t NrOfschedule)
 		  // Read day of week and relay / lights in current schedule
 		  EEPROM_ScheduleDayInWeekRead(2, schedule2DayInWeekTab);
 		  EEPROM_ScheduleRelayAndSwitchTabRead(2, schedule2RelayAndSwitchTab);
-
-		  //Update day and relay on screen
-		  updateTFTScheduleDayOfWeek(schedule2DayInWeekTab);
-		  updateTFTScheduleRelayLights(schedule2RelayAndSwitchTab);
 
 		  if(hourOnschedule2 > 23) hourOnschedule2 = 23;
 		  if(minuteOnschedule2 > 59) minuteOnschedule2 = 59;
@@ -1009,6 +1002,8 @@ void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
 
 }
 
+//
+// Restore on TFT screen rectangle indicate each day of week, from EEPROM
 void restoreTFTScheduleDayOfWeek(uint8_t NrOfSchedule)
 {
 	uint8_t TempDayTab[7] = {0};
@@ -1028,6 +1023,34 @@ void restoreTFTScheduleDayOfWeek(uint8_t NrOfSchedule)
 	else changeTFTScheduleDayOfWeek(6, 0);
 	if(TempDayTab[6]) changeTFTScheduleDayOfWeek(7, 1);
 	else changeTFTScheduleDayOfWeek(7, 0);
+
+}
+
+//
+// Restore on TFT screen rectangle indicate each Relay and Light, from EEPROM
+void restoreTFTScheduleRelayLights(uint8_t NrOfSchedule)
+{
+	uint8_t TempRelayLIghtsTab[9] = {0};
+	EEPROM_ScheduleRelayAndSwitchTabRead(NrOfSchedule, TempRelayLIghtsTab);
+
+	if(TempRelayLIghtsTab[0]) changeTFTScheduleRelayLights (1, 1);
+	else changeTFTScheduleRelayLights(1, 0);
+	if(TempRelayLIghtsTab[1]) changeTFTScheduleRelayLights(2, 1);
+	else changeTFTScheduleRelayLights(2, 0);
+	if(TempRelayLIghtsTab[2]) changeTFTScheduleRelayLights(3, 1);
+	else changeTFTScheduleRelayLights(3, 0);
+	if(TempRelayLIghtsTab[3]) changeTFTScheduleRelayLights(4, 1);
+	else changeTFTScheduleRelayLights(4, 0);
+	if(TempRelayLIghtsTab[4]) changeTFTScheduleRelayLights(5, 1);
+	else changeTFTScheduleRelayLights(5, 0);
+	if(TempRelayLIghtsTab[5]) changeTFTScheduleRelayLights(6, 1);
+	else changeTFTScheduleRelayLights(6, 0);
+	if(TempRelayLIghtsTab[6]) changeTFTScheduleRelayLights(7, 1);
+	else changeTFTScheduleRelayLights(7, 0);
+	if(TempRelayLIghtsTab[7]) changeTFTScheduleRelayLights(8, 1);
+	else changeTFTScheduleRelayLights(8, 0);
+	if(TempRelayLIghtsTab[8]) changeTFTScheduleRelayLights(9, 1);
+	else changeTFTScheduleRelayLights(9, 0);
 
 }
 

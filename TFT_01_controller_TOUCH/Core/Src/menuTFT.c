@@ -33,10 +33,10 @@ uint8_t Hours = 15;
 uint8_t Minutes = 5;
 uint8_t NrOfLeds = 15;
 
-uint8_t schedule1DayInWeekTab[7] = {0};
-uint8_t schedule1RelayAndSwitchTab[9] = {0};
-uint8_t schedule2DayInWeekTab[7] = {0};
-uint8_t schedule2RelayAndSwitchTab[9] = {0};
+uint8_t schedule1DayInWeekTab[7] = {0};	// schedule1DayInWeekTab[] = {Mon, Tue, Wed, Thu, Fri, Sat, Sun}
+uint8_t schedule1RelayAndSwitchTab[9] = {0}; // schedule1RelayAndSwitchTab[] = { R1, R2, R3, R4, WS, L1, L2, L3, L4}
+uint8_t schedule2DayInWeekTab[7] = {0};	// schedule2DayInWeekTab[] = {Mon, Tue, Wed, Thu, Fri, Sat, Sun}
+uint8_t schedule2RelayAndSwitchTab[9] = {0}; // schedule2RelayAndSwitchTab[] = { R1, R2, R3, R4, WS, L1, L2, L3, L4}
 uint8_t hourOnSchedule1 = 0;
 uint8_t hourOffSchedule1 = 0;
 uint8_t minuteOnSchedule1 = 0;
@@ -942,6 +942,12 @@ void Schedule1Activity()
 				MenuTFTSchedule1ActivityHourMinuteOFFAdd(x,y);
 			}
 
+			//Check if touch is inside row with rectangle of Relays and Lights
+			else if((y >= DAY_CHECK_RELAY_BUTTON_Y)&&(y <= (DAY_CHECK_RELAY_BUTTON_Y + DAY_CHECK_BUTTON_H)))
+			{
+
+			}
+
 			// Check if that point is inside the MEDIUM Button - CONFIRM
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
 					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
@@ -1110,6 +1116,9 @@ void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y)
 	}
 }
 
+//
+// Update rectangle with state of each day
+//
 void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState)
 {
 	if (1 == NrOfDay)	// if Monday
@@ -1187,6 +1196,112 @@ void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState)
 		else	// if turn on
 		{
 			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_7_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+}
+
+//
+// Update rectangle with state of each day
+//
+void changeTFTScheduleRelayLights(uint8_t NrOfRS, uint8_t NewState)
+{
+	if(1 == NrOfRS) // R1
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_1_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_1_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(2 == NrOfRS) // R2
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_2_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_2_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(3 == NrOfRS) // R3
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_3_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_3_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(4 == NrOfRS) // R4
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_4_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_4_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(5 == NrOfRS) // WS2812b
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_5_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_5_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(6 == NrOfRS) // L1
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_6_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_6_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(7 == NrOfRS) // L2
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_7_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_7_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(8 == NrOfRS) // L3
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_8_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_8_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if(9 == NrOfRS) // L4
+	{
+		if (0 == NewState) // if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_9_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else // if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_RELAY_BUTTON_9_X+1, DAY_CHECK_RELAY_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
 		}
 	}
 }
@@ -1468,4 +1583,19 @@ void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
 	}
 }
 
+//
+// Handle touch in Relays and Lights in Schedule 1 section
+//
+void MenuTFTSchedule1ActivityRelaysAndLightsRow(uint16_t x, uint16_t y)
+{
+
+}
+
+//
+// Handle touch in Relays and Lights in Schedule 1 section
+//
+void MenuTFTSchedule2ActivityRelaysAndLightsRow(uint16_t x, uint16_t y)
+{
+
+}
 

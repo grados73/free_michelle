@@ -140,15 +140,15 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
 	uint32_t a = 0x01;
 	for(uint8_t i = 0; i < 7 ; i++)
 	{
-		if(TempDayInWeek & a)
+		if(TempDayInWeek & a) // check every bit in TempDayInWeek (EEPROM) if is 1
 		{
 			scheduleDayInWeekTab[i] = 1;
 		}
-		else
+		else // or is 0
 		{
 			scheduleDayInWeekTab[i] = 0;
 		}
-		a = a << 1;
+		a = a << 1; // Mask bit shift
 	}
 }
 
@@ -165,7 +165,7 @@ void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * schedu
 		{
 			TempDayInWeek = TempDayInWeek | a;
 		}
-		a = a << 1;
+		a = a << 1; // Mask bit shift
 	}
 
 	if(1 == NrOfSchedule)
@@ -200,6 +200,39 @@ void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * schedu
 			eeprom_read(EEPROM_ADR_SHEDULE_2_RELAYS, &TempRelays, sizeof(TempRelays));
 			eeprom_read(EEPROM_ADR_SHEDULE_2_LIGHTS, &TempLights, sizeof(TempLights));
 		}
+		//
+		// scheduleRelayAndSwitchTab = { R1, R2, R3, R4, WS, L1, L2, L3, L4}
+		//								 =	 =	 =	 =
+		uint32_t a = 0x01;
+		for(uint8_t i = 0; i < 4 ; i++)
+		{
+			if(TempRelays & a) // check every bit in TempRelays (EEPROM) if is 1
+			{
+				scheduleRelayAndSwitchTab[i] = 1;
+			}
+			else // or is 0
+			{
+				scheduleRelayAndSwitchTab[i] = 0;
+			}
+			a = a << 1; // Mask bit shift
+		}
+		//
+		// scheduleRelayAndSwitchTab = { R1, R2, R3, R4, WS, L1, L2, L3, L4}
+		//								 				  =	  =	  =	  =	 =
+		a = 0x01; // reseting Mask to check from first bit in TempLights
+		for(uint8_t j = 4; j < 9 ; j++)
+		{
+			if(TempLights & a) // check every bit in TempRelays (EEPROM) if is 1
+			{
+				scheduleRelayAndSwitchTab[j] = 1;
+			}
+			else // or is 0
+			{
+				scheduleRelayAndSwitchTab[j] = 0;
+			}
+			a = a << 1; // Mask bit shift
+		}
+
 }
 //
 // Function to update saved day which apply this schedule

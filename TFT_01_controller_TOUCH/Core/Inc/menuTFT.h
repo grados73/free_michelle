@@ -199,12 +199,15 @@ void Schedule2Activity();
 void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y);
 void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
 void MenuTFTSchedule1ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y);
+void MenuTFTSchedule1ActivityRelaysAndLightsRow(uint16_t x, uint16_t y);
 
 void MenuTFTSchedule2ActivityDayOfWeekRow(uint16_t x, uint16_t y);
 void MenuTFTSchedule2ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
 void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y);
+void MenuTFTSchedule2ActivityRelaysAndLightsRow(uint16_t x, uint16_t y);
 
 void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState);
+void changeTFTScheduleRelayLights(uint8_t NrOfRS, uint8_t NewState);
 
 
 #endif /* INC_MENUTFT_H_ */
