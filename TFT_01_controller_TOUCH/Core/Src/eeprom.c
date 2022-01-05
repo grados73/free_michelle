@@ -137,28 +137,19 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
 		eeprom_read(EEPROM_ADR_SHEDULE_2_DAYS, &TempDayInWeek, sizeof(TempDayInWeek));
 	}
 
-	//TODO! spr czy nie powinno byc if(0x02 == (TempDayInWeek & 0x02)); //konieczne nawiasy!!
-	//PON-1
-	if(TempDayInWeek & 0x01)  scheduleDayInWeekTab[0] = 1;
-	else  scheduleDayInWeekTab[0] = 0;
-	//WT-2
-	if(TempDayInWeek & 0x02)  scheduleDayInWeekTab[1] = 1;
-	else  scheduleDayInWeekTab[1] = 0;
-	//SR-3
-	if(TempDayInWeek & 0x04)  scheduleDayInWeekTab[2] = 1;
-	else  scheduleDayInWeekTab[2] = 0;
-	//CZW-4
-	if(TempDayInWeek & 0x08)  scheduleDayInWeekTab[3] = 1;
-	else scheduleDayInWeekTab[3] = 0;
-	//PT-5
-	if(TempDayInWeek & 0x10)  scheduleDayInWeekTab[4] = 1;
-	else  scheduleDayInWeekTab[4] = 0;
-	//SB-6
-	if(TempDayInWeek & 0x20)  scheduleDayInWeekTab[5] = 1;
-	else  scheduleDayInWeekTab[5] = 0;
-	//ND-7
-	if(TempDayInWeek & 0x40)  scheduleDayInWeekTab[6] = 1;
-	else  scheduleDayInWeekTab[6] = 0;
+	uint32_t a = 0x01;
+	for(uint8_t i = 0; i < 7 ; i++)
+	{
+		if(TempDayInWeek & a)
+		{
+			scheduleDayInWeekTab[i] = 1;
+		}
+		else
+		{
+			scheduleDayInWeekTab[i] = 0;
+		}
+		a = a << 1;
+	}
 }
 
 //
@@ -168,7 +159,7 @@ void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * schedu
 
 	uint8_t TempDayInWeek = 0;
 	uint32_t a = 0x01;
-	for(uint8_t i = 0 ; i <8 ; i++)
+	for(uint8_t i = 0 ; i < 7 ; i++)
 	{
 		if(scheduleDayInWeekTab[i])
 		{
@@ -195,7 +186,20 @@ void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * schedu
 // Function to read saved day which apply this schedule
 void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * scheduleRelayAndSwitchTab)
 {
+	uint8_t TempRelays = 0;
+	uint8_t TempLights = 0;
 
+		if(1 == NrOfSchedule)
+		{
+			eeprom_read(EEPROM_ADR_SHEDULE_1_RELAYS, &TempRelays, sizeof(TempRelays));
+			eeprom_read(EEPROM_ADR_SHEDULE_1_LIGHTS, &TempLights, sizeof(TempLights));
+
+		}
+		else if(2 == NrOfSchedule)
+		{
+			eeprom_read(EEPROM_ADR_SHEDULE_2_RELAYS, &TempRelays, sizeof(TempRelays));
+			eeprom_read(EEPROM_ADR_SHEDULE_2_LIGHTS, &TempLights, sizeof(TempLights));
+		}
 }
 //
 // Function to update saved day which apply this schedule
