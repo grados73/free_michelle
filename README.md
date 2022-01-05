@@ -55,6 +55,12 @@ Project is created with:
 ## To-do list
 * Shedules - TODO
 * Alarms - TODO
+* PCB - TODO
+* Watchdog - TODO
+* UPS - TODO
+* Online access(ESP) - TODO
+* Wireless comunitation with sensors - nRF24L01+ - TODO
+* Push inormation on telephone - TODO
 
 ## Status
 Project is in progress and i will develop them to learn ARM and STM32.
