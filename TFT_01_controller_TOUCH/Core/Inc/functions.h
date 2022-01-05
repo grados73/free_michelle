@@ -139,7 +139,7 @@ void drawSchedulePanel(uint8_t NrOfSchedule);
 void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab);
 void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab);
 
-
+void restoreTFTScheduleDayOfWeek(uint8_t NrOfSchedule);
 
 
 #endif /* INC_FUNCTIONS_H_ */

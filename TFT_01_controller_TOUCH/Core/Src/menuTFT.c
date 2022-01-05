@@ -950,6 +950,7 @@ void Schedule1Activity()
 				EEPROM_ScheduleMinuteOnUpdate(1, minuteOnSchedule1);
 				EEPROM_ScheduleHourOffUpdate(1, hourOffSchedule1);
 				EEPROM_ScheduleMinuteOffUpdate(1, minuteOffSchedule1);
+				EEPROM_ScheduleDayInWeekUpdate(1,  schedule1DayInWeekTab);
 
 				EF_SetFont(&arialBlack_20ptFontInfo);
 				sprintf((char*)Msg, " H1 ZMIENIONY      ");

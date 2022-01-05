@@ -580,6 +580,9 @@ void drawschedulePanel(uint8_t NrOfschedule)
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_6_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_7_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 
+	  // Restore from EEPROM chosen day for this schedule
+	  restoreTFTScheduleDayOfWeek(1);
+
 	  EF_SetFont(&arial_11ptFontInfo);
 	  sprintf((char*)Msg, "PN WT ŚR CZ PT SB ND");
 	  EF_PutString(Msg, DAY_CHECK_BUTTON_1_X, (DAY_CHECK_BUTTON_Y + 25), ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
@@ -1003,6 +1006,28 @@ void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab)
 
 void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
 {
+
+}
+
+void restoreTFTScheduleDayOfWeek(uint8_t NrOfSchedule)
+{
+	uint8_t TempDayTab[7] = {0};
+	EEPROM_ScheduleDayInWeekRead(NrOfSchedule, TempDayTab);
+
+	if(TempDayTab[0]) changeTFTScheduleDayOfWeek(1, 1);
+	else changeTFTScheduleDayOfWeek(1, 0);
+	if(TempDayTab[1]) changeTFTScheduleDayOfWeek(2, 1);
+	else changeTFTScheduleDayOfWeek(2, 0);
+	if(TempDayTab[2]) changeTFTScheduleDayOfWeek(3, 1);
+	else changeTFTScheduleDayOfWeek(3, 0);
+	if(TempDayTab[3]) changeTFTScheduleDayOfWeek(4, 1);
+	else changeTFTScheduleDayOfWeek(4, 0);
+	if(TempDayTab[4]) changeTFTScheduleDayOfWeek(5, 1);
+	else changeTFTScheduleDayOfWeek(5, 0);
+	if(TempDayTab[5]) changeTFTScheduleDayOfWeek(6, 1);
+	else changeTFTScheduleDayOfWeek(6, 0);
+	if(TempDayTab[6]) changeTFTScheduleDayOfWeek(7, 1);
+	else changeTFTScheduleDayOfWeek(7, 0);
 
 }
 
