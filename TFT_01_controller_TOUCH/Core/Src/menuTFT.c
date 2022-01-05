@@ -945,7 +945,7 @@ void Schedule1Activity()
 			//Check if touch is inside row with rectangle of Relays and Lights
 			else if((y >= DAY_CHECK_RELAY_BUTTON_Y)&&(y <= (DAY_CHECK_RELAY_BUTTON_Y + DAY_CHECK_BUTTON_H)))
 			{
-
+				MenuTFTSchedule1ActivityRelaysAndLightsRow(x,y);
 			}
 
 			// Check if that point is inside the MEDIUM Button - CONFIRM
@@ -957,6 +957,7 @@ void Schedule1Activity()
 				EEPROM_ScheduleHourOffUpdate(1, hourOffSchedule1);
 				EEPROM_ScheduleMinuteOffUpdate(1, minuteOffSchedule1);
 				EEPROM_ScheduleDayInWeekUpdate(1,  schedule1DayInWeekTab);
+				EEPROM_ScheduleRelayAndSwitchTabUpdate(1, schedule1RelayAndSwitchTab);
 
 				EF_SetFont(&arialBlack_20ptFontInfo);
 				sprintf((char*)Msg, " H1 ZMIENIONY      ");
@@ -1029,6 +1030,12 @@ void Schedule2Activity()
 				MenuTFTSchedule2ActivityHourMinuteOFFAdd(x,y);
 			}
 
+			//Check if touch is inside row with rectangle of Relays and Lights
+			else if((y >= DAY_CHECK_RELAY_BUTTON_Y)&&(y <= (DAY_CHECK_RELAY_BUTTON_Y + DAY_CHECK_BUTTON_H)))
+			{
+				MenuTFTSchedule2ActivityRelaysAndLightsRow(x,y);
+			}
+
 			// Check if that point is inside the MEDIUM Button - CONFIRM
 			else if((x >= MEDIUM_BUTTON_X)&&(x <= (MEDIUM_BUTTON_X+MEDIUM_BUTTON_W))&&
 					(y >= MEDIUM_BUTTON_Y)&&(y <= (MEDIUM_BUTTON_Y + MEDIUM_BUTTON_H)))
@@ -1038,6 +1045,7 @@ void Schedule2Activity()
 				EEPROM_ScheduleHourOffUpdate(2, hourOffSchedule2);
 				EEPROM_ScheduleMinuteOffUpdate(2, minuteOffSchedule2);
 				EEPROM_ScheduleDayInWeekUpdate(2,  schedule2DayInWeekTab);
+				EEPROM_ScheduleRelayAndSwitchTabUpdate(2, schedule2RelayAndSwitchTab);
 
 				EF_SetFont(&arialBlack_20ptFontInfo);
 				sprintf((char*)Msg, " H2 ZMIENIONY       ");
@@ -1588,14 +1596,139 @@ void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y)
 //
 void MenuTFTSchedule1ActivityRelaysAndLightsRow(uint16_t x, uint16_t y)
 {
+	// R1
+	if((x >= DAY_CHECK_RELAY_BUTTON_1_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_1_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[0]) changeTFTScheduleRelayLights(1, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(1, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[0] = !schedule1RelayAndSwitchTab[0]; // update current state in tab holding state of day in week
+	}
+	// R2
+	if((x >= DAY_CHECK_RELAY_BUTTON_2_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_2_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[1]) changeTFTScheduleRelayLights(2, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(2, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[1] = !schedule1RelayAndSwitchTab[1]; // update current state in tab holding state of day in week
+	}
+	// R3
+	if((x >= DAY_CHECK_RELAY_BUTTON_3_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_3_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[2]) changeTFTScheduleRelayLights(3, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(3, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[2] = !schedule1RelayAndSwitchTab[2]; // update current state in tab holding state of day in week
+	}
+	// R4
+	if((x >= DAY_CHECK_RELAY_BUTTON_4_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_4_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[3]) changeTFTScheduleRelayLights(4, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(4, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[3] = !schedule1RelayAndSwitchTab[3]; // update current state in tab holding state of day in week
+	}
+	// WS2812b
+	if((x >= DAY_CHECK_RELAY_BUTTON_5_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_5_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[4]) changeTFTScheduleRelayLights(5, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(5, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[4] = !schedule1RelayAndSwitchTab[4]; // update current state in tab holding state of day in week
+	}
+	// L1
+	if((x >= DAY_CHECK_RELAY_BUTTON_6_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_6_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[5]) changeTFTScheduleRelayLights(6, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(6, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[5] = !schedule1RelayAndSwitchTab[5]; // update current state in tab holding state of day in week
+	}
+	// L2
+	if((x >= DAY_CHECK_RELAY_BUTTON_7_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_7_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[6]) changeTFTScheduleRelayLights(7, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(7, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[6] = !schedule1RelayAndSwitchTab[6]; // update current state in tab holding state of day in week
+	}
+	// L3
+	if((x >= DAY_CHECK_RELAY_BUTTON_8_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_8_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[7]) changeTFTScheduleRelayLights(8, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(8, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[7] = !schedule1RelayAndSwitchTab[7]; // update current state in tab holding state of day in week
+	}
+	// L4
+	if((x >= DAY_CHECK_RELAY_BUTTON_9_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_9_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule1RelayAndSwitchTab[8]) changeTFTScheduleRelayLights(9, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(9, 1);//if is OFF -> Turn ON
+		schedule1RelayAndSwitchTab[8] = !schedule1RelayAndSwitchTab[8]; // update current state in tab holding state of day in week
+	}
 
 }
 
 //
-// Handle touch in Relays and Lights in Schedule 1 section
+// Handle touch in Relays and Lights in Schedule 2 section
 //
 void MenuTFTSchedule2ActivityRelaysAndLightsRow(uint16_t x, uint16_t y)
 {
-
+	// R1
+	if((x >= DAY_CHECK_RELAY_BUTTON_1_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_1_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[0]) changeTFTScheduleRelayLights(1, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(1, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[0] = !schedule2RelayAndSwitchTab[0]; // update current state in tab holding state of day in week
+	}
+	// R2
+	if((x >= DAY_CHECK_RELAY_BUTTON_2_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_2_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[1]) changeTFTScheduleRelayLights(2, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(2, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[1] = !schedule2RelayAndSwitchTab[1]; // update current state in tab holding state of day in week
+	}
+	// R3
+	if((x >= DAY_CHECK_RELAY_BUTTON_3_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_3_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[2]) changeTFTScheduleRelayLights(3, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(3, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[2] = !schedule2RelayAndSwitchTab[2]; // update current state in tab holding state of day in week
+	}
+	// R4
+	if((x >= DAY_CHECK_RELAY_BUTTON_4_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_4_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[3]) changeTFTScheduleRelayLights(4, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(4, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[3] = !schedule2RelayAndSwitchTab[3]; // update current state in tab holding state of day in week
+	}
+	// WS2812b
+	if((x >= DAY_CHECK_RELAY_BUTTON_5_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_5_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[4]) changeTFTScheduleRelayLights(5, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(5, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[4] = !schedule2RelayAndSwitchTab[4]; // update current state in tab holding state of day in week
+	}
+	// L1
+	if((x >= DAY_CHECK_RELAY_BUTTON_6_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_6_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[5]) changeTFTScheduleRelayLights(6, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(6, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[5] = !schedule2RelayAndSwitchTab[5]; // update current state in tab holding state of day in week
+	}
+	// L2
+	if((x >= DAY_CHECK_RELAY_BUTTON_7_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_7_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[6]) changeTFTScheduleRelayLights(7, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(7, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[6] = !schedule2RelayAndSwitchTab[6]; // update current state in tab holding state of day in week
+	}
+	// L3
+	if((x >= DAY_CHECK_RELAY_BUTTON_8_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_8_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[7]) changeTFTScheduleRelayLights(8, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(8, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[7] = !schedule2RelayAndSwitchTab[7]; // update current state in tab holding state of day in week
+	}
+	// L4
+	if((x >= DAY_CHECK_RELAY_BUTTON_9_X)&&(x <= (DAY_CHECK_RELAY_BUTTON_9_X + DAY_CHECK_BUTTON_W)))
+	{
+		if(schedule2RelayAndSwitchTab[8]) changeTFTScheduleRelayLights(9, 0);//if is ON -> Turn OFF
+		else changeTFTScheduleRelayLights(9, 1);//if is OFF -> Turn ON
+		schedule2RelayAndSwitchTab[8] = !schedule2RelayAndSwitchTab[8]; // update current state in tab holding state of day in week
+	}
 }
 

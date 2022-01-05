@@ -236,9 +236,41 @@ void EEPROM_ScheduleRelayAndSwitchTabRead(uint8_t NrOfSchedule, uint8_t * schedu
 }
 //
 // Function to update saved day which apply this schedule
+//
+// scheduleRelayAndSwitchTab = { R1, R2, R3, R4, WS, L1, L2, L3, L4}
 void EEPROM_ScheduleRelayAndSwitchTabUpdate(uint8_t NrOfSchedule, const uint8_t * scheduleRelayAndSwitchTab)
 {
+	uint8_t TempRelay = 0;
+	uint8_t TempLight = 0;
+	uint32_t a = 0x01;
+	for(uint8_t i = 0 ; i < 4 ; i++)
+	{
+		if(scheduleRelayAndSwitchTab[i])
+		{
+			TempRelay = TempRelay | a;
+		}
+		a = a << 1; // Mask bit shift
+	}
+	a = 0x01;  // reseting Mask to check from first bit in TempLights
+	for(uint8_t j = 4 ; j < 9 ; j++)
+	{
+		if(scheduleRelayAndSwitchTab[j])
+		{
+			TempLight = TempLight | a;
+		}
+		a = a << 1; // Mask bit shift
+	}
 
+	if(1 == NrOfSchedule)
+	{
+		eeprom_write(EEPROM_ADR_SHEDULE_1_RELAYS, &TempRelay, sizeof(TempRelay));
+		eeprom_write(EEPROM_ADR_SHEDULE_1_LIGHTS, &TempLight, sizeof(TempLight));
+	}
+	else if(2 == NrOfSchedule)
+	{
+		eeprom_write(EEPROM_ADR_SHEDULE_2_RELAYS, &TempRelay, sizeof(TempRelay));
+		eeprom_write(EEPROM_ADR_SHEDULE_2_LIGHTS, &TempLight, sizeof(TempLight));
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
