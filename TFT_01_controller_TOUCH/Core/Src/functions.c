@@ -684,16 +684,16 @@ void drawschedulePanel(uint8_t NrOfschedule)
 		  if(hourOffschedule2 > 23) hourOffschedule2 = 23;
 		  if(minuteOffschedule2 > 59) minuteOffschedule2 = 59;
 
-		  if((hourOnschedule2 < 10)&&(minuteOnschedule2 < 10))sprintf((char*)Msg, "ON:   0%d :0%d", hourOnschedule2, minuteOnschedule2);
-		  else if(hourOnschedule2 < 10) sprintf((char*)Msg, "ON:   0%d : %d", hourOnschedule2, minuteOnschedule2);
-		  else if (minuteOnschedule2 < 10) sprintf((char*)Msg, "ON:    %d :0%d", hourOnschedule2, minuteOnschedule2);
-		  else sprintf((char*)Msg, "ON:    %d : %d", hourOnschedule2, minuteOnschedule2);
+		  if((hourOnschedule2 < 10)&&(minuteOnschedule2 < 10))sprintf((char*)Msg, "ON:    0%d :0%d", hourOnschedule2, minuteOnschedule2);
+		  else if(hourOnschedule2 < 10) sprintf((char*)Msg, "ON:    0%d : %d", hourOnschedule2, minuteOnschedule2);
+		  else if (minuteOnschedule2 < 10) sprintf((char*)Msg, "ON:     %d :0%d", hourOnschedule2, minuteOnschedule2);
+		  else sprintf((char*)Msg, "ON:     %d : %d", hourOnschedule2, minuteOnschedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X, STRING_ON_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
-		  if((hourOffschedule2 < 10)&&(minuteOffschedule2 < 10))sprintf((char*)Msg, "OFF: 0%d :0%d", hourOffschedule2, minuteOffschedule2);
-		  else if(hourOffschedule2 < 10) sprintf((char*)Msg, "OFF: 0%d : %d", hourOffschedule2, minuteOffschedule2);
-		  else if (minuteOffschedule2 < 10) sprintf((char*)Msg, "OFF:  %d :0%d", hourOffschedule2, minuteOffschedule2);
-		  else sprintf((char*)Msg, "OFF:  %d : %d", hourOffschedule2, minuteOffschedule2);
+		  if((hourOffschedule2 < 10)&&(minuteOffschedule2 < 10))sprintf((char*)Msg, "OFF:  0%d :0%d", hourOffschedule2, minuteOffschedule2);
+		  else if(hourOffschedule2 < 10) sprintf((char*)Msg, "OFF:  0%d : %d", hourOffschedule2, minuteOffschedule2);
+		  else if (minuteOffschedule2 < 10) sprintf((char*)Msg, "OFF:   %d :0%d", hourOffschedule2, minuteOffschedule2);
+		  else sprintf((char*)Msg, "OFF:   %d : %d", hourOffschedule2, minuteOffschedule2);
 		  EF_PutString(Msg, STRING_ON_OFF_X+2, STRING_OFF_Y, ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 	  }
 }
@@ -1006,10 +1006,7 @@ void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
 
 }
 
-void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState)
-{
 
-}
 
 //
 // Function to wait but only if it is necessary

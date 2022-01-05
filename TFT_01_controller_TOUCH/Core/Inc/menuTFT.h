@@ -24,6 +24,8 @@
 #define LED_WS_SUN_BUTTON_COLOR ILI9341_CYAN
 #define SWITCH_ON_ACTIVITY_BUTTON_COLOR ILI9341_GREEN
 #define DAY_CHECK_SWITCH_COLOR ILI9341_RED
+#define DAY_CHECK_SWITCH_COLOR_OFF ILI9341_RED
+#define DAY_CHECK_SWITCH_COLOR_ON ILI9341_GREEN
 #define SHEDULE_ADD_HOUR_MINUTE_BUTTON_COLOR ILI9341_YELLOW
 
 //define position and size of button to change menu screen to RIGHT
@@ -201,6 +203,8 @@ void MenuTFTSchedule1ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y);
 void MenuTFTSchedule2ActivityDayOfWeekRow(uint16_t x, uint16_t y);
 void MenuTFTSchedule2ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
 void MenuTFTSchedule2ActivityHourMinuteOFFAdd(uint16_t x, uint16_t y);
+
+void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState);
 
 
 #endif /* INC_MENUTFT_H_ */

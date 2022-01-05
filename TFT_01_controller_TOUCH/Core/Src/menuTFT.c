@@ -1060,42 +1060,130 @@ void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y)
 	{
 		if(schedule1DayInWeekTab[0]) changeTFTScheduleDayOfWeek(1, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(1, 1);//if is OFF
+		schedule1DayInWeekTab[0] = !schedule1DayInWeekTab[0]; // update current state in tab holding state of day in week
 	}
 	//Tuesday - WT
 	else if((x >= DAY_CHECK_BUTTON_2_X)&&(x <= (DAY_CHECK_BUTTON_2_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule1DayInWeekTab[1]) changeTFTScheduleDayOfWeek(2, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(2, 1);//if is OFF
+		schedule1DayInWeekTab[1] = !schedule1DayInWeekTab[1];
 	}
 	//Wednesday - SR
 	else if((x >= DAY_CHECK_BUTTON_3_X)&&(x <= (DAY_CHECK_BUTTON_3_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule1DayInWeekTab[2]) changeTFTScheduleDayOfWeek(3, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(3, 1);//if is OFF
+		schedule1DayInWeekTab[2] = !schedule1DayInWeekTab[2];
 	}
 	//Thursday - CZ
 	else if((x >= DAY_CHECK_BUTTON_4_X)&&(x <= (DAY_CHECK_BUTTON_4_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule1DayInWeekTab[3]) changeTFTScheduleDayOfWeek(4, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(4, 1);//if is OFF
+		schedule1DayInWeekTab[3] = !schedule1DayInWeekTab[3];
 	}
 	//Friday - PT
 	else if((x >= DAY_CHECK_BUTTON_5_X)&&(x <= (DAY_CHECK_BUTTON_5_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule1DayInWeekTab[4]) changeTFTScheduleDayOfWeek(5, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(5, 1);//if is OFF
+		schedule1DayInWeekTab[4] = !schedule1DayInWeekTab[4];
 	}
 	//Saturday - SB
 	else if((x >= DAY_CHECK_BUTTON_6_X)&&(x <= (DAY_CHECK_BUTTON_6_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule1DayInWeekTab[5]) changeTFTScheduleDayOfWeek(6, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(6, 1);//if is OFF
+		schedule1DayInWeekTab[5] = !schedule1DayInWeekTab[5];
 	}
 	//Sunday - ND
 	else if((x >= DAY_CHECK_BUTTON_7_X)&&(x <= (DAY_CHECK_BUTTON_7_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule1DayInWeekTab[6]) changeTFTScheduleDayOfWeek(7, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(7, 1);//if is OFF
+		schedule1DayInWeekTab[6] = !schedule1DayInWeekTab[6];
+	}
+}
+
+void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState)
+{
+	if (1 == NrOfDay)	// if Monday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_1_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_1_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if (2== NrOfDay)	// if Tuesday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_2_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_2_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if (3== NrOfDay)	// if Wednesday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_3_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_3_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if (4== NrOfDay)	// if Thursday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_4_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_4_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if (5== NrOfDay)	// if Friday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_5_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_5_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if (6== NrOfDay)	// if Saturday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_6_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_6_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
+	}
+	else if (7== NrOfDay)	// If Sunday
+	{
+		if(0 == NewState)	// if turn off
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_7_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_OFF);
+		}
+		else	// if turn on
+		{
+			GFX_DrawFillRoundRectangle(DAY_CHECK_BUTTON_7_X+1, DAY_CHECK_BUTTON_Y+1, DAY_CHECK_BUTTON_W-2, DAY_CHECK_BUTTON_H-2, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR_ON);
+		}
 	}
 }
 
