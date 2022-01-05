@@ -5,6 +5,7 @@
 * [General info](#general-info)
 * [Screenshots](#screenshots)
 * [Technologies](#technologies)
+* [HARDWARE](#hardware)
 * [Features](#features)
 * [Status](#status)
 * [Inspiration](#inspiration)
@@ -31,8 +32,15 @@ Project is created with:
 * Image2Lcd v3.2
 
 
-## Code Examples
-
+## HARDWARE
+* 2x Blackpill STM32F411CEU6 
+* TFT LCD 2,4″ (240x320px) with ILI9341 controller - SPI
+* RTC DS3231 - I2C
+* EEPROM memory 1kb - I2C
+* BMP280 - I2C
+* DS18B20 - 1-WIRE
+* Ultrasonic distance sensor - DFRobot SEN0311 - UART
+* WS2812b - I2C
 
 ## Features
 * Menu on TFT Display - DONE
@@ -42,10 +50,11 @@ Project is created with:
 * Predefined Activities like feeding or cleaning - DONE
 * Display Pressure and Temperature inside and outside the aquarium  - DONE
 * Display current day of week, hour and minute and possibility to change them in RTC - DONE
-* Shedules - TODO
-* Measuring the water level in the aquarium - TODO
+* Measuring the water level in the aquarium - DONE
 
 ## To-do list
+* Shedules - TODO
+* Alarms - TODO
 
 ## Status
 Project is in progress and i will develop them to learn ARM and STM32.
