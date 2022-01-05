@@ -165,14 +165,6 @@ void EEPROM_ScheduleDayInWeekRead(uint8_t NrOfSchedule, uint8_t * scheduleDayInW
 // Function to update to EEPROM day which apply this schedule
 void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * scheduleDayInWeekTab)
 {
-//	//Todo! Sprawdzic czy bedzie dzialalo zeby zamianst "Mon" dać scheduleDayInWeekTab[0]...
-//		uint8_t Mon = scheduleDayInWeekTab[0];
-//		uint8_t Tue = scheduleDayInWeekTab[1];
-//		uint8_t Wed = scheduleDayInWeekTab[2];
-//		uint8_t Thu = scheduleDayInWeekTab[3];
-//		uint8_t Fri = scheduleDayInWeekTab[4];
-//		uint8_t Sat = scheduleDayInWeekTab[5];
-//		uint8_t Sun = scheduleDayInWeekTab[6];
 
 	uint8_t TempDayInWeek = 0;
 	uint32_t a = 0x01;
@@ -184,14 +176,6 @@ void EEPROM_ScheduleDayInWeekUpdate(uint8_t NrOfSchedule, const uint8_t * schedu
 		}
 		a = a << 1;
 	}
-
-//	if(scheduleDayInWeekTab[0]) TempDayInWeek | 0x01;
-//	if(scheduleDayInWeekTab[0]) TempDayInWeek | 0x01;
-//	if(scheduleDayInWeekTab[0]) TempDayInWeek | 0x01;
-//	if(scheduleDayInWeekTab[0]) TempDayInWeek | 0x01;
-//	if(scheduleDayInWeekTab[0]) TempDayInWeek | 0x01;
-//	if(scheduleDayInWeekTab[0]) TempDayInWeek | 0x01;
-
 
 	if(1 == NrOfSchedule)
 	{

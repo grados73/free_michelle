@@ -981,6 +981,8 @@ void Schedule2Activity()
 		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnSchedule2);
 		  EEPROM_ScheduleHourOffRead(2, &hourOffSchedule2);
 		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffSchedule2);
+		  EEPROM_ScheduleDayInWeekRead(2, schedule1DayInWeekTab);
+		  EEPROM_ScheduleRelayAndSwitchTabRead(2, schedule1RelayAndSwitchTab);
 		  ScheduleChangeFlag = 0;
 	}
 
@@ -1029,6 +1031,7 @@ void Schedule2Activity()
 				EEPROM_ScheduleMinuteOnUpdate(2, minuteOnSchedule2);
 				EEPROM_ScheduleHourOffUpdate(2, hourOffSchedule2);
 				EEPROM_ScheduleMinuteOffUpdate(2, minuteOffSchedule2);
+				EEPROM_ScheduleDayInWeekUpdate(2,  schedule2DayInWeekTab);
 
 				EF_SetFont(&arialBlack_20ptFontInfo);
 				sprintf((char*)Msg, " H2 ZMIENIONY       ");
@@ -1309,42 +1312,49 @@ void MenuTFTSchedule2ActivityDayOfWeekRow(uint16_t x, uint16_t y)
 	{
 		if(schedule2DayInWeekTab[0]) changeTFTScheduleDayOfWeek(1, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(1, 1);//if is OFF
+		schedule2DayInWeekTab[0] = !schedule2DayInWeekTab[0]; // update current state in tab holding state of day in week
 	}
 	//Tuesday - WT
 	else if((x >= DAY_CHECK_BUTTON_2_X)&&(x <= (DAY_CHECK_BUTTON_2_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule2DayInWeekTab[1]) changeTFTScheduleDayOfWeek(2, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(2, 1);//if is OFF
+		schedule2DayInWeekTab[1] = !schedule2DayInWeekTab[1]; // update current state in tab holding state of day in week
 	}
 	//Wednesday - SR
 	else if((x >= DAY_CHECK_BUTTON_3_X)&&(x <= (DAY_CHECK_BUTTON_3_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule2DayInWeekTab[2]) changeTFTScheduleDayOfWeek(3, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(3, 1);//if is OFF
+		schedule2DayInWeekTab[2] = !schedule2DayInWeekTab[2]; // update current state in tab holding state of day in week
 	}
 	//Thursday - CZ
 	else if((x >= DAY_CHECK_BUTTON_4_X)&&(x <= (DAY_CHECK_BUTTON_4_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule2DayInWeekTab[3]) changeTFTScheduleDayOfWeek(4, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(4, 1);//if is OFF
+		schedule2DayInWeekTab[3] = !schedule2DayInWeekTab[3]; // update current state in tab holding state of day in week
 	}
 	//Friday - PT
 	else if((x >= DAY_CHECK_BUTTON_5_X)&&(x <= (DAY_CHECK_BUTTON_5_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule2DayInWeekTab[4]) changeTFTScheduleDayOfWeek(5, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(5, 1);//if is OFF
+		schedule2DayInWeekTab[4] = !schedule2DayInWeekTab[4]; // update current state in tab holding state of day in week
 	}
 	//Saturday - SB
 	else if((x >= DAY_CHECK_BUTTON_6_X)&&(x <= (DAY_CHECK_BUTTON_6_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule2DayInWeekTab[5]) changeTFTScheduleDayOfWeek(6, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(6, 1);//if is OFF
+		schedule2DayInWeekTab[5] = !schedule2DayInWeekTab[5]; // update current state in tab holding state of day in week
 	}
 	//Sunday - ND
 	else if((x >= DAY_CHECK_BUTTON_7_X)&&(x <= (DAY_CHECK_BUTTON_7_X + DAY_CHECK_BUTTON_W)))
 	{
 		if(schedule2DayInWeekTab[6]) changeTFTScheduleDayOfWeek(7, 0);//if is ON
 		else changeTFTScheduleDayOfWeek(7, 1);//if is OFF
+		schedule2DayInWeekTab[6] = !schedule2DayInWeekTab[6]; // update current state in tab holding state of day in week
 	}
 }
 

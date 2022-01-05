@@ -571,7 +571,7 @@ void drawschedulePanel(uint8_t NrOfschedule)
 	uint8_t schedule2DayInWeekTab[7] = {0};
 	uint8_t schedule2RelayAndSwitchTab[9] = {0};
 	  //
-	  // Draw Rectangle to indicate day of week
+	  // Draw empty Rectangle to indicate day of week
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_1_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_2_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_3_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
@@ -581,14 +581,14 @@ void drawschedulePanel(uint8_t NrOfschedule)
 	  GFX_DrawRoundRectangle(DAY_CHECK_BUTTON_7_X, DAY_CHECK_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 
 	  // Restore from EEPROM chosen day for this schedule
-	  restoreTFTScheduleDayOfWeek(1);
+	  restoreTFTScheduleDayOfWeek(NrOfschedule);
 
 	  EF_SetFont(&arial_11ptFontInfo);
 	  sprintf((char*)Msg, "PN WT ŚR CZ PT SB ND");
 	  EF_PutString(Msg, DAY_CHECK_BUTTON_1_X, (DAY_CHECK_BUTTON_Y + 25), ILI9341_BLACK, BG_COLOR, ILI9341_LIGHTGREY);
 
 	  //
-	  // Draw Rectangle to indicate relay and lights
+	  // Draw empty Rectangle to indicate relay and lights
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_1_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_2_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
 	  GFX_DrawRoundRectangle(DAY_CHECK_RELAY_BUTTON_3_X, DAY_CHECK_RELAY_BUTTON_Y, DAY_CHECK_BUTTON_W, DAY_CHECK_BUTTON_H, DAY_CHECK_BUTTON_R, DAY_CHECK_SWITCH_COLOR);
