@@ -18,6 +18,9 @@ Aquarium hobby has been one of my hobbies for over 10 years, along with cars, sp
 Currently, the device is in a prototype version. It has been assembled on two prototype boards. The next version will have a dedicated PCB.
 ![Device photo](./Photo/1_urzadzenie_v0_1.jpg)
 
+Short wideo:
+https://youtu.be/HiZ6xpy-laI
+
 Currently, the software allows you to control the device and communicate with it through a 2.4" TFT screen, controlled by SPI. All commands are issued via the touch screen available on each of the 8 menu screens. 
 ![Screen photo](./Photo/0_Ekrany.jpg)
 
