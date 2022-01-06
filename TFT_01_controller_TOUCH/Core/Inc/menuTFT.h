@@ -217,5 +217,10 @@ void clockIncreaseSixHoursTenMinutes(uint16_t x, uint16_t y);
 void changeSwitchStatusTouch(uint8_t y);
 void changeLightsStatusTouch(uint8_t y);
 
+void predefinedActivityTouchAction(uint8_t y);
+
+void increaseNumberOfWSLedOnTFT(uint8_t x, uint8_t y);
+void changeTypeOfWSLights(uint8_t x, uint8_t y);
+
 
 #endif /* INC_MENUTFT_H_ */
