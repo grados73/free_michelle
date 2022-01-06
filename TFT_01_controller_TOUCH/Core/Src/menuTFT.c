@@ -887,14 +887,8 @@ void Schedule1Activity()
 {
 	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
 	{
-		  EEPROM_ScheduleHourOnRead(1, &hourOnSchedule1);
-		  EEPROM_ScheduleMinuteOnRead(1, &minuteOnSchedule1);
-		  EEPROM_ScheduleHourOffRead(1, &hourOffSchedule1);
-		  EEPROM_ScheduleMinuteOffRead(1, &minuteOffSchedule1);
-		  EEPROM_ScheduleDayInWeekRead(1, schedule1DayInWeekTab);
-		  EEPROM_ScheduleRelayAndSwitchTabRead(1, schedule1RelayAndSwitchTab);
-
-		  ScheduleChangeFlag = 0;
+		updateAllSchedulesInfo(1);
+		ScheduleChangeFlag = 0;
 	}
 
 	// Check if screen was touched
@@ -984,13 +978,8 @@ void Schedule2Activity()
 
 	if(1 == ScheduleChangeFlag) // initialization variables from eeprom, only once per change screen
 	{
-		  EEPROM_ScheduleHourOnRead(2, &hourOnSchedule2);
-		  EEPROM_ScheduleMinuteOnRead(2, &minuteOnSchedule2);
-		  EEPROM_ScheduleHourOffRead(2, &hourOffSchedule2);
-		  EEPROM_ScheduleMinuteOffRead(2, &minuteOffSchedule2);
-		  EEPROM_ScheduleDayInWeekRead(2, schedule1DayInWeekTab);
-		  EEPROM_ScheduleRelayAndSwitchTabRead(2, schedule1RelayAndSwitchTab);
-		  ScheduleChangeFlag = 0;
+		updateAllSchedulesInfo(2);
+		ScheduleChangeFlag = 0;
 	}
 
 	// Check if screen was touched
@@ -1732,3 +1721,28 @@ void MenuTFTSchedule2ActivityRelaysAndLightsRow(uint16_t x, uint16_t y)
 	}
 }
 
+//
+//Read All info about schedules
+void updateAllSchedulesInfo(uint8_t NrOfSchedule)
+{
+	if( 1 == NrOfSchedule)
+	{
+	  EEPROM_ScheduleHourOnRead(1, &hourOnSchedule1);
+	  EEPROM_ScheduleMinuteOnRead(1, &minuteOnSchedule1);
+	  EEPROM_ScheduleHourOffRead(1, &hourOffSchedule1);
+	  EEPROM_ScheduleMinuteOffRead(1, &minuteOffSchedule1);
+	  EEPROM_ScheduleDayInWeekRead(1, schedule1DayInWeekTab);
+	  EEPROM_ScheduleRelayAndSwitchTabRead(1, schedule1RelayAndSwitchTab);
+	}
+
+	else if ( 2 == NrOfSchedule)
+	{
+	  EEPROM_ScheduleHourOnRead(2, &hourOnSchedule2);
+	  EEPROM_ScheduleMinuteOnRead(2, &minuteOnSchedule2);
+	  EEPROM_ScheduleHourOffRead(2, &hourOffSchedule2);
+	  EEPROM_ScheduleMinuteOffRead(2, &minuteOffSchedule2);
+	  EEPROM_ScheduleDayInWeekRead(2, schedule1DayInWeekTab);
+	  EEPROM_ScheduleRelayAndSwitchTabRead(2, schedule1RelayAndSwitchTab);
+	}
+
+}

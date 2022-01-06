@@ -10,12 +10,14 @@
 #include "parser.h"
 
 #define EEPROM_ADDR     0xA0
-#define WRITE_TIMEOUT   6
+#define WRITE_TIMEOUT   6 // Time which we have to wait after write before we read
 
 static uint32_t last_write;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Basic function to work with I2C EEPROM
+//
 void eeprom_wait(void)
 {
     while (HAL_GetTick() - last_write <= WRITE_TIMEOUT)
@@ -343,7 +345,7 @@ void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff)
 }
 
 //
-// ON UPDATE
+// ON UPDATE IN EEPROM
 void EEPROM_ScheduleHourOnUpdate(uint8_t NrOfSchedule, uint8_t hourOn)
 {
 	uint8_t NewHour = hourOn;
@@ -358,7 +360,7 @@ void EEPROM_ScheduleMinuteOnUpdate(uint8_t NrOfSchedule, uint8_t minuteOn)
 }
 
 //
-// OFF UPDATE
+// OFF UPDATE IN EEPROM
 void EEPROM_ScheduleHourOffUpdate(uint8_t NrOfSchedule, uint8_t hourOff)
 {
 	uint8_t NewHour = hourOff;

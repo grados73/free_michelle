@@ -191,10 +191,10 @@ void TouchLightsActivity(void);
 void TouchClockActivity(void);
 void TouchPredefinedActivityActivity();
 void TouchWSLedActivity(void);
-void showSchedule1Panel();
-void showSchedule2Panel();
-void Schedule1Activity();
-void Schedule2Activity();
+void showSchedule1Panel(void);
+void showSchedule2Panel(void);
+void Schedule1Activity(void);
+void Schedule2Activity(void);
 
 void MenuTFTSchedule1ActivityDayOfWeekRow(uint16_t x, uint16_t y);
 void MenuTFTSchedule1ActivityHourMinuteONAdd(uint16_t x, uint16_t y);
@@ -208,6 +208,8 @@ void MenuTFTSchedule2ActivityRelaysAndLightsRow(uint16_t x, uint16_t y);
 
 void changeTFTScheduleDayOfWeek(uint8_t NrOfDay, uint8_t NewState);
 void changeTFTScheduleRelayLights(uint8_t NrOfRS, uint8_t NewState);
+
+void updateAllSchedulesInfo(uint8_t NrOfSchedule);
 
 
 #endif /* INC_MENUTFT_H_ */

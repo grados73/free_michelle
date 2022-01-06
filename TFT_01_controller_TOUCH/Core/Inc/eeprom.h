@@ -249,7 +249,7 @@ void EEPROM_ScheduleHourOffRead(uint8_t NrOfSchedule, uint8_t * hourOff);
 void EEPROM_ScheduleMinuteOffRead(uint8_t NrOfSchedule, uint8_t * minuteOff);
 
 //
-// Set Hour and Minute of ON and OFF in schedules
+// Set (Update) Hour and Minute of ON and OFF in schedules
 void EEPROM_ScheduleHourOnUpdate(uint8_t NrOfSchedule, uint8_t  hourOn);
 void EEPROM_ScheduleMinuteOnUpdate(uint8_t NrOfSchedule, uint8_t  minuteOn);
 void EEPROM_ScheduleHourOffUpdate(uint8_t NrOfSchedule, uint8_t  hourOff);

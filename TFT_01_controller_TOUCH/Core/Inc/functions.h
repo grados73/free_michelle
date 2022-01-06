@@ -108,11 +108,7 @@
 #define HEADER_UNDERLINE_POZ_Y 41
 #define HEADER_UNDERLINE_COLOR ILI9341_ORANGE
 
-
-
-
-uint8_t Msg[64];
-
+uint8_t Msg[64]; // Message to receive/send UART
 
 //
 // Prototype of functions
