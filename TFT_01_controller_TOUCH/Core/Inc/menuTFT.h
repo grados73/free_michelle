@@ -211,5 +211,11 @@ void changeTFTScheduleRelayLights(uint8_t NrOfRS, uint8_t NewState);
 
 void updateAllSchedulesInfo(uint8_t NrOfSchedule);
 
+void clockIncreaseOneHourAndMinute(uint16_t x, uint16_t y);
+void clockIncreaseSixHoursTenMinutes(uint16_t x, uint16_t y);
+
+void changeSwitchStatusTouch(uint8_t y);
+void changeLightsStatusTouch(uint8_t y);
+
 
 #endif /* INC_MENUTFT_H_ */
