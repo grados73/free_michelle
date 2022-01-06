@@ -76,6 +76,12 @@ void Error_Handler(void);
 #define TOUCH_IRQ_EXTI_IRQn EXTI9_5_IRQn
 /* USER CODE BEGIN Private defines */
 #define FEEDING_TIME_IN_S 5
+//
+// Place of display error messages
+#define ERROR_FILE_POZ_X 10
+#define ERROR_FILE_POZ_Y 20
+#define ERROR_FUNC_AND_LINE_POZ_X 10
+#define ERROR_FUNC_AND_LINE_POZ_Y 50
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

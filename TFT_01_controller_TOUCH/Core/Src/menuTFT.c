@@ -1008,7 +1008,7 @@ void Schedule2Activity()
 			if((x >= LEFT_BUTTON_X)&&(x <= (LEFT_BUTTON_X+LEFT_BUTTON_W))&&
 					(y >= LEFT_BUTTON_Y)&&(y <= (LEFT_BUTTON_Y + LEFT_BUTTON_H)))
 			{
-				State = MENUTFT_SCHEDULE_1;
+				State = MENUTFT_CLOCK;
 				StateChangeFlag = 1;
 			}
 

@@ -7,7 +7,6 @@
   * @purpose		: TFT touch display controller for communication interface with
   * 				  user for aquarium controller project named "FREE MICHELLE"
   * @todo			: Use confirmation of make orders
-  * 				: Read water LVL
   * 				: Read PH
   * 				: Schedule of activity (need EEPROM memory)
   * 				: Online access by ESP with push messages
@@ -147,8 +146,7 @@ int main(void)
   DS3231_Init(&hi2c1);
   DS3231_SetInterruptMode(DS3231_ALARM_INTERRUPT);
   DS3231_EnableOscillator(DS3231_ENABLED);
-
-
+  // EEPROM CHECK
   uint8_t result = 0;
   while (eeprom_read(0x01, &result, sizeof(result)) != HAL_OK)
   Error_Handler();
@@ -159,23 +157,27 @@ int main(void)
   while (1)
   {
 
+	  //
+	  // RECEIVE DATA FROM SECUND uC
+	  //
 	  if(UARTDMA_IsDataReceivedReady(&huartdma2))
 	  {
 		  UART_ParseLine(&huartdma2); // Parsing function
 	  }
 
 	  //
-	  // TRANSMIT
+	  // TRANSMIT DATA AND COMAND TO SECOND uC
 	  //
 	  UARTDMA_TransmitEvent(&huartdma2);
 
 	  //
-	  // TOUCH
+	  // TOUCH SCREEN
 	  //
 	  XPT2046_Task();
 
 	  //
 	  // CURRENT DISPLAYED SCREEN
+	  //
 	  MenuTFT();
 
     /* USER CODE END WHILE */
@@ -257,11 +259,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM11) // Update event one per 8 seconds
 	{
-		ChangeHourOnScreen();
+		ChangeHourOnScreen(); // Check if current showing hour are different from this from RTC and change it
 	}
 	if(htim->Instance == TIM10) // Update even each second - one per second 1/s
 	{
-		if(FeedingCounter >= FEEDING_TIME_IN_S)
+		if(FeedingCounter >= FEEDING_TIME_IN_S) // timer to count seconds from start feeding to turn off this activity
 		{
 			HAL_GPIO_TogglePin(BP_USER_LED_GPIO_Port, BP_USER_LED_Pin);
 			predefinedActivityKarmienie(0);
@@ -276,7 +278,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 // Output interrupt from GPIO etc. Callback
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	if(GPIO_Pin == TOUCH_IRQ_Pin)
+	if(GPIO_Pin == TOUCH_IRQ_Pin) // Interrupt from XPT2046 - touch screen controler
 	{
 		XPT2046_IRQ();
 	}
@@ -301,10 +303,10 @@ void Error_Handler(void)
 
 	ILI9341_ClearDisplay(ILI9341_RED);
 	EF_SetFont(&arial_11ptFontInfo);
-//	sprintf((char*)Msg, "Error in Function: %s\n", __FILE__);
-//	EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_RED);
-//	sprintf((char*)Msg, "Function: %s, Line: %d\n",__func__, (int)__LINE__);
-//	EF_PutString(Msg, TEMP_ZEW_POZ_X, TEMP_ZEW_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_RED);
+	sprintf((char*)Msg, "Error in Function: %s\n", __FILE__);
+	EF_PutString(Msg, ERROR_FILE_POZ_X, ERROR_FILE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_RED);
+	sprintf((char*)Msg, "Function: %s, Line: %d\n",__func__, (int)__LINE__);
+	EF_PutString(Msg, ERROR_FUNC_AND_LINE_POZ_X, ERROR_FUNC_AND_LINE_POZ_Y, ILI9341_BLACK, BG_COLOR, ILI9341_RED);
 
   __disable_irq();
 
