@@ -102,6 +102,7 @@ uint8_t system_init(){
 //
 	  GFX_DrawFillRoundRectangle(120, 190, 20, 20, 5, ILI9341_GREEN);
 	  	  SendComand(UCMD_PRES_1);	// ASK for current pressure
+	  	  updateAllSchedulesInfo(1); // Read all info about schedule 1
 
 			  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 			  LastTime = HAL_GetTick();
@@ -122,7 +123,9 @@ uint8_t system_init(){
 //Fifth step of initialization
 //
 	  GFX_DrawFillRoundRectangle(180, 190, 20, 20, 5, ILI9341_GREEN);
-	  	  	  SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
+	  	  	SendComand(UCMD_TEMP_1);	// ASK for current temperature outside
+	  	  	updateAllSchedulesInfo(2); // Read all info about schedule 2
+
 			  initWait(ONE_MODULE_INIT_TIME_IN_MS);
 			  LastTime = HAL_GetTick();
 
@@ -144,7 +147,6 @@ uint8_t system_init(){
 
 	  return 1; // TODO! DODAĆ SPRAWDZENIE POPRAWNOŚCI INICJALIZACJI I ZWRÓCENIE 1 / 0
 }
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -629,8 +631,6 @@ void drawschedulePanel(uint8_t NrOfschedule)
 	  sprintf((char*)Msg, "+10M");
 	  EF_PutString(Msg, (TEN_MINUTE_ADD_SHEDULE_X+1), (HOUR_MINUTE_OFF_ADD_SHEDULE_Y + 3), ILI9341_BLACK, BG_TRANSPARENT, SHEDULE_ADD_HOUR_MINUTE_BUTTON_COLOR);
 
-	  //TODO: ADD READ FROM EEPROM INFO ABOUT DAY OF WEEK, HH:MM AND RELAYS AND LIGHTS!
-
 	  //
 	  // Display hour and minute ON and OFF
 
@@ -758,7 +758,6 @@ void showSchedule2Panel()
 //
 // Change displayed time, if is other than current time
 //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ChangeHourOnScreen()
 {
 	  uint8_t CHour = DS3231_GetHour();
@@ -993,15 +992,6 @@ void drawCurrentStateOfLights()
 	  }
 }
 
-void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab)
-{
-
-}
-
-void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab)
-{
-
-}
 
 //
 // Restore on TFT screen rectangle indicate each day of week, from EEPROM
@@ -1054,8 +1044,6 @@ void restoreTFTScheduleRelayLights(uint8_t NrOfSchedule)
 	else changeTFTScheduleRelayLights(9, 0);
 
 }
-
-
 
 //
 // Function to wait but only if it is necessary

@@ -132,9 +132,6 @@ void drawCurrentStateOfLights();
 void drawCurrentStateOfSwitches();
 void drawSchedulePanel(uint8_t NrOfSchedule);
 
-void updateTFTScheduleDayOfWeek(uint8_t * scheduleDayInWeekTab);
-void updateTFTScheduleRelayLights(uint8_t * scheduleRelayAndSwitchTab);
-
 void restoreTFTScheduleDayOfWeek(uint8_t NrOfSchedule);
 void restoreTFTScheduleRelayLights(uint8_t NrOfSchedule);
 
