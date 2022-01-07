@@ -83,7 +83,7 @@ void Error_Handler(void);
 #define LIGHT_1_Pin GPIO_PIN_7
 #define LIGHT_1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+#define DATA_RELEASE_TIME 10 // time in seconds every time the refresh of the environmental data will be do
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

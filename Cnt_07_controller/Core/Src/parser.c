@@ -104,7 +104,7 @@ void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma)
 
 		if(!UARTDMA_GetLineFromReceiveBuffer(huartdma, BufferReceive))
 		{
-
+			UartSendErrorInfo(1);
 		}
 
 		UART_CountDistance(Tab);
@@ -157,43 +157,6 @@ uint32_t RecalculateDistance(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM)
 	return Distance;
 }
 
-void UART_DistanceParse()
-{
-	uint32_t PomocniczyPP[5] = {0};
-    uint8_t i,j; // Iterators
-
-	for(i = 0; i<5; i++) // 4 parametry sa oczekiwane - numer przekaznika i stan
-	{
-		char* ParsePointer = strtok(NULL, "0x"); // Look for next token or end of string
-
-				if(strlen(ParsePointer) > 0) // If string exists
-				{
-
-		            for(j=0; j<2; j++) // Loop over all chars in current strong-block
-						{
-
-		                        if(ParsePointer[j] == 'a') PomocniczyPP[j] = 10;
-		                        else if(ParsePointer[j] == 'b') PomocniczyPP[j] = 11;
-		                        else if(ParsePointer[j] == 'c') PomocniczyPP[j] = 12;
-		                        else if(ParsePointer[j] == 'd') PomocniczyPP[j] = 13;
-		                        else if(ParsePointer[j] == 'e') PomocniczyPP[j] = 14;
-		                        else if(ParsePointer[j] == 'f') PomocniczyPP[j] = 15;
-		                        else if(ParsePointer[j] == '1') PomocniczyPP[j] = 1;
-		                        else if(ParsePointer[j] == '2') PomocniczyPP[j] = 2;
-		                        else if(ParsePointer[j] == '3') PomocniczyPP[j] = 3;
-		                        else if(ParsePointer[j] == '4') PomocniczyPP[j] = 4;
-		                        else if(ParsePointer[j] == '5') PomocniczyPP[j] = 5;
-		                        else if(ParsePointer[j] == '6') PomocniczyPP[j] = 6;
-		                        else if(ParsePointer[j] == '7') PomocniczyPP[j] = 7;
-		                        else if(ParsePointer[j] == '8') PomocniczyPP[j] = 8;
-		                        else if(ParsePointer[j] == '9') PomocniczyPP[j] = 9;
-		                        else if(ParsePointer[j] == '0') PomocniczyPP[j] = 0;
-		                        else PomocniczyPP[j] = 0;
-		                }
-		                Liczba[i] = PomocniczyPP[0]*16+PomocniczyPP[1];
-				}
-	}
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -644,4 +607,17 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan)
 
 	sprintf(Message, "ACHLIGHT=%d,%d,DONE\n", LightNumber, NowyStan); // Potwierdzenie wykonania polecenia
 	UARTDMA_Print(&huartdma2, Message); // Print message
+}
+
+//
+// SENDING INFORMATION ABOUT ERRORs
+//
+void UartSendErrorInfo(uint8_t NrOfSection)
+{
+	if( 1 == NrOfSection)
+	{
+	sprintf(Message, "ERROR=DISTMESURE\n"); // Potwierdzenie wykonania polecenia
+	UARTDMA_Print(&huartdma2, Message); // Print message
+	}
+
 }

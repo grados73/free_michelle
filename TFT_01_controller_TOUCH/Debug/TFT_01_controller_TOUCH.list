@@ -13343,7 +13343,7 @@ void TouchWSLedActivity(void)
  8006166:	f002 f841 	bl	80081ec <increaseNumberOfWSLedOnTFT>
  800616a:	e007      	b.n	800617c <TouchWSLedActivity+0xa8>
 				//
-				// Check if it is second line button to change LEDs to WHITE
+				// Check if it is second line button to change LEDs to WHITE // BLUE // ETC
 				//
 				else
 				{

@@ -40,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DATA_RELEASE_TIME 10 // time in seconds every time the refresh of the environmental data will be do
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -222,7 +222,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		BMPResults = temp_pressure_measurement(); // Read Temperature and Pressure from sensor
 		CTemp = BMPResults.Temp;
 		CPressure = BMPResults.Pressure;
-		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Connect! It have to stay.
+		HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin); // Connect! It must stay.
 
 		if (RefreshMeasurementDataCounter == (DATA_RELEASE_TIME - 1)) // one second before sending current parameters
 		{

@@ -45,8 +45,6 @@ void UART_ParseAnsStateStatus();
 void UART_ParseAnsLightStatus();
 
 void UART_DistanceSensorParseLine(UARTDMA_HandleTypeDef *huartdma);
-void UART_DistanceParse();
-
 
 void SwitchMotorRegular();
 
@@ -58,6 +56,8 @@ void ZmienStanSwiatlaRoutine(uint8_t NrSwiatla, uint8_t Stan);
 void UART_CountDistance(uint8_t * Tab);
 uint8_t CheckSum(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM);
 uint32_t RecalculateDistance(uint8_t DATA_H, uint8_t DATA_L, uint8_t SUM);
+
+void UartSendErrorInfo(uint8_t NrOfSection);
 
 
 
