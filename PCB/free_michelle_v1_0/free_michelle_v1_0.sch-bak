@@ -35,24 +35,4 @@ F 3 "" H 8200 1500 50  0001 C CNN
 	1    7400 2500
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3550 2800 4000 2800
-Wire Wire Line
-	4000 2800 4000 1000
-Wire Wire Line
-	4000 1000 8700 1000
-Wire Wire Line
-	8700 1000 8700 2700
-Wire Wire Line
-	8700 2700 8300 2700
-Wire Wire Line
-	3550 2700 3900 2700
-Wire Wire Line
-	3900 2700 3900 900 
-Wire Wire Line
-	3900 900  8800 900 
-Wire Wire Line
-	8800 900  8800 2800
-Wire Wire Line
-	8800 2800 8300 2800
 $EndSCHEMATC
