@@ -142,7 +142,7 @@ int main(void)
   UARTDMA_Init(&huartdma2, &huart2);
   // TFT touch controller INIT
   XPT2046_Init(&hspi3, EXTI9_5_IRQn);
-  // RTC Initialization
+  // RTC Initialization - I2C1
   DS3231_Init(&hi2c1);
   DS3231_SetInterruptMode(DS3231_ALARM_INTERRUPT);
   DS3231_EnableOscillator(DS3231_ENABLED);
