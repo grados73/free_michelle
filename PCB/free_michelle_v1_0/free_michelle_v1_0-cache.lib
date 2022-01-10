@@ -161,11 +161,11 @@ X +3V3 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# grad73_library_24AA01
+# free_michelle_v1_0-cache_grad73_library_24AA01
 #
-DEF grad73_library_24AA01 U 0 40 Y Y 1 F N
+DEF free_michelle_v1_0-cache_grad73_library_24AA01 U 0 40 Y Y 1 F N
 F0 "U" 0 0 50 H V C BNN
-F1 "grad73_library_24AA01" 0 0 50 H V C TNN
+F1 "free_michelle_v1_0-cache_grad73_library_24AA01" 0 0 50 H V C TNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -241,6 +241,27 @@ X PA0 6 900 -500 200 L 50 50 1 1 B
 X PA1 7 900 -400 200 L 50 50 1 1 B
 X PA2 8 900 -300 200 L 50 50 1 1 B
 X PA3 9 900 -200 200 L 50 50 1 1 B
+ENDDRAW
+ENDDEF
+#
+# grad73_library_LD1117V33
+#
+DEF grad73_library_LD1117V33 U 0 10 Y Y 1 F N
+F0 "U" -150 125 50 H V C CNN
+F1 "grad73_library_LD1117V33" 0 125 50 H V L CNN
+F2 "" 25 -150 50 H I L CIN
+F3 "" 0 -50 50 H I C CNN
+ALIAS L7806_copy L7808_copy L7885_copy L7809_copy L7812_copy L7815_copy L7818_copy L7824_copy
+$FPLIST
+ TO?252*
+ TO?263*
+ TO?220*
+$ENDFPLIST
+DRAW
+S -200 75 200 -200 0 1 10 f
+X IN 1 -300 0 100 R 50 50 1 1 W
+X GND 2 0 -300 100 U 50 50 1 1 W
+X OUT 3 300 0 100 L 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
