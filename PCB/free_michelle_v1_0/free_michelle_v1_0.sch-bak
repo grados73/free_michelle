@@ -683,7 +683,7 @@ L free_michelle_v1_0-cache:grad73_library_24AA01 U?
 U 1 1 61E51F54
 P 2140 7830
 F 0 "U?" H 2165 7945 50  0000 C CNN
-F 1 "grad73_library_24AA01" H 2165 7854 50  0000 C CNN
+F 1 "EEPROM_24AA01" H 2165 7854 50  0000 C CNN
 F 2 "" H 2140 7830 50  0001 C CNN
 F 3 "" H 2140 7830 50  0001 C CNN
 	1    2140 7830
@@ -883,8 +883,6 @@ Connection ~ 680  4100
 Wire Wire Line
 	680  4100 680  4130
 Wire Wire Line
-	2450 3800 2450 4000
-Wire Wire Line
 	2450 4000 800  4000
 Wire Wire Line
 	800  4000 800  3500
@@ -942,4 +940,105 @@ Wire Wire Line
 Connection ~ 8810 1400
 Wire Wire Line
 	8810 1400 8810 3660
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 61F2C264
+P 2550 4600
+F 0 "J?" V 2704 4312 50  0000 R CNN
+F 1 "SW" V 2613 4312 50  0000 R CNN
+F 2 "" H 2550 4600 50  0001 C CNN
+F 3 "~" H 2550 4600 50  0001 C CNN
+	1    2550 4600
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2450 3800 2450 4000
+Connection ~ 2450 4000
+Wire Wire Line
+	2450 4000 2450 4400
+Wire Wire Line
+	2550 3800 2550 4400
+Wire Wire Line
+	2650 3800 2650 4400
+Wire Wire Line
+	2750 4100 2750 4400
+Connection ~ 2750 4100
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 61F4F876
+P 10140 4650
+F 0 "J?" V 10294 4362 50  0000 R CNN
+F 1 "SW" V 10203 4362 50  0000 R CNN
+F 2 "" H 10140 4650 50  0001 C CNN
+F 3 "~" H 10140 4650 50  0001 C CNN
+	1    10140 4650
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	10040 4100 10040 4450
+Connection ~ 10040 4100
+Wire Wire Line
+	10140 3960 10140 4450
+Wire Wire Line
+	10240 3960 10240 4450
+Wire Wire Line
+	10340 4200 10340 4450
+Connection ~ 10340 4200
+$Comp
+L grad73_library:BMP280 U?
+U 1 1 61F880B9
+P 9150 5490
+F 0 "U?" H 9133 5555 50  0000 C CNN
+F 1 "BMP280" H 9133 5464 50  0000 C CNN
+F 2 "" H 9150 5440 50  0001 C CNN
+F 3 "" H 9150 5440 50  0001 C CNN
+	1    9150 5490
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61F9233B
+P 9500 5500
+F 0 "#PWR?" H 9500 5350 50  0001 C CNN
+F 1 "+3.3V" H 9515 5673 50  0000 C CNN
+F 2 "" H 9500 5500 50  0001 C CNN
+F 3 "" H 9500 5500 50  0001 C CNN
+	1    9500 5500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9300 5690 9500 5690
+Wire Wire Line
+	9500 5690 9500 5500
+$Comp
+L power:GND #PWR?
+U 1 1 61F9BBC2
+P 9500 6400
+F 0 "#PWR?" H 9500 6150 50  0001 C CNN
+F 1 "GND" H 9505 6227 50  0000 C CNN
+F 2 "" H 9500 6400 50  0001 C CNN
+F 3 "" H 9500 6400 50  0001 C CNN
+	1    9500 6400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9300 5790 9500 5790
+Wire Wire Line
+	9500 5790 9500 6400
+Text GLabel 9600 5890 2    39   Input ~ 0
+BMP_SCL_PB8
+Text GLabel 9600 5990 2    39   Input ~ 0
+BMP_SDA_PB9
+Wire Wire Line
+	9600 5890 9300 5890
+Wire Wire Line
+	9600 5990 9300 5990
+Text GLabel 8540 3260 0    39   Input ~ 0
+BMP_SCL_PB8
+Wire Wire Line
+	8540 3260 9340 3260
+Text GLabel 8540 3360 0    39   Input ~ 0
+BMP_SDA_PB9
+Wire Wire Line
+	8540 3360 9340 3360
 $EndSCHEMATC

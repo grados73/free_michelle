@@ -1,5 +1,10 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP BMP280
+D BMP280 Bosh na pcb
+K bmp280 bosh
+$ENDCMP
+#
 $CMP L7806_copy
 D Positive 1.5A 35V Linear Regulator, Fixed Output 6V, TO-220/TO-263/TO-252
 K Voltage Regulator 1.5A Positive
