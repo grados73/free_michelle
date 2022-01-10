@@ -679,7 +679,7 @@ F 3 "" H 15000 1930 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L free_michelle_v1_0-cache:grad73_library_24AA01 U?
+L free_michelle_v1_0-rescue:grad73_library_24AA01-free_michelle_v1_0-cache U?
 U 1 1 61E51F54
 P 2140 7830
 F 0 "U?" H 2165 7945 50  0000 C CNN
@@ -1044,17 +1044,6 @@ Wire Wire Line
 NoConn ~ 9300 6090
 NoConn ~ 9300 6190
 $Comp
-L Connector:Conn_01x03_Male J?
-U 1 1 61FEF438
-P 12700 6000
-F 0 "J?" H 12808 6281 50  0000 C CNN
-F 1 "WS2812b" H 12808 6190 50  0000 C CNN
-F 2 "" H 12700 6000 50  0001 C CNN
-F 3 "~" H 12700 6000 50  0001 C CNN
-	1    12700 6000
-	-1   0    0    1   
-$EndComp
-$Comp
 L power:+5VP #PWR?
 U 1 1 61FF0CBC
 P 12600 1180
@@ -1221,4 +1210,70 @@ Wire Wire Line
 	11600 5340 11600 5300
 Wire Wire Line
 	11900 5600 11900 6000
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 622B6E8C
+P 12700 6100
+F 0 "J?" H 12672 5982 50  0000 R CNN
+F 1 "WS2812b" H 12672 6073 50  0000 R CNN
+F 2 "" H 12700 6100 50  0001 C CNN
+F 3 "~" H 12700 6100 50  0001 C CNN
+	1    12700 6100
+	-1   0    0    1   
+$EndComp
+NoConn ~ 12500 6200
+$Comp
+L Connector:Conn_01x04_Male J?
+U 1 1 622CF0D8
+P 14660 6100
+F 0 "J?" H 14632 5982 50  0000 R CNN
+F 1 "DS18B20" H 14632 6073 50  0000 R CNN
+F 2 "" H 14660 6100 50  0001 C CNN
+F 3 "~" H 14660 6100 50  0001 C CNN
+	1    14660 6100
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 622CFE05
+P 14300 5800
+F 0 "#PWR?" H 14300 5650 50  0001 C CNN
+F 1 "+5V" H 14315 5973 50  0000 C CNN
+F 2 "" H 14300 5800 50  0001 C CNN
+F 3 "" H 14300 5800 50  0001 C CNN
+	1    14300 5800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14460 5900 14300 5900
+Wire Wire Line
+	14300 5900 14300 5800
+$Comp
+L power:GND #PWR?
+U 1 1 622DBDAF
+P 14300 6300
+F 0 "#PWR?" H 14300 6050 50  0001 C CNN
+F 1 "GND" H 14305 6127 50  0000 C CNN
+F 2 "" H 14300 6300 50  0001 C CNN
+F 3 "" H 14300 6300 50  0001 C CNN
+	1    14300 6300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14300 6300 14300 6100
+Wire Wire Line
+	14300 6100 14460 6100
+Text GLabel 14100 6000 0    39   Input ~ 0
+DS18B20_1WIRE_PA15
+Wire Wire Line
+	14460 6000 14100 6000
+NoConn ~ 14460 6200
+Wire Wire Line
+	9340 2260 8600 2260
+Text GLabel 8600 2260 0    39   Input ~ 0
+WS2812b_PA9
+Text GLabel 8590 2660 0    39   Input ~ 0
+DS18B20_1WIRE_PA15
+Wire Wire Line
+	8590 2660 9340 2660
 $EndSCHEMATC
