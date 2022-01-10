@@ -86,6 +86,42 @@ X GND 9 0 -400 100 U 50 50 1 1 P N
 ENDDRAW
 ENDDEF
 #
+# free_michelle_v1_0-cache_+3.3V
+#
+DEF free_michelle_v1_0-cache_+3.3V #PWR 0 0 Y Y 1 F P
+F0 "#PWR" 0 -150 50 H I C CNN
+F1 "free_michelle_v1_0-cache_+3.3V" 0 140 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+ALIAS +3.3V
+DRAW
+P 2 0 1 0 -30 50 0 100 N
+P 2 0 1 0 0 0 0 100 N
+P 2 0 1 0 0 100 30 50 N
+X +3V3 1 0 0 0 U 50 50 1 1 W N
+ENDDRAW
+ENDDEF
+#
+# grad73_library_24AA01
+#
+DEF grad73_library_24AA01 U 0 40 Y Y 1 F N
+F0 "U" 0 0 50 H V C BNN
+F1 "grad73_library_24AA01" 0 0 50 H V C TNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+S -200 -50 250 -550 0 1 0 f
+X A0 1 -300 -150 100 R 50 50 1 1 B
+X A1 2 -300 -250 100 R 50 50 1 1 B
+X A2 3 -300 -350 100 R 50 50 1 1 B
+X VSS 4 -300 -450 100 R 50 50 1 1 W
+X SDA 5 350 -450 100 L 50 50 1 1 B
+X SCL 6 350 -350 100 L 50 50 1 1 B
+X WP 7 350 -250 100 L 50 50 1 1 B
+X VCC 8 350 -150 100 L 50 50 1 1 W
+ENDDRAW
+ENDDEF
+#
 # grad73_library_BlackPill_STM32F4x1_grados73
 #
 DEF grad73_library_BlackPill_STM32F4x1_grados73 U 0 40 Y Y 1 F N
@@ -185,7 +221,6 @@ F0 "#PWR" 0 -150 50 H I C CNN
 F1 "power_+3.3V" 0 140 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
-ALIAS +3.3V
 DRAW
 P 2 0 1 0 -30 50 0 100 N
 P 2 0 1 0 0 0 0 100 N

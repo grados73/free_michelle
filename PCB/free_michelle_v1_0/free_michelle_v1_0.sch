@@ -447,4 +447,119 @@ Wire Wire Line
 Connection ~ 4750 5430
 Wire Wire Line
 	4750 5430 4780 5430
+$Comp
+L grad73_library:24AA01 U?
+U 1 1 61DD6889
+P 2240 7320
+F 0 "U?" H 2265 7435 50  0000 C CNN
+F 1 "24AA01" H 2265 7344 50  0000 C CNN
+F 2 "" H 2240 7320 50  0001 C CNN
+F 3 "" H 2240 7320 50  0001 C CNN
+	1    2240 7320
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 61DD74E4
+P 1800 8030
+F 0 "#PWR?" H 1800 7780 50  0001 C CNN
+F 1 "GND" H 1805 7857 50  0000 C CNN
+F 2 "" H 1800 8030 50  0001 C CNN
+F 3 "" H 1800 8030 50  0001 C CNN
+	1    1800 8030
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 7770 1940 7770
+Wire Wire Line
+	1800 7770 1800 7900
+Wire Wire Line
+	2590 7570 2650 7570
+Wire Wire Line
+	2650 7570 2650 7900
+Wire Wire Line
+	2650 7900 1800 7900
+Connection ~ 1800 7900
+Wire Wire Line
+	1800 7900 1800 8030
+$Comp
+L free_michelle_v1_0-cache:+3.3V #PWR?
+U 1 1 61DBFF7C
+P 2700 7300
+F 0 "#PWR?" H 2700 7150 50  0001 C CNN
+F 1 "+3.3V" H 2715 7473 50  0000 C CNN
+F 2 "" H 2700 7300 50  0001 C CNN
+F 3 "" H 2700 7300 50  0001 C CNN
+	1    2700 7300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2590 7470 2700 7470
+Wire Wire Line
+	2700 7470 2700 7380
+NoConn ~ 1940 7470
+NoConn ~ 1940 7570
+NoConn ~ 1940 7670
+Text GLabel 3480 7770 2    39   Input ~ 0
+EEPROM_SDA_PB8
+Text GLabel 1600 3100 0    39   Input ~ 0
+EEPROM_SDA_PB8
+Wire Wire Line
+	1600 3100 1750 3100
+Text GLabel 3480 7670 2    39   Input ~ 0
+EEPROM_SCL_PA8
+Text GLabel 1590 2000 0    39   Input ~ 0
+EEPROM_SCL_PA8
+Wire Wire Line
+	1590 2000 1750 2000
+Wire Wire Line
+	2590 7670 2800 7670
+Wire Wire Line
+	2590 7770 3090 7770
+$Comp
+L Device:R_Small R4
+U 1 1 61DDD494
+P 2800 7500
+F 0 "R4" H 2859 7546 50  0000 L CNN
+F 1 "4K7" H 2859 7455 50  0000 L CNN
+F 2 "" H 2800 7500 50  0001 C CNN
+F 3 "~" H 2800 7500 50  0001 C CNN
+	1    2800 7500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R5
+U 1 1 61DDDE8B
+P 3090 7500
+F 0 "R5" H 3149 7546 50  0000 L CNN
+F 1 "4K7" H 3149 7455 50  0000 L CNN
+F 2 "" H 3090 7500 50  0001 C CNN
+F 3 "~" H 3090 7500 50  0001 C CNN
+	1    3090 7500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 7600 2800 7670
+Connection ~ 2800 7670
+Wire Wire Line
+	2800 7670 3480 7670
+Wire Wire Line
+	3090 7600 3090 7770
+Connection ~ 3090 7770
+Wire Wire Line
+	3090 7770 3480 7770
+Wire Wire Line
+	2800 7400 2800 7380
+Wire Wire Line
+	2800 7380 2700 7380
+Connection ~ 2700 7380
+Wire Wire Line
+	2700 7380 2700 7330
+Wire Wire Line
+	3090 7400 3090 7330
+Wire Wire Line
+	3090 7330 2700 7330
+Connection ~ 2700 7330
+Wire Wire Line
+	2700 7330 2700 7300
 $EndSCHEMATC

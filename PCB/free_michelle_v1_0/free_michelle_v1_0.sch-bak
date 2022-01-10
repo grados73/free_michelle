@@ -265,18 +265,14 @@ F 3 "http://datasheets.maximintegrated.com/en/ds/DS3231.pdf" H 5550 5680 50  000
 	1    0    0    -1  
 $EndComp
 NoConn ~ 5780 5430
-Text GLabel 4620 5430 0    39   Input ~ 0
+Text GLabel 4440 5430 0    39   Input ~ 0
 DS3231_SCL_PB6
 Text GLabel 1600 2900 0    39   Input ~ 0
 DS3231_SCL_PB6
 Wire Wire Line
 	1600 2900 1750 2900
-Wire Wire Line
-	4620 5430 4780 5430
-Text GLabel 4620 5530 0    39   Input ~ 0
+Text GLabel 4440 5530 0    39   Input ~ 0
 DS3231_SDA_PB7
-Wire Wire Line
-	4620 5530 4780 5530
 Text GLabel 1600 3000 0    39   Input ~ 0
 DS3231_SDA_PB7
 Wire Wire Line
@@ -359,7 +355,7 @@ Wire Wire Line
 	5950 4820 5180 4820
 Connection ~ 5180 4820
 Wire Wire Line
-	5180 4820 5180 5230
+	5180 4820 5180 4870
 Wire Wire Line
 	5280 6280 5280 6380
 Wire Wire Line
@@ -401,4 +397,89 @@ Wire Wire Line
 	11540 1000 11540 2860
 Wire Wire Line
 	4000 1000 11540 1000
+$Comp
+L Device:R_Small R2
+U 1 1 61DB60FA
+P 4510 5040
+F 0 "R2" H 4451 4994 50  0000 R CNN
+F 1 "4k7" H 4451 5085 50  0000 R CNN
+F 2 "" H 4510 5040 50  0001 C CNN
+F 3 "~" H 4510 5040 50  0001 C CNN
+	1    4510 5040
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R_Small R3
+U 1 1 61DC4213
+P 4750 5030
+F 0 "R3" H 4691 4984 50  0000 R CNN
+F 1 "4k7" H 4691 5075 50  0000 R CNN
+F 2 "" H 4750 5030 50  0001 C CNN
+F 3 "~" H 4750 5030 50  0001 C CNN
+	1    4750 5030
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4440 5530 4780 5530
+Wire Wire Line
+	4440 5430 4510 5430
+Wire Wire Line
+	4510 5140 4510 5430
+Connection ~ 4510 5430
+Wire Wire Line
+	4510 5430 4750 5430
+Wire Wire Line
+	4510 4940 4510 4870
+Wire Wire Line
+	4510 4870 5180 4870
+Connection ~ 5180 4870
+Wire Wire Line
+	5180 4870 5180 4910
+Wire Wire Line
+	4750 4930 4750 4910
+Wire Wire Line
+	4750 4910 5180 4910
+Connection ~ 5180 4910
+Wire Wire Line
+	5180 4910 5180 5230
+Wire Wire Line
+	4750 5130 4750 5430
+Connection ~ 4750 5430
+Wire Wire Line
+	4750 5430 4780 5430
+$Comp
+L grad73_library:24AA01 U?
+U 1 1 61DD6889
+P 2240 7320
+F 0 "U?" H 2265 7435 50  0000 C CNN
+F 1 "24AA01" H 2265 7344 50  0000 C CNN
+F 2 "" H 2240 7320 50  0001 C CNN
+F 3 "" H 2240 7320 50  0001 C CNN
+	1    2240 7320
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 61DD74E4
+P 1800 8030
+F 0 "#PWR?" H 1800 7780 50  0001 C CNN
+F 1 "GND" H 1805 7857 50  0000 C CNN
+F 2 "" H 1800 8030 50  0001 C CNN
+F 3 "" H 1800 8030 50  0001 C CNN
+	1    1800 8030
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 7770 1940 7770
+Wire Wire Line
+	1800 7770 1800 7900
+Wire Wire Line
+	2590 7570 2650 7570
+Wire Wire Line
+	2650 7570 2650 7900
+Wire Wire Line
+	2650 7900 1800 7900
+Connection ~ 1800 7900
+Wire Wire Line
+	1800 7900 1800 8030
 $EndSCHEMATC
