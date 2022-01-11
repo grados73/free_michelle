@@ -58,11 +58,13 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define BP_USER_LED_Pin GPIO_PIN_13
-#define BP_USER_LED_GPIO_Port GPIOC
 #define RTC_IRQ_Pin GPIO_PIN_4
 #define RTC_IRQ_GPIO_Port GPIOA
 #define RTC_IRQ_EXTI_IRQn EXTI4_IRQn
+#define nRF_CE_Pin GPIO_PIN_1
+#define nRF_CE_GPIO_Port GPIOB
+#define nRF_IRQ_Pin GPIO_PIN_2
+#define nRF_IRQ_GPIO_Port GPIOB
 #define TOUCH_CS_Pin GPIO_PIN_10
 #define TOUCH_CS_GPIO_Port GPIOB
 #define TFT_CS_Pin GPIO_PIN_12
@@ -76,6 +78,10 @@ void Error_Handler(void);
 #define TOUCH_IRQ_Pin GPIO_PIN_9
 #define TOUCH_IRQ_GPIO_Port GPIOA
 #define TOUCH_IRQ_EXTI_IRQn EXTI9_5_IRQn
+#define CSN_nRF_Pin GPIO_PIN_11
+#define CSN_nRF_GPIO_Port GPIOA
+#define USART1_TX_ESP_Pin GPIO_PIN_15
+#define USART1_TX_ESP_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 #define FEEDING_TIME_IN_S 5
 //
