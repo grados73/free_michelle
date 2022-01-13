@@ -160,7 +160,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PA2     ------> USART2_TX
     PA3     ------> USART2_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
+    GPIO_InitStruct.Pin = USART2_TX_2uC_Pin|USART2_RX_2uC_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -224,7 +224,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PA11     ------> USART6_TX
     PA12     ------> USART6_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12;
+    GPIO_InitStruct.Pin = USART6_TX_A02YYUW_Pin|USART6_RX_A02YYUW_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -306,7 +306,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     PA2     ------> USART2_TX
     PA3     ------> USART2_RX
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_3);
+    HAL_GPIO_DeInit(GPIOA, USART2_TX_2uC_Pin|USART2_RX_2uC_Pin);
 
     /* USART2 DMA DeInit */
     HAL_DMA_DeInit(uartHandle->hdmarx);
@@ -330,7 +330,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     PA11     ------> USART6_TX
     PA12     ------> USART6_RX
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_12);
+    HAL_GPIO_DeInit(GPIOA, USART6_TX_A02YYUW_Pin|USART6_RX_A02YYUW_Pin);
 
     /* USART6 DMA DeInit */
     HAL_DMA_DeInit(uartHandle->hdmarx);

@@ -114,6 +114,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM1_Init();
   MX_USART6_UART_Init();
+  MX_TIM2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
