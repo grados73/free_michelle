@@ -1,4 +1,4 @@
-19032618001158250
+19035902212348121
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -83041,12 +83041,26 @@ CR2032_KOSZYK
 2
 2
 grados73
+NodeMCU_v2_ESP_grados73
+
+
+0
+30
+30
+grados73
 Switch_BS800L
 
 
 0
+6
+2
+grados73
+TFT_2_4_c_240x320_SPI
+
+
 0
-0
+14
+14
 grados73
 grados73_BlackPill_STM32F4x1
 Through hole headers for BluePill module. No SWD breakout. Fancy silkscreen.
