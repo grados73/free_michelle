@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source D:\STM32\free_michelle\PCB\free_michelle_v1_0\free_michelle_v1_0.sch)
-    (date "15.01.2022 13:00:57")
+    (date "15.01.2022 17:20:42")
     (tool "Eeschema (5.1.8)-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
