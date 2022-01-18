@@ -598,17 +598,6 @@ Connection ~ 19610 4090
 Wire Wire Line
 	19610 4090 19450 4090
 $Comp
-L grad73_library:LD1117V33 U8
-U 1 1 61E4A9E3
-P 20120 2810
-F 0 "U8" H 20120 3052 50  0000 C CNN
-F 1 "LD1117V33" H 20120 2961 50  0000 C CNN
-F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 20145 2660 50  0001 L CIN
-F 3 "" H 20120 2760 50  0001 C CNN
-	1    20120 2810
-	1    0    0    -1  
-$EndComp
-$Comp
 L free_michelle_v1_0-rescue:grad73_library_24AA01-free_michelle_v1_0-cache U1
 U 1 1 61E51F54
 P 2510 8230
@@ -2487,17 +2476,6 @@ NoConn ~ 12380 3920
 NoConn ~ 12380 4020
 NoConn ~ 12380 4120
 $Comp
-L grad73_library:LD1117V33 U6
-U 1 1 64E78405
-P 17820 2830
-F 0 "U6" H 17820 3072 50  0000 C CNN
-F 1 "LD1117V33" H 17820 2981 50  0000 C CNN
-F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 17845 2680 50  0001 L CIN
-F 3 "" H 17820 2780 50  0001 C CNN
-	1    17820 2830
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:+9V #PWR045
 U 1 1 64E7923F
 P 16880 2660
@@ -2577,9 +2555,6 @@ Wire Wire Line
 	17280 3250 17820 3250
 Wire Wire Line
 	17280 2890 17280 2830
-Connection ~ 17280 2830
-Wire Wire Line
-	17280 2830 17520 2830
 Wire Wire Line
 	17820 3250 18360 3250
 Wire Wire Line
@@ -3361,6 +3336,75 @@ F 1 "+9V" H 20945 6153 50  0000 C CNN
 F 2 "" H 20930 5980 50  0001 C CNN
 F 3 "" H 20930 5980 50  0001 C CNN
 	1    20930 5980
+	1    0    0    -1  
+$EndComp
+Connection ~ 17280 2830
+Wire Wire Line
+	17280 2830 17520 2830
+$Comp
+L Regulator_Linear:LD1117S12TR_SOT223 U6
+U 1 1 697826F5
+P 17820 2830
+F 0 "U6" H 17820 3072 50  0000 C CNN
+F 1 "LD1117AV33" H 17820 2981 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 17820 3030 50  0001 C CNN
+F 3 "https://www.tme.eu/Document/bad00e7fc591b73ff810af309b2bb7a4/LD1117A.pdf" H 17920 2580 50  0001 C CNN
+	1    17820 2830
+	1    0    0    -1  
+$EndComp
+$Comp
+L Regulator_Linear:LD1117S12TR_SOT223 U8
+U 1 1 697DB078
+P 20120 2810
+F 0 "U8" H 20120 3052 50  0000 C CNN
+F 1 "LD1117AV33" H 20120 2961 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 20120 3010 50  0001 C CNN
+F 3 "https://www.tme.eu/Document/bad00e7fc591b73ff810af309b2bb7a4/LD1117A.pdf" H 20220 2560 50  0001 C CNN
+	1    20120 2810
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 61EC6BA5
+P 17500 6660
+F 0 "H1" H 17600 6706 50  0000 L CNN
+F 1 "MountingHole" H 17600 6615 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 17500 6660 50  0001 C CNN
+F 3 "~" H 17500 6660 50  0001 C CNN
+	1    17500 6660
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 61EC80BA
+P 18260 6660
+F 0 "H2" H 18360 6706 50  0000 L CNN
+F 1 "MountingHole" H 18360 6615 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 18260 6660 50  0001 C CNN
+F 3 "~" H 18260 6660 50  0001 C CNN
+	1    18260 6660
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 61EC8464
+P 19210 6660
+F 0 "H3" H 19310 6706 50  0000 L CNN
+F 1 "MountingHole" H 19310 6615 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 19210 6660 50  0001 C CNN
+F 3 "~" H 19210 6660 50  0001 C CNN
+	1    19210 6660
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 61EC8838
+P 20120 6660
+F 0 "H4" H 20220 6706 50  0000 L CNN
+F 1 "MountingHole" H 20220 6615 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 20120 6660 50  0001 C CNN
+F 3 "~" H 20120 6660 50  0001 C CNN
+	1    20120 6660
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
