@@ -1,6 +1,8 @@
 # Aquarium controller
 >The project, with the working name "free_miechelle", is a response to the lack of market proposals for aquarium control and management devices.
->Currently this project is developing in another repository. -> https://github.com/grados73/akwa_elektron
+
+
+>>Now this project is being developed in another repository. -> https://github.com/grados73/akwa_elektron
 
 ## Table of contents
 * [General info](#general-info)
