@@ -1,0 +1,1 @@
+Ten RTC DS3231 który używam jest niepodłączony IRQ
